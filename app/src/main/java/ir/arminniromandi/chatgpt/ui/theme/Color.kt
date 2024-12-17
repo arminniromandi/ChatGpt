@@ -1,11 +1,26 @@
-package ir.arminniromandi.chatgpt.ui.theme
-
+package ir.arminniromandi.chatgpt
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+var gradient = listOf(
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+    Color(0xFF364645),
+    Color(0xFF222A33)
+
+)
+
+var whiteGradient = listOf(
+
+    Color(0x33EAEAEA),
+    Color(0x03FFFFFF)
+
+)
+
+var white = Color(0xFFFFFFFF)
+var black = Color(0xFF000000)
+
+var textFieldColor = Color(0x99ADADAD)
+var UnFoucosedtextFieldColor = Color(0xFFADADAD)
+
+var gray_900 = Color(0xFF242424)
+var gray_700 = Color(0xFF616161)
+var gray_400 = Color(0xFFC2C2C2)
