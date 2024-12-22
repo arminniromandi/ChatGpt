@@ -111,11 +111,9 @@ fun Intro(modifier: Modifier) {
                 ElevatedButton(
                     onClick = {},
                     modifier = Modifier
-                        .fillMaxWidth()
                         .height(52.dp)
                 ) {
                     Text(
-                        "Login With Phone Number",
                         color = black,
                         fontSize = 18.sp,
                         fontFamily = FontFamily(Font(R.font.satoshi_medium))
