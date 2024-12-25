@@ -3,7 +3,9 @@ package ir.arminniromandi.chatgpt.customUi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -18,12 +20,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.R
-import ir.arminniromandi.chatgpt.UnFoucosedtextFieldColor
-import ir.arminniromandi.chatgpt.gradient
-import ir.arminniromandi.chatgpt.gray_400
 import ir.arminniromandi.chatgpt.textFieldColor
-import ir.arminniromandi.chatgpt.white
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
  fun MTextField(modifier: Modifier ,text : MutableState<String> , icon:Int , hint:String ) {
     
@@ -43,13 +42,15 @@ import ir.arminniromandi.chatgpt.white
                 fontFamily = FontFamily(Font(R.font.satoshi_regular)),
                 fontSize = 18.sp
             ),
-            colors = TextFieldDefaults.colors(
+            colors =TextFieldDefaults.textFieldColors(
                 focusedTextColor = Color.White,
+                cursorColor = Color.White,
                 unfocusedTextColor = Color.White,
-                focusedContainerColor = textFieldColor,
-                unfocusedContainerColor = UnFoucosedtextFieldColor,
-                focusedBorderColor = gray_400
+                containerColor = textFieldColor,
+                focusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent
             ),
+            shape = RoundedCornerShape(50),
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
 

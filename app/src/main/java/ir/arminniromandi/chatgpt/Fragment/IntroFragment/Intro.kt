@@ -114,6 +114,7 @@ fun Intro(modifier: Modifier) {
                         .height(52.dp)
                 ) {
                     Text(
+                        text = "Verify",
                         color = black,
                         fontSize = 18.sp,
                         fontFamily = FontFamily(Font(R.font.satoshi_medium))
