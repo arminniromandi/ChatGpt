@@ -16,6 +16,11 @@ var whiteGradient = listOf(
 )
 
 var white = Color(0xFFFFFFFF)
+
+
+var transparent = Color(0x00FFFFFF)
+
+
 var black = Color(0xFF000000)
 
 var textFieldColor = Color(0x99ADADAD)

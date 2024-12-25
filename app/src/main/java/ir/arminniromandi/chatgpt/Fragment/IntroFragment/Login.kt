@@ -1,5 +1,8 @@
 package ir.arminniromandi.chatgpt.Fragment.IntroFragment
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -31,7 +34,8 @@ import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.black
 import ir.arminniromandi.chatgpt.customUi.MText
-import ir.arminniromandi.chatgpt.customUi.MTextField
+import ir.arminniromandi.chatgpt.customUi.MyStyledTextField
+import ir.arminniromandi.chatgpt.customUi.OtpView
 import ir.arminniromandi.chatgpt.gradient
 import ir.arminniromandi.chatgpt.white
 
@@ -39,6 +43,8 @@ import ir.arminniromandi.chatgpt.white
 fun Login(modifier: Modifier) {
 
     val phoneNumber = remember { mutableStateOf("") }
+
+    val onVerify = remember { mutableStateOf(false) }
 
     Column(
         modifier
@@ -50,10 +56,7 @@ fun Login(modifier: Modifier) {
 
         Column(
             Modifier.fillMaxWidth(),
-
             ) {
-
-
             Row(
                 modifier
                     .fillMaxWidth()
@@ -90,28 +93,72 @@ fun Login(modifier: Modifier) {
             MText("Welcome", 64, R.font.satoshi_regular, Color(0xFFA7BA88))
             MText("Aboard.", 64, R.font.satoshi_regular, white)
 
-        }
-        Column(
-            Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ){
-
-            MTextField(modifier , phoneNumber ,R.drawable.images , "Enter Phone Number")
-
-        }
-        ElevatedButton(
-            onClick = {},
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(52.dp)
-        ) {
+            Spacer(modifier.height(18.dp))
             Text(
-                "Login With Phone Number",
-                color = black,
+                "Enter Phone Number for Verfiy",
+                modifier = modifier.padding(bottom = 10.dp, start = 14.dp),
+                fontFamily = FontFamily(Font(R.font.satoshi_medium)),
                 fontSize = 18.sp,
-                fontFamily = FontFamily(Font(R.font.satoshi_medium))
+                color = white
             )
+
+            MyStyledTextField(modifier, phoneNumber, R.drawable.images, "Enter Phone Number")
+
+            Spacer(modifier.height(10.dp))
+
+            ElevatedButton(
+                onClick = {
+                    onVerify.value = true
+                },
+                modifier = Modifier
+                    .padding(horizontal = 18.dp)
+                    .padding(bottom = 8.dp)
+                    .fillMaxWidth()
+                    .height(52.dp)
+            ) {
+                Text(
+                    "Login With Phone Number",
+                    color = black,
+                    fontSize = 18.sp,
+                    fontFamily = FontFamily(Font(R.font.satoshi_medium))
+                )
+            }
+            Spacer(modifier.height(12.dp))
+
+            AnimatedVisibility(onVerify.value,
+                modifier = modifier.align(Alignment.CenterHorizontally),
+                enter = fadeIn(),
+                exit = fadeOut()
+                ) {
+                OtpView()
+            }
+            Spacer(modifier.height(10.dp))
+            if (onVerify.value) {
+                ElevatedButton(
+                    onClick = {
+
+
+                    },
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp)
+                        .padding(bottom = 8.dp)
+                        .fillMaxWidth()
+                        .height(52.dp)
+                ) {
+                    Text(
+                        "Verify",
+                        color = black,
+                        fontSize = 18.sp,
+                        fontFamily = FontFamily(Font(R.font.satoshi_medium))
+                    )
+                }
+
+
+            }
+
         }
+
+
 
 
     }

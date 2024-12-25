@@ -10,7 +10,7 @@ class ApiRepository(
     private val apiService: ApiService
 ) {
 
-    fun getChatResponse(request: ChatRequest): Flow<Result<ChatResponse>> = flow {
+     fun getChatResponse(request: ChatRequest): Flow<Result<ChatResponse>> = flow {
         val response = apiService.getChatResponse(request)
         emit(Result.success(response))
     }.catch {
