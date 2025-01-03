@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 
 class ApiRepository(
-    private val apiService: ApiService
+    private val apiService: ChatApiService
 ) {
 
      fun getChatResponse(request: ChatRequest): Flow<Result<ChatResponse>> = flow {

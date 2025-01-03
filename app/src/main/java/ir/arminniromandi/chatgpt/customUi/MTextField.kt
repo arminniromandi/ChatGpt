@@ -27,45 +27,28 @@ import ir.arminniromandi.chatgpt.textFieldColor
 import ir.arminniromandi.chatgpt.transparent
 
 
+val textFieldColorStyle = TextFieldDefaults.textFieldColors(
+    focusedTextColor = Color.White,
+    cursorColor = Color.White,
+    unfocusedTextColor = Color.White,
+    containerColor = textFieldColor,
+    focusedIndicatorColor = transparent,
+    unfocusedIndicatorColor = transparent,
+    disabledIndicatorColor = transparent
+)
+val textFieldTextStyle = TextStyle(
+    color = Color.White,
+    fontFamily = FontFamily(Font(R.font.satoshi_regular)),
+    fontSize = 18.sp
+)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyStyledTextField(modifier: Modifier, text: MutableState<String>, icon: Int, hint: String) {
 
 
-    val textFieldColorStyle = TextFieldDefaults.textFieldColors(
-        focusedTextColor = Color.White,
-        cursorColor = Color.White,
-        unfocusedTextColor = Color.White,
-        containerColor = textFieldColor,
-        focusedIndicatorColor = transparent,
-        unfocusedIndicatorColor = transparent,
-        disabledIndicatorColor = transparent
-    )
-    val textFieldTextStyle = TextStyle(
-        color = Color.White,
-        fontFamily = FontFamily(Font(R.font.satoshi_regular)),
-        fontSize = 18.sp
-    )
 
 
-    TextField(
-        value = text.value,
-        onValueChange = { text.value = it },
-        modifier = modifier.fillMaxWidth()
-            .padding(horizontal = 12.dp),
-        leadingIcon = {
-            Image(
-                modifier = Modifier.size(24.dp),
-                painter = painterResource(icon),
-                contentDescription = "icon"
-            )
-        },
-        textStyle = textFieldTextStyle,
-        colors = textFieldColorStyle,
-        shape = RoundedCornerShape(50),
-        singleLine = true,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
-    )
 
 
 }

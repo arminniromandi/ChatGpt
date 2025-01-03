@@ -12,10 +12,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -26,16 +23,14 @@ import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.white
 
 @Composable
-fun OtpView() {
-    var otpValue by remember {
-        mutableStateOf("")
-    }
+fun OtpView(otpValue: MutableState<String>) {
+
 
     BasicTextField(
-        value = otpValue,
+        value = otpValue.value,
         onValueChange = {
             if (it.length <= 4)
-                otpValue = it
+                otpValue.value = it
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
         decorationBox = {
@@ -44,10 +39,10 @@ fun OtpView() {
             ) {
                 repeat(4) {
                     val char = when {
-                        it >= otpValue.length -> "-"
-                        else -> otpValue[it].toString()
+                        it >= otpValue.value.length -> "-"
+                        else -> otpValue.value[it].toString()
                     }
-                    val isFocused = otpValue.length == it
+                    val isFocused = otpValue.value.length == it
                     Text(
                         modifier = Modifier
                             .clip(RoundedCornerShape(8.dp))

@@ -5,7 +5,7 @@ data class Parameter(
     val value: String
 )
 
-data class RequestBody(
+data class RequestSmsBody(
     val mobile: String,
     val templateId: String,
     val parameters: List<Parameter>

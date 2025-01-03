@@ -1,5 +1,7 @@
 package ir.arminniromandi.chatgpt.Fragment.IntroFragment
 
+import android.content.Intent
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -15,9 +17,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,24 +30,32 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ir.arminniromandi.chatgpt.MainActivity
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.black
 import ir.arminniromandi.chatgpt.customUi.MText
-import ir.arminniromandi.chatgpt.customUi.MyStyledTextField
 import ir.arminniromandi.chatgpt.customUi.OtpView
+import ir.arminniromandi.chatgpt.customUi.textFieldColorStyle
+import ir.arminniromandi.chatgpt.customUi.textFieldTextStyle
 import ir.arminniromandi.chatgpt.gradient
+import ir.arminniromandi.chatgpt.viewmodel.SignUpViewModel
 import ir.arminniromandi.chatgpt.white
+import kotlin.random.Random
 
 @Composable
-fun Login(modifier: Modifier) {
+fun Login(modifier: Modifier, viewModel: SignUpViewModel) {
 
+
+    val context = LocalContext.current
     val phoneNumber = remember { mutableStateOf("") }
+    val otp = remember { mutableStateOf("") }
 
     val onVerify = remember { mutableStateOf(false) }
 
@@ -56,7 +69,7 @@ fun Login(modifier: Modifier) {
 
         Column(
             Modifier.fillMaxWidth(),
-            ) {
+        ) {
             Row(
                 modifier
                     .fillMaxWidth()
@@ -95,20 +108,55 @@ fun Login(modifier: Modifier) {
 
             Spacer(modifier.height(18.dp))
             Text(
-                "Enter Phone Number for Verfiy",
+                "Enter Phone Number for Verify",
                 modifier = modifier.padding(bottom = 10.dp, start = 14.dp),
                 fontFamily = FontFamily(Font(R.font.satoshi_medium)),
                 fontSize = 18.sp,
                 color = white
             )
 
-            MyStyledTextField(modifier, phoneNumber, R.drawable.images, "Enter Phone Number")
+
+            TextField(
+                value = phoneNumber.value,
+                onValueChange = {
+                    if (11 >= it.length)
+                        phoneNumber.value = it
+                },
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp),
+                leadingIcon = {
+                    Image(
+                        modifier = Modifier.size(24.dp),
+                        painter = painterResource(R.drawable.images),
+                        contentDescription = "icon"
+                    )
+                },
+
+                textStyle = textFieldTextStyle,
+                colors = textFieldColorStyle,
+                shape = RoundedCornerShape(50),
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
+            )
+
+
+
+
 
             Spacer(modifier.height(10.dp))
 
             ElevatedButton(
                 onClick = {
                     onVerify.value = true
+
+                    if (phoneNumber.value.startsWith("09"))
+                        viewModel.sendReqForAuth(phoneNumber.value , viewModel.random)
+                    else
+                        Toast.makeText(context , "invalid phone Number" , Toast.LENGTH_LONG).show()
+
+                    Toast.makeText(context , viewModel.smsReqState.value , Toast.LENGTH_LONG).show()
+
                 },
                 modifier = Modifier
                     .padding(horizontal = 18.dp)
@@ -125,18 +173,25 @@ fun Login(modifier: Modifier) {
             }
             Spacer(modifier.height(12.dp))
 
-            AnimatedVisibility(onVerify.value,
+            AnimatedVisibility(
+                onVerify.value,
                 modifier = modifier.align(Alignment.CenterHorizontally),
                 enter = fadeIn(),
                 exit = fadeOut()
-                ) {
-                OtpView()
+            ) {
+                OtpView(otp)
             }
             Spacer(modifier.height(10.dp))
             if (onVerify.value) {
                 ElevatedButton(
                     onClick = {
 
+
+
+                        if (viewModel.isOtpValid(otp.value))
+                            context.startActivity(Intent(context , MainActivity::class.java))
+                            else
+                            Toast.makeText(context , "Code is incorrect" , Toast.LENGTH_LONG).show()
 
                     },
                     modifier = Modifier
@@ -159,13 +214,6 @@ fun Login(modifier: Modifier) {
         }
 
 
-
-
     }
 }
 
-@Preview
-@Composable
-private fun loginPreView() {
-    Login(Modifier)
-}

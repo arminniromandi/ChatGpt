@@ -12,6 +12,6 @@ object RetrofitService {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-    var apiService : ApiService = retrofit.create(ApiService::class.java)
+    var apiService : ChatApiService = retrofit.create(ChatApiService::class.java)
 
 }
