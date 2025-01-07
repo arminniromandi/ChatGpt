@@ -1,135 +1,67 @@
 package ir.arminniromandi.chatgpt
 
-import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.activity.viewModels
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
-import ir.arminniromandi.chatgpt.customUi.MText
+import ir.arminniromandi.chatgpt.Fragment.IntroFragment.Intro
+import ir.arminniromandi.chatgpt.Fragment.IntroFragment.Login
+import ir.arminniromandi.chatgpt.Fragment.IntroScreens
+import ir.arminniromandi.chatgpt.viewmodel.SignUpViewModel
 
 @AndroidEntryPoint
 class SignupActivity : ComponentActivity() {
+    private val viewModel by viewModels<SignUpViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent {
-            var navController = rememberNavController()
 
+        setContent {
             AppTheme {
 
 
-            }
-        }
-    }
-}
+                val navController = rememberNavController()
 
+                Scaffold(
 
-@Composable
-fun Greeting2(name: String, modifier: Modifier = Modifier) {
+                ) { it ->
 
+                    NavHost(
+                        navController = navController,
+                        startDestination = IntroScreens.Intro.screenName,
+                        enterTransition = {
+                            slideInHorizontally(
+                                initialOffsetX = { it },
+                                animationSpec = tween(
+                                    durationMillis = 600
+                                ),
+                            )
+                        },
 
-    Scaffold(
+                        modifier = Modifier.padding(it)
+                    ) {
+                        composable(IntroScreens.Intro.screenName) { Intro(Modifier) }
+                        composable(IntroScreens.Login.screenName) { Login(Modifier  ,viewModel) }
 
-    ) {
-
-        Column(
-            modifier
-                .background(
-                    brush = Brush.verticalGradient(gradient)
-                )
-                .padding(it)
-                .padding(8.dp)
-
-                .fillMaxSize()
-        ) {
-            Row(
-                modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 4.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Absolute.SpaceBetween
-            ){
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Image(painter = painterResource(R.drawable.logo),
-                        modifier = Modifier.size(48.dp),
-                        contentDescription = "logo"
-                    )
-
-                    Spacer(modifier.width(8.dp))
-                    Text("Chat Gpt" ,
-                        fontSize = 18.sp ,
-                        fontFamily = FontFamily(Font(R.font.satoshi_bold))
-                    )
+                    }
                 }
-                Text(
-                    "skip",
-                    fontSize = 18.sp,
-                    fontFamily = FontFamily (Font(R.font.satoshi_regular))
-                )
-            }
 
-            
 
-            Column(
-                Modifier.fillMaxWidth()
 
-            ) {
-                MText("Explore", 64, R.font.satoshi_regular, white)
-                MText("Infinite", 64, R.font.satoshi_regular, Color(0xFFA7BA88))
-                MText("Of Writing.", 64, R.font.satoshi_regular, white)
 
             }
 
-            Row(
-                modifier = modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // TODO: create box of that 
             }
-
-
-
         }
     }
-}
 
-@Preview(
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL,
-
-)
-@Composable
-fun GreetingPreview2() {
-    AppTheme {
-        Greeting2("Android")
-    }
-}

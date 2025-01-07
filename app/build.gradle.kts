@@ -64,7 +64,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.kotlinx.coroutines.android)
-    implementation("com.google.dagger:hilt-android:2.51.1")
-    ksp("com.google.dagger:hilt-android-compiler:2.51.1")
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
 
 }

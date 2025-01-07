@@ -1,6 +1,5 @@
 package ir.arminniromandi.chatgpt.viewmodel
 
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -42,7 +41,7 @@ class SignUpViewModel @Inject constructor(
     fun isOtpValid(entered : String):Boolean = entered == random
 
     fun sendReqForAuth(phoneNumber : String, code :String) {
-        var parametr = listOf( Parameter("code" , code))
+        val parametr = listOf( Parameter("code" , code))
 
 
         viewModelScope.launch {

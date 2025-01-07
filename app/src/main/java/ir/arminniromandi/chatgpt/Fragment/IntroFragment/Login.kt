@@ -47,7 +47,6 @@ import ir.arminniromandi.chatgpt.customUi.textFieldTextStyle
 import ir.arminniromandi.chatgpt.gradient
 import ir.arminniromandi.chatgpt.viewmodel.SignUpViewModel
 import ir.arminniromandi.chatgpt.white
-import kotlin.random.Random
 
 @Composable
 fun Login(modifier: Modifier, viewModel: SignUpViewModel) {
@@ -185,9 +184,6 @@ fun Login(modifier: Modifier, viewModel: SignUpViewModel) {
             if (onVerify.value) {
                 ElevatedButton(
                     onClick = {
-
-
-
                         if (viewModel.isOtpValid(otp.value))
                             context.startActivity(Intent(context , MainActivity::class.java))
                             else

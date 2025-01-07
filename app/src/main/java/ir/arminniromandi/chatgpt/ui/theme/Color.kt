@@ -21,7 +21,7 @@ var white = Color(0xFFFFFFFF)
 var transparent = Color(0x00FFFFFF)
 
 
-var black = Color(0xFF000000)
+var black = Color(0xFF161616)
 
 var textFieldColor = Color(0x99ADADAD)
 var UnFoucosedtextFieldColor = Color(0xFFADADAD)

@@ -38,7 +38,6 @@ object NetworkModule {
         retrofit.create(SmsApiService::class.java)
 
     @Provides
-    @Singleton
     fun provideConnectivityObserver(
         @ApplicationContext context: Context
     ): ConectivityObserver {

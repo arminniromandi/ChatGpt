@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ChatGpt</string>
     <string name="title_activity_signup">SignupActivity</string>
+    <string name="new_chat">New Chat</string>
 </resources>
