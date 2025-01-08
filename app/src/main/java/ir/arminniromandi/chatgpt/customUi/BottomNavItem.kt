@@ -15,7 +15,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import ir.arminniromandi.chatgpt.BottomNavItems
+import ir.arminniromandi.chatgpt.Fragment.home.BottomNavItems
 import ir.arminniromandi.chatgpt.R
 
 @Composable

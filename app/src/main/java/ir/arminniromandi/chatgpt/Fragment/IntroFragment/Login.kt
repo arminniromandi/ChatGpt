@@ -23,6 +23,7 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,6 +33,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
@@ -42,9 +44,9 @@ import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.black
 import ir.arminniromandi.chatgpt.customUi.MText
 import ir.arminniromandi.chatgpt.customUi.OtpView
-import ir.arminniromandi.chatgpt.customUi.textFieldColorStyle
-import ir.arminniromandi.chatgpt.customUi.textFieldTextStyle
 import ir.arminniromandi.chatgpt.gradient
+import ir.arminniromandi.chatgpt.textFieldColor
+import ir.arminniromandi.chatgpt.transparent
 import ir.arminniromandi.chatgpt.viewmodel.SignUpViewModel
 import ir.arminniromandi.chatgpt.white
 
@@ -57,6 +59,12 @@ fun Login(modifier: Modifier, viewModel: SignUpViewModel) {
     val otp = remember { mutableStateOf("") }
 
     val onVerify = remember { mutableStateOf(false) }
+
+
+
+
+
+
 
     Column(
         modifier
@@ -132,8 +140,22 @@ fun Login(modifier: Modifier, viewModel: SignUpViewModel) {
                     )
                 },
 
-                textStyle = textFieldTextStyle,
-                colors = textFieldColorStyle,
+                textStyle = TextStyle(
+                    color = Color.White,
+                    fontFamily = FontFamily(Font(R.font.satoshi_regular)),
+                    fontSize = 18.sp
+                ),
+                colors = TextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    cursorColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    unfocusedContainerColor = textFieldColor,
+                    focusedContainerColor = textFieldColor,
+                    disabledContainerColor = textFieldColor,
+                    focusedIndicatorColor = transparent,
+                    unfocusedIndicatorColor = transparent,
+                    disabledIndicatorColor = transparent
+                ),
                 shape = RoundedCornerShape(50),
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)

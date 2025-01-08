@@ -9,6 +9,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Scaffold
@@ -36,7 +37,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         val item = arrayOf(
-            BottomNavItems("Home" , Icons.Default.Home)
+            BottomNavItems("Home" , Icons.Default.Home),
+            BottomNavItems("Chat" , Icons.Default.Create)
         )
 
         setContent {
@@ -72,7 +74,8 @@ class MainActivity : ComponentActivity() {
 
                         modifier = Modifier.padding(it)
                     ) {
-                        composable(HomeScreens.Home.screenName) { Home() }
+                        composable(HomeScreens.Home.screenName) { Home(navController) }
+                        composable(HomeScreens.ChatPage.screenName) {  }
 
                     }
                 }
