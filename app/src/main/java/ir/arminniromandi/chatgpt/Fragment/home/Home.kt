@@ -17,6 +17,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -51,7 +54,7 @@ import ir.arminniromandi.chatgpt.white
 import ir.arminniromandi.chatgpt.whiteGradient
 
 @Composable
-fun Home(navController: NavController){
+fun Home(navController: NavController) {
     val context = LocalContext.current
 
     Column(
@@ -65,10 +68,11 @@ fun Home(navController: NavController){
         TopApp()
 
         ElevatedButton(
-            onClick = {navController.navigate(HomeScreens.ChatPage.screenName)},
-            modifier = Modifier.fillMaxWidth()
+            onClick = { navController.navigate(HomeScreens.ChatPage.screenName) },
+            modifier = Modifier
+                .fillMaxWidth()
                 .height(49.dp)
-                .padding(horizontal = 10.dp , vertical = 8.dp)
+                .padding(horizontal = 10.dp, vertical = 8.dp)
         ) {
             Text(
                 text = context.getString(R.string.new_chat),
@@ -79,7 +83,8 @@ fun Home(navController: NavController){
         }
 
         Column(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(horizontal = 10.dp)
         ) {
             Explore()
@@ -88,21 +93,18 @@ fun Home(navController: NavController){
         }
 
 
-
-
-
     }
 }
 
 
 @Composable
 private fun TopApp(context: Context = LocalContext.current) {
-    Row (
+    Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
-    ){
+    ) {
         Image(
             painter = painterResource(R.drawable.logo),
             modifier = Modifier.size(48.dp),
@@ -122,7 +124,6 @@ private fun TopApp(context: Context = LocalContext.current) {
 }
 
 
-
 @Composable
 private fun Explore() {
 
@@ -132,7 +133,7 @@ private fun Explore() {
             .padding(top = 8.dp, bottom = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
-    ){
+    ) {
 
         Text(
             text = "Explore More",
@@ -150,9 +151,9 @@ private fun Explore() {
     }
 
     val a = arrayOf(
-        Items("job" , Icons.Outlined.Email , "lorem ipsom a text that make perfect" ),
-        Items("job" , Icons.Outlined.Email , "lorem ipsom a text that make perfect" ),
-        Items("job" , Icons.Outlined.Email , "lorem ipsom a text that make perfect" )
+        Items("job", Icons.Outlined.Email, "lorem ipsom a text that make perfect"),
+        Items("job", Icons.Outlined.Email, "lorem ipsom a text that make perfect"),
+        Items("job", Icons.Outlined.Email, "lorem ipsom a text that make perfect")
     )
 
 
@@ -160,15 +161,16 @@ private fun Explore() {
     LazyRow(
         modifier = Modifier.fillMaxWidth()
     ) {
-        items(a){
+        items(a) {
             ExpItems(it)
         }
     }
 
 
 }
+
 @Composable
-private fun ExpItems(item : Items){
+private fun ExpItems(item: Items) {
 
     Column(
         modifier = Modifier
@@ -182,16 +184,16 @@ private fun ExpItems(item : Items){
                 shape = RoundedCornerShape(38.dp)
             )
             .background(gray_700)
-            .padding(18.dp)
-        ,
+            .padding(18.dp),
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Icon(
-            item.icon ,
+            item.icon,
             modifier = Modifier.size(28.dp),
             tint = white,
-            contentDescription = "")
+            contentDescription = ""
+        )
         Spacer(Modifier.height(8.dp))
         Text(
             text = item.title,
@@ -220,7 +222,7 @@ private fun Prompt() {
             .padding(top = 8.dp, bottom = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
-    ){
+    ) {
 
         Text(
             text = "Prompt Library",
@@ -237,6 +239,41 @@ private fun Prompt() {
 
     }
 
+    val a = arrayOf("Seo", "Develope", "Marketing", "job", "Code")
+
+    LazyHorizontalStaggeredGrid(
+        rows = StaggeredGridCells.Fixed(2),
+        horizontalItemSpacing = 4.dp
+    ) {
+        items(a) {
+            PromptItems(it)
+        }
+    }
+
+
+}
+
+@Composable
+private fun PromptItems(text : String) {
+
+    Row(
+        modifier = Modifier
+            .padding(horizontal = 12.dp , vertical = 8.dp)
+            .background(black)
+            .clip(RoundedCornerShape(28.dp))
+        ,
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+
+        Text(
+            text ,
+            fontFamily = FontFamily(Font(R.font.satoshi_medium)),
+            fontSize = 16.sp,
+            color = white
+        )
+
+    }
 
 }
 

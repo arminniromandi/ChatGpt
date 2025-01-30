@@ -27,10 +27,9 @@ fun RowScope.BottomNavItem(
     NavigationBarItem(
         selected = currentRoute == item.name,
 
+
         colors = NavigationBarItemDefaults.colors(
-            indicatorColor = Color(
-                0xFF1A237E
-            )
+
         ),
         onClick = {
             navController.navigate(item.name) {

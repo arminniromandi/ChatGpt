@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Home
@@ -15,18 +16,18 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import ir.arminniromandi.chatgpt.Fragment.home.Home
 import ir.arminniromandi.chatgpt.Fragment.HomeScreens
 import ir.arminniromandi.chatgpt.Fragment.home.BottomNavItems
+import ir.arminniromandi.chatgpt.Fragment.home.Home
 import ir.arminniromandi.chatgpt.customUi.BottomNavItem
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
-
-
 
 
 class MainActivity : ComponentActivity() {
@@ -49,14 +50,15 @@ class MainActivity : ComponentActivity() {
 
                 Scaffold(
                     bottomBar = {
-                        NavigationBar(containerColor = Color(0xFF252525)) {
+                        NavigationBar(
+                            modifier = Modifier.padding(horizontal = 8.dp)
+                                .clip(RoundedCornerShape(60.dp)),
+                            containerColor = Color(0xFF000000)
+                        ) {
                             item.forEachIndexed { _, item ->
                                 BottomNavItem(currentRoute, item, navController)
                                 }
                             }
-
-
-
                     }
                 ) { it ->
 
