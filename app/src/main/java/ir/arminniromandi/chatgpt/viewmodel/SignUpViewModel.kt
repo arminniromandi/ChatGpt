@@ -20,15 +20,13 @@ import kotlin.random.Random
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-
     connectivityObserver: ConectivityObserver,
     private val smsApiService: SmsApiService
 ) : ViewModel() {
 
     val smsReqState = mutableStateOf("")
 
-     val random = Random.nextInt(1000 , 9999).toString()
-
+    val random = Random.nextInt(1000, 9999).toString()
 
 
     val isConnected = connectivityObserver.isConnected
@@ -38,10 +36,10 @@ class SignUpViewModel @Inject constructor(
             false
         )
 
-    fun isOtpValid(entered : String):Boolean = entered == random
+    fun isOtpValid(entered: String): Boolean = entered == random
 
-    fun sendReqForAuth(phoneNumber : String, code :String) {
-        val parametr = listOf( Parameter("code" , code))
+    fun sendReqForAuth(phoneNumber: String, code: String) {
+        val parametr = listOf(Parameter("code", code))
 
 
         viewModelScope.launch {
@@ -70,7 +68,7 @@ class SignUpViewModel @Inject constructor(
                 )
 
 
-            }else{
+            } else {
                 smsReqState.value = "No Internet Connection"
             }
 

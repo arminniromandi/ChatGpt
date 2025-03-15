@@ -1,6 +1,7 @@
 package ir.arminniromandi.chatgpt.Fragment.home
 
 import android.content.Context
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,9 +25,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -40,10 +47,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Wallpapers
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import ir.arminniromandi.chatgpt.AppTheme
 import ir.arminniromandi.chatgpt.Fragment.HomeScreens
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.black
@@ -61,24 +71,25 @@ fun Home(navController: NavController) {
         Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .background(brush = Brush.verticalGradient(gradient))
+
             .padding(horizontal = 8.dp)
     ) {
 
         TopApp()
 
-        ElevatedButton(
+        Button(
             onClick = { navController.navigate(HomeScreens.ChatPage.screenName) },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(49.dp)
-                .padding(horizontal = 10.dp, vertical = 8.dp)
-        ) {
+                .padding(horizontal = 10.dp, vertical = 8.dp),
+
+            ) {
             Text(
                 text = context.getString(R.string.new_chat),
+                modifier = Modifier
+                    .padding(horizontal = 8.dp, vertical = 4.dp),
                 fontFamily = FontFamily(Font(R.font.satoshi_medium)),
-                color = black,
-                fontSize = 18.sp
+                fontSize = 20.sp
             )
         }
 
@@ -115,7 +126,6 @@ private fun TopApp(context: Context = LocalContext.current) {
         Text(
             text = context.getString(R.string.app_name),
             fontFamily = FontFamily(Font(R.font.satoshi_medium)),
-            color = white,
             fontSize = 18.sp
         )
     }
@@ -137,16 +147,21 @@ private fun Explore() {
 
         Text(
             text = "Explore More",
-            color = white,
-            fontSize = 30.sp,
+            fontSize = 28.sp,
             fontFamily = FontFamily(Font(R.font.satoshi_medium))
         )
 
-        Image(
-            painter = painterResource(R.drawable.more),
-            modifier = Modifier.size(48.dp),
-            contentDescription = "Explore More"
-        )
+
+        
+        FloatingActionButton ({})  {
+            Image(
+                imageVector = Icons.Default.ArrowForward ,
+                contentDescription = "Explore More"
+            )
+        }
+
+
+
 
     }
 
@@ -216,6 +231,7 @@ private fun ExpItems(item: Items) {
 @Composable
 private fun Prompt() {
 
+    Spacer(modifier = Modifier.height(8.dp))
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -226,14 +242,14 @@ private fun Prompt() {
 
         Text(
             text = "Prompt Library",
-            color = white,
-            fontSize = 30.sp,
+
+            fontSize = 28.sp,
             fontFamily = FontFamily(Font(R.font.satoshi_medium))
         )
 
         Image(
             painter = painterResource(R.drawable.more),
-            modifier = Modifier.size(48.dp),
+            modifier = Modifier.size(44.dp),
             contentDescription = "Explore More"
         )
 
@@ -242,6 +258,9 @@ private fun Prompt() {
     val a = arrayOf("Seo", "Develope", "Marketing", "job", "Code")
 
     LazyHorizontalStaggeredGrid(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(150.dp),
         rows = StaggeredGridCells.Fixed(2),
         horizontalItemSpacing = 4.dp
     ) {
@@ -254,22 +273,22 @@ private fun Prompt() {
 }
 
 @Composable
-private fun PromptItems(text : String) {
+private fun PromptItems(text: String) {
 
     Row(
         modifier = Modifier
-            .padding(horizontal = 12.dp , vertical = 8.dp)
-            .background(black)
+            .padding(horizontal = 6.dp, vertical = 4.dp)
             .clip(RoundedCornerShape(28.dp))
-        ,
+            .background(Color.Black),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
 
         Text(
-            text ,
-            fontFamily = FontFamily(Font(R.font.satoshi_medium)),
-            fontSize = 16.sp,
+            text,
+            fontFamily = FontFamily(Font(R.font.satoshi_bold)),
+            fontSize = 20.sp,
+            modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
             color = white
         )
 
@@ -285,10 +304,17 @@ private data class Items(
 )
 
 
-@Preview
+@Preview(
+    showSystemUi = true, showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL,
+
+)
 @Composable
 private fun HomePagePre() {
-    Home(NavController(LocalContext.current))
+    AppTheme {
+        Home(NavController(LocalContext.current))
+    }
 }
+
 
 

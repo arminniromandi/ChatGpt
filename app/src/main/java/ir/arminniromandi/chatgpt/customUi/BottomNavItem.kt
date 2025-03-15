@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import ir.arminniromandi.chatgpt.Fragment.home.BottomNavItems
 import ir.arminniromandi.chatgpt.R
+import ir.arminniromandi.chatgpt.white
 
 @Composable
 fun RowScope.BottomNavItem(
@@ -29,7 +30,11 @@ fun RowScope.BottomNavItem(
 
 
         colors = NavigationBarItemDefaults.colors(
-
+            selectedIconColor = white,
+            selectedTextColor = white,
+            indicatorColor = Color.Transparent,
+            unselectedIconColor = Color.LightGray,
+            unselectedTextColor = Color.LightGray
         ),
         onClick = {
             navController.navigate(item.name) {
@@ -53,7 +58,7 @@ fun RowScope.BottomNavItem(
                 style = TextStyle(
                     color = Color.White,
                     fontSize = 15.sp,
-                    fontFamily = FontFamily(Font(R.font.satoshi_regular))
+                    fontFamily = FontFamily(Font(R.font.satoshi_medium))
                 )
             )
         }

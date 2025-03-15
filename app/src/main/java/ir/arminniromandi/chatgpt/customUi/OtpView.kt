@@ -39,9 +39,15 @@ fun OtpView(otpValue: MutableState<String>) {
             ) {
                 repeat(4) {
                     val char = when {
+                        //it is -> number of textField
+                        //otpValue.value.length is -> current length of text
                         it >= otpValue.value.length -> "-"
+
                         else -> otpValue.value[it].toString()
                     }
+
+                    //isFocused -> if textField is focused .
+                    // the otpValue is ==it
                     val isFocused = otpValue.value.length == it
                     Text(
                         modifier = Modifier
