@@ -1,6 +1,7 @@
 package ir.arminniromandi.myapplication.Api.ChatAi
 
 import android.util.Log
+import androidx.compose.foundation.AndroidEmbeddedExternalSurface
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatRequest
@@ -20,6 +21,5 @@ class ApiRepository @Inject constructor(
             throw e
         }
     }
-
 
 }

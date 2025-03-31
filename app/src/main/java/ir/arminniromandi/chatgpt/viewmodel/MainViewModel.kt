@@ -3,10 +3,12 @@ package ir.arminniromandi.chatgpt.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.arminniromandi.myapplication.Api.ChatAi.ApiRepository
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatRequest
+import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatResponse
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,7 +17,8 @@ class MainViewModel @Inject constructor(
     private val apiRepository: ApiRepository
 ) : ViewModel() {
 
-
+    private val _chatResponse = MutableLiveData<ChatResponse>()
+    val chatResponse = _chatResponse
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
@@ -28,7 +31,16 @@ class MainViewModel @Inject constructor(
             try {
                 _loading.postValue(true)
                 val response = apiRepository.getChatResponse(chatRequest)
+                if (response.isSuccessful) {
+                    _chatResponse.asFlow().collect{
+                        it.choices[0].message.content.forEach {
 
+                        }
+                    }
+                    _chatResponse.postValue(response.body())
+                }else {
+                    _error.postValue(response.message())
+                }
 
             }catch (e:Exception){
                 _error.postValue(e.message)

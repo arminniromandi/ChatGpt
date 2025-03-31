@@ -19,19 +19,14 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    /*@Provides
-    @Singleton
-    fun provideGsonConverterFactory(): GsonConverterFactory {
-        return GsonConverterFactory.create() // Create the GsonConverterFactory
-    }*/
+
     private const val SMS_URL = "https://api.sms.ir/v1/"
     private const val CHAT_URL = "https://api.avalai.ir/"
+
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
     annotation class ProvideSmsApi
-
-
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
     annotation class ProvideChatApi
@@ -69,11 +64,11 @@ object NetworkModule {
     fun provideChatService(@ProvideChatApi retrofit: Retrofit): ChatApiService =
         retrofit.create(ChatApiService::class.java)
 
-   /* @Provides
+    @Provides
     @Singleton
     fun provideApiRepository(apiService: ChatApiService): ApiRepository {
         return ApiRepository(apiService)
-    }*/
+    }
 
     //todo : get this out
     @Provides

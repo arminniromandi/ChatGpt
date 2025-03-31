@@ -1,7 +1,7 @@
 package ir.arminniromandi.chatgpt.Fragment.home
 
+import android.annotation.SuppressLint
 import android.util.Log
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -13,14 +13,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material3.DropdownMenu
@@ -30,9 +28,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -41,15 +39,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.LifecycleOwner
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.black
 import ir.arminniromandi.chatgpt.customUi.ChatView
@@ -68,7 +63,7 @@ val introP = mutableStateOf(true)
 fun ChatPage(viewModel: MainViewModel) {
 
     val modelIndex = remember { mutableIntStateOf(0) }
-    val chatItem = arrayOf("chatGpt" , "Gemeni")
+    val chatItem = arrayOf("chatGpt", "Gemeni")
 
 
     val massage = remember { mutableStateOf("") }
@@ -76,7 +71,8 @@ fun ChatPage(viewModel: MainViewModel) {
 
 
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .fillMaxHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
@@ -90,7 +86,7 @@ fun ChatPage(viewModel: MainViewModel) {
         else
             ChatLayout(viewModel)
 
-        TextBoxAndSend(massage ,viewModel )
+        TextBoxAndSend(massage, viewModel)
 
     }
 
@@ -112,7 +108,7 @@ private fun TopBar(chatItem: Array<String>, modelIndex: MutableIntState) {
         modifier = Modifier
             .clickable { expanded.value = !expanded.value }
             .fillMaxWidth()
-            .padding(horizontal = 8.dp , vertical = 4.dp ),
+            .padding(horizontal = 8.dp, vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -139,7 +135,8 @@ private fun TopBar(chatItem: Array<String>, modelIndex: MutableIntState) {
                 .padding(vertical = 10.dp, horizontal = 8.dp)
         ) {
             Row(
-                modifier = Modifier.wrapContentWidth()
+                modifier = Modifier
+                    .wrapContentWidth()
                     .padding(horizontal = 8.dp)
                     .clickable { expanded.value = !expanded.value },
                 verticalAlignment = Alignment.CenterVertically,
@@ -162,31 +159,28 @@ private fun TopBar(chatItem: Array<String>, modelIndex: MutableIntState) {
                 )
             }
 
-                DropdownMenu(
-                    expanded.value,
-                    onDismissRequest = { expanded.value = false }
-                ) {
+            DropdownMenu(
+                expanded.value,
+                onDismissRequest = { expanded.value = false }
+            ) {
 
-                    chatItem.forEachIndexed { index, model ->
-                        DropdownMenuItem(
-                            text = {
-                                Text(
-                                    model
-                                )
-                            },
-                            onClick = {
-                                expanded.value = false
-                                modelIndex.intValue = index
+                chatItem.forEachIndexed { index, model ->
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                model
+                            )
+                        },
+                        onClick = {
+                            expanded.value = false
+                            modelIndex.intValue = index
 
-                            }
-                        )
-                    }
+                        }
+                    )
                 }
             }
         }
-
-
-
+    }
 
 
 }
@@ -214,12 +208,12 @@ private fun Intro(modelSelected: String = "ChatGpt") {
             horizontalAlignment = Alignment.Start
         ) {
             Text(
-                text  ="hello and welcome to new Chat.",
+                text = "hello and welcome to new Chat.",
                 fontSize = 18.sp,
                 color = Color.White,
                 fontFamily = FontFamily(Font(R.font.satoshi_medium)),
 
-            )
+                )
 
             Text(
                 "Please chose your ai model from top.",
@@ -227,7 +221,7 @@ private fun Intro(modelSelected: String = "ChatGpt") {
                 color = Color.White,
                 fontFamily = FontFamily(Font(R.font.satoshi_medium)),
 
-            )
+                )
 
             Text(
                 "Current Model : $modelSelected",
@@ -243,19 +237,30 @@ private fun Intro(modelSelected: String = "ChatGpt") {
 
 }
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 private fun ChatLayout(viewModel: MainViewModel) {
-//    var text = remember { mutableStateOf("") }
-//    text.value = viewModel.r.observeAsState().value.toString()
+    val text = remember { mutableStateOf("") }
 
-    ChatView(false , "")
+    text.value = viewModel.chatResponse.observeAsState()
+        .value?.choices?.get(0)?.message?.content ?: "error  "
+
+    var error = viewModel.error.value
+    if (error != null) {
+        Log.i("error" , error)
+    }
+
+    ChatView(false, text)
+
+
 }
 
 @Composable
-private fun TextBoxAndSend(text: MutableState<String> , viewModel: MainViewModel ) {
+private fun TextBoxAndSend(text: MutableState<String>, viewModel: MainViewModel) {
 
     Row(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(bottom = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly
@@ -284,9 +289,13 @@ private fun TextBoxAndSend(text: MutableState<String> , viewModel: MainViewModel
         Image(
             painter = painterResource(R.drawable.send),
             contentDescription = "send",
-            modifier = Modifier.size(58.dp)
+            modifier = Modifier
+                .size(58.dp)
                 .clickable {
-                    var req = ChatRequest( model = "gpt-3.5-turbo" , messages = listOf(Message("user" , text.value)))
+                    var req = ChatRequest(
+                        model = "gpt-3.5-turbo",
+                        messages = listOf(Message("user", text.value))
+                    )
                     CoroutineScope(Dispatchers.IO).launch {
                         viewModel.sendReq(req)
                     }
@@ -295,12 +304,8 @@ private fun TextBoxAndSend(text: MutableState<String> , viewModel: MainViewModel
                     introP.value = false
                 }
         )
-
-
     }
-
 }
-
 
 
 
