@@ -70,7 +70,7 @@ object NetworkModule {
         return ApiRepository(apiService)
     }
 
-    //todo : get this out
+    //todo : get this out2
     @Provides
     fun provideConnectivityObserver(
         @ApplicationContext context: Context

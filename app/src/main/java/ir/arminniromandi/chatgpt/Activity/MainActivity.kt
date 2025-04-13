@@ -9,18 +9,27 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonElevation
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -35,8 +44,6 @@ import ir.arminniromandi.chatgpt.Fragment.home.Home
 import ir.arminniromandi.chatgpt.customUi.BottomNavItem
 import ir.arminniromandi.chatgpt.gradient
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
-import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatRequest
-import ir.arminniromandi.myapplication.Api.ChatAi.Model.Message
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -49,9 +56,7 @@ class MainActivity : ComponentActivity() {
         )
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
-        var req = ChatRequest( model = "gpt-3.5-turbo-0125" , messages = listOf(Message("user" , "hello ai")))
 
-        viewModel.sendReq(req)
 
         setContent {
             AppTheme {
@@ -64,7 +69,8 @@ class MainActivity : ComponentActivity() {
                         .background(brush = Brush.verticalGradient(gradient)),
                     bottomBar = {
                         NavigationBar(
-                            modifier = Modifier.padding(horizontal = 8.dp , vertical = 4.dp)
+                            modifier = Modifier
+                                .padding(horizontal = 8.dp, vertical = 4.dp)
                                 .clip(RoundedCornerShape(60.dp)),
                             containerColor = Color(0xFF000000),
                             tonalElevation = 4.dp,

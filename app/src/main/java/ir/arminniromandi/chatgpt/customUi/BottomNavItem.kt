@@ -27,8 +27,6 @@ fun RowScope.BottomNavItem(
 ) {
     NavigationBarItem(
         selected = currentRoute == item.name,
-
-
         colors = NavigationBarItemDefaults.colors(
             selectedIconColor = white,
             selectedTextColor = white,
@@ -37,13 +35,14 @@ fun RowScope.BottomNavItem(
             unselectedTextColor = Color.LightGray
         ),
         onClick = {
-            navController.navigate(item.name) {
-                popUpTo(navController.graph.startDestinationId)
-                launchSingleTop = true
+            if(currentRoute != item.name) {
+                navController.navigate(item.name) {
+                    popUpTo(navController.graph.startDestinationId)
+                    launchSingleTop = true
+                }
             }
         },
         icon = {
-
             Icon(
                 imageVector = item.icon,
                 contentDescription = item.name,

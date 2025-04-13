@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
@@ -30,7 +31,6 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -55,18 +55,27 @@ import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatRequest
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.Message
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 val introP = mutableStateOf(true)
+
+
+// assistant
+enum class Role(val value: String) {
+    User("user"), Assistant("assistant")
+}
 
 @Composable
 fun ChatPage(viewModel: MainViewModel) {
 
     val modelIndex = remember { mutableIntStateOf(0) }
     val chatItem = arrayOf("chatGpt", "Gemeni")
-
-
     val massage = remember { mutableStateOf("") }
+    val Allmassage = mutableListOf<Message>(Message(Role.User.value, ""))
+
+
+
 
 
 
@@ -76,17 +85,15 @@ fun ChatPage(viewModel: MainViewModel) {
             .fillMaxHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
-
-
     ) {
         TopBar(chatItem, modelIndex)
 
         if (introP.value)
             Intro(chatItem[modelIndex.intValue])
         else
-            ChatLayout(viewModel)
+            ChatLayout(viewModel, Allmassage)
 
-        TextBoxAndSend(massage, viewModel)
+        TextBoxAndSend(massage, Allmassage , viewModel)
 
     }
 
@@ -237,26 +244,58 @@ private fun Intro(modelSelected: String = "ChatGpt") {
 
 }
 
-@SuppressLint("SuspiciousIndentation")
+
+@SuppressLint("SuspiciousIndentation", "CoroutineCreationDuringComposition")
 @Composable
-private fun ChatLayout(viewModel: MainViewModel) {
+private fun ChatLayout(viewModel: MainViewModel, allMassage: MutableList<Message>) {
     val text = remember { mutableStateOf("") }
 
-    text.value = viewModel.chatResponse.observeAsState()
-        .value?.choices?.get(0)?.message?.content ?: "error  "
 
-    var error = viewModel.error.value
-    if (error != null) {
-        Log.i("error" , error)
+    var content = viewModel.chatResponse.observeAsState().value?.choices?.get(0)?.message?.content
+
+    if (!content.isNullOrEmpty())
+        allMassage.add(Message(Role.Assistant.value , content))
+
+
+    CoroutineScope(Dispatchers.Main).launch {
+        content?.forEach {
+            delay(300)
+            text.value += it
+        }
     }
 
-    ChatView(false, text)
+
+    val error = viewModel.error.value
+    if (error != null) {
+        Log.i("error", error)
+    }
+
+    LazyColumn(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.Top
+    ) {
+
+        items(allMassage.size) {
+            ChatView(allMassage[it])
+
+        }
+
+    }
 
 
 }
 
 @Composable
-private fun TextBoxAndSend(text: MutableState<String>, viewModel: MainViewModel) {
+private fun TextBoxAndSend(
+    text: MutableState<String>,
+    allMassage: MutableList<Message>,
+    viewModel: MainViewModel
+) {
+
+    val chatReq = ChatRequest(
+        model = "gpt-3.5-turbo",
+        messages = allMassage
+    )
 
     Row(
         modifier = Modifier
@@ -279,6 +318,7 @@ private fun TextBoxAndSend(text: MutableState<String>, viewModel: MainViewModel)
             label = {
                 Text("Type your question ...")
             },
+            maxLines = 10,
             colors = TextFieldDefaults.colors(
                 focusedIndicatorColor = transparent,
                 unfocusedIndicatorColor = transparent,
@@ -292,13 +332,9 @@ private fun TextBoxAndSend(text: MutableState<String>, viewModel: MainViewModel)
             modifier = Modifier
                 .size(58.dp)
                 .clickable {
-                    var req = ChatRequest(
-                        model = "gpt-3.5-turbo",
-                        messages = listOf(Message("user", text.value))
-                    )
-                    CoroutineScope(Dispatchers.IO).launch {
-                        viewModel.sendReq(req)
-                    }
+
+                    viewModel.sendReq(chatReq)
+                    allMassage.add(Message(Role.User.value , text.value))
 
                     text.value = ""
                     introP.value = false
@@ -306,6 +342,9 @@ private fun TextBoxAndSend(text: MutableState<String>, viewModel: MainViewModel)
         )
     }
 }
+
+
+
 
 
 
