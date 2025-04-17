@@ -7,6 +7,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -17,9 +22,35 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.Message
+import kotlinx.coroutines.delay
+import java.text.BreakIterator
+import java.text.StringCharacterIterator
 
 @Composable
-fun ChatView(massage: Message) {
+fun ChatView(massage: Message , isLastItem : Boolean) {
+
+    var text by remember {
+        mutableStateOf("")
+    }
+    if (isLastItem){
+
+        val breakIterator = remember(massage.content) { BreakIterator.getCharacterInstance() }
+
+        val typingDelayInMs = 50L
+
+        LaunchedEffect(text) {
+            delay(1000)
+            breakIterator.text = StringCharacterIterator(text)
+
+            var nextIndex = breakIterator.next()
+            while (nextIndex != BreakIterator.DONE) {
+                text = text.subSequence(0, nextIndex).toString()
+                nextIndex = breakIterator.next()
+                delay(typingDelayInMs)
+            }
+        }
+    }else
+        text = massage.content
 
 
     val isFromUser = massage.role == "user"
@@ -41,7 +72,7 @@ fun ChatView(massage: Message) {
     ) {
 
         Text(
-            massage.content,
+            text,
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
             fontSize = 18.sp,
             color = if (isFromUser) Color.White else Color.Black,

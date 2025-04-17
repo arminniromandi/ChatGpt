@@ -19,6 +19,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
@@ -29,8 +31,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableIntState
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -48,34 +52,25 @@ import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.black
 import ir.arminniromandi.chatgpt.customUi.ChatView
+import ir.arminniromandi.chatgpt.model.AiModel
+import ir.arminniromandi.chatgpt.model.Role
 import ir.arminniromandi.chatgpt.transparent
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 import ir.arminniromandi.chatgpt.white
-import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatRequest
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.Message
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlin.enums.EnumEntries
 
 val introP = mutableStateOf(true)
 
 
 // assistant
-enum class Role(val value: String) {
-    User("user"), Assistant("assistant")
-}
+
 
 @Composable
 fun ChatPage(viewModel: MainViewModel) {
 
     val modelIndex = remember { mutableIntStateOf(0) }
-    val chatItem = arrayOf("chatGpt", "Gemeni")
-    val massage = remember { mutableStateOf("") }
-    val Allmassage = mutableListOf<Message>(Message(Role.User.value, ""))
-
-
-
+    val chatItem = AiModel.entries
 
 
 
@@ -89,11 +84,11 @@ fun ChatPage(viewModel: MainViewModel) {
         TopBar(chatItem, modelIndex)
 
         if (introP.value)
-            Intro(chatItem[modelIndex.intValue])
+            Intro(chatItem[modelIndex.intValue].value)
         else
-            ChatLayout(viewModel, Allmassage)
+            ChatLayout(viewModel)
 
-        TextBoxAndSend(massage, Allmassage , viewModel)
+        TextBoxAndSend(viewModel ,chatItem[modelIndex.intValue].value )
 
     }
 
@@ -101,7 +96,7 @@ fun ChatPage(viewModel: MainViewModel) {
 }
 
 @Composable
-private fun TopBar(chatItem: Array<String>, modelIndex: MutableIntState) {
+private fun TopBar(chatItem: EnumEntries<AiModel>, modelIndex: MutableIntState) {
 
     val expanded = remember { mutableStateOf(false) }
     val rotateAnimation = animateFloatAsState(
@@ -113,7 +108,7 @@ private fun TopBar(chatItem: Array<String>, modelIndex: MutableIntState) {
 
     Row(
         modifier = Modifier
-            .clickable { expanded.value = !expanded.value }
+
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -135,6 +130,7 @@ private fun TopBar(chatItem: Array<String>, modelIndex: MutableIntState) {
 
         Box(
             modifier = Modifier
+                .clickable { expanded.value = !expanded.value }
                 .wrapContentWidth()
                 .padding(4.dp)
                 .clip(RoundedCornerShape(60.dp))
@@ -150,7 +146,7 @@ private fun TopBar(chatItem: Array<String>, modelIndex: MutableIntState) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    chatItem[modelIndex.intValue],
+                    chatItem[modelIndex.intValue].value,
                     fontFamily = FontFamily(Font(R.font.satoshi_medium)),
                     color = Color.Black,
                     fontSize = 18.sp
@@ -175,7 +171,7 @@ private fun TopBar(chatItem: Array<String>, modelIndex: MutableIntState) {
                     DropdownMenuItem(
                         text = {
                             Text(
-                                model
+                                model.value
                             )
                         },
                         onClick = {
@@ -247,22 +243,13 @@ private fun Intro(modelSelected: String = "ChatGpt") {
 
 @SuppressLint("SuspiciousIndentation", "CoroutineCreationDuringComposition")
 @Composable
-private fun ChatLayout(viewModel: MainViewModel, allMassage: MutableList<Message>) {
-    val text = remember { mutableStateOf("") }
+private fun ChatLayout(viewModel: MainViewModel) {
 
 
     var content = viewModel.chatResponse.observeAsState().value?.choices?.get(0)?.message?.content
 
     if (!content.isNullOrEmpty())
-        allMassage.add(Message(Role.Assistant.value , content))
-
-
-    CoroutineScope(Dispatchers.Main).launch {
-        content?.forEach {
-            delay(300)
-            text.value += it
-        }
-    }
+        viewModel.allMessage.add(Message(Role.Assistant.value, content))
 
 
     val error = viewModel.error.value
@@ -270,13 +257,19 @@ private fun ChatLayout(viewModel: MainViewModel, allMassage: MutableList<Message
         Log.i("error", error)
     }
 
+    val listState = rememberLazyListState()
     LazyColumn(
         modifier = Modifier.fillMaxWidth(),
+        state = listState,
         verticalArrangement = Arrangement.Top
     ) {
 
-        items(allMassage.size) {
-            ChatView(allMassage[it])
+        itemsIndexed(viewModel.allMessage) {index , massage ->
+            val isLastItem by remember{
+                derivedStateOf{index == viewModel.allMessage.lastIndex}
+            }
+            ChatView(massage , isLastItem)
+
 
         }
 
@@ -287,15 +280,12 @@ private fun ChatLayout(viewModel: MainViewModel, allMassage: MutableList<Message
 
 @Composable
 private fun TextBoxAndSend(
-    text: MutableState<String>,
-    allMassage: MutableList<Message>,
-    viewModel: MainViewModel
+    viewModel: MainViewModel,
+    modelSelected: String
 ) {
 
-    val chatReq = ChatRequest(
-        model = "gpt-3.5-turbo",
-        messages = allMassage
-    )
+    val text = remember { mutableStateOf("") }
+
 
     Row(
         modifier = Modifier
@@ -333,8 +323,7 @@ private fun TextBoxAndSend(
                 .size(58.dp)
                 .clickable {
 
-                    viewModel.sendReq(chatReq)
-                    allMassage.add(Message(Role.User.value , text.value))
+                    viewModel.saveMessageAndSendReq(text.value , modelSelected)
 
                     text.value = ""
                     introP.value = false

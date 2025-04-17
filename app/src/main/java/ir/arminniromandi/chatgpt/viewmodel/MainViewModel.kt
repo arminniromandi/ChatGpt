@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ir.arminniromandi.chatgpt.model.Role
 import ir.arminniromandi.myapplication.Api.ChatAi.ApiRepository
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatRequest
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatResponse
@@ -30,9 +31,18 @@ class MainViewModel @Inject constructor(
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
+    val allMessage = mutableListOf<Message>()
+
+    fun saveMessageAndSendReq(text :String , model : String){
+        sendReq(ChatRequest(model, allMessage))
+        allMessage.add(Message(Role.User.value, text))
+    }
+
+
+
+
     fun sendReq(chatRequest: ChatRequest) {
         viewModelScope.launch {
-
 
             try {
                 _loading.postValue(true)
