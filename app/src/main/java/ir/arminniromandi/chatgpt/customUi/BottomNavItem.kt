@@ -2,6 +2,7 @@ package ir.arminniromandi.chatgpt.customUi
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -9,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -17,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import ir.arminniromandi.chatgpt.Fragment.home.BottomNavItems
 import ir.arminniromandi.chatgpt.R
+import ir.arminniromandi.chatgpt.gray_700
 import ir.arminniromandi.chatgpt.white
 
 @Composable
@@ -26,13 +29,14 @@ fun RowScope.BottomNavItem(
     navController: NavHostController
 ) {
     NavigationBarItem(
+        modifier = Modifier.padding( vertical = 4.dp),
         selected = currentRoute == item.name,
         colors = NavigationBarItemDefaults.colors(
             selectedIconColor = white,
             selectedTextColor = white,
             indicatorColor = Color.Transparent,
-            unselectedIconColor = Color.LightGray,
-            unselectedTextColor = Color.LightGray
+            unselectedIconColor = gray_700,
+            unselectedTextColor = gray_700
         ),
         onClick = {
             if(currentRoute != item.name) {
@@ -44,16 +48,16 @@ fun RowScope.BottomNavItem(
         },
         icon = {
             Icon(
-                imageVector = item.icon,
+                painter = painterResource(item.icon),
                 contentDescription = item.name,
-                tint = if (currentRoute == item.name) Color.White else Color.LightGray
+                modifier = Modifier.size(32.dp),
+                tint = if (currentRoute == item.name) Color.White else gray_700
             )
 
         },
         label = {
             Text(
                 text = item.name,
-                modifier = Modifier.padding(top = 8.dp),
                 style = TextStyle(
                     color = Color.White,
                     fontSize = 15.sp,

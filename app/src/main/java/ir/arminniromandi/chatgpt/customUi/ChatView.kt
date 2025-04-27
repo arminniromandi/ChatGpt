@@ -2,8 +2,8 @@ package ir.arminniromandi.chatgpt.customUi
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,45 +23,39 @@ import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.Message
 import kotlinx.coroutines.delay
-import java.text.BreakIterator
-import java.text.StringCharacterIterator
+
 
 @Composable
-fun ChatView(massage: Message , isLastItem : Boolean) {
+fun ChatView(message: Message, isLastItem: Boolean) {
+    val isFromUser = message.role == "user"
+    var text by remember { mutableStateOf("") }
 
-    var text by remember {
-        mutableStateOf("")
-    }
-    if (isLastItem){
-
-        val breakIterator = remember(massage.content) { BreakIterator.getCharacterInstance() }
-
-        val typingDelayInMs = 50L
-
-        LaunchedEffect(text) {
-            delay(1000)
-            breakIterator.text = StringCharacterIterator(text)
-
-            var nextIndex = breakIterator.next()
-            while (nextIndex != BreakIterator.DONE) {
-                text = text.subSequence(0, nextIndex).toString()
-                nextIndex = breakIterator.next()
-                delay(typingDelayInMs)
+    if (!isFromUser && isLastItem) {
+        LaunchedEffect(message.content) {
+            text = ""
+            message.content.forEach { char ->
+                text += char
+                delay(50) // سرعت تایپ
             }
         }
-    }else
-        text = massage.content
+    } else {
+        text = message.content
+    }
 
 
-    val isFromUser = massage.role == "user"
+    // TODO: animate bubble chat item
+
+
     Box(
         modifier = Modifier
-            .fillMaxWidth()
+            .wrapContentWidth(
+                align = if (isFromUser) Alignment.End else Alignment.Start
+            )
             .padding(horizontal = 8.dp, vertical = 4.dp)
             .clip(
                 RoundedCornerShape(
-                    topStart = if (isFromUser) 4.dp else 20.dp,
-                    topEnd = if (isFromUser) 20.dp else 4.dp,
+                    topStart = if (isFromUser) 20.dp else 4.dp,
+                    topEnd = if (isFromUser) 4.dp else 20.dp,
                     bottomStart = 20.dp,
                     bottomEnd = 20.dp
                 )
@@ -70,19 +64,14 @@ fun ChatView(massage: Message , isLastItem : Boolean) {
             .padding(horizontal = 8.dp, vertical = 4.dp),
         contentAlignment = Alignment.CenterStart
     ) {
-
         Text(
-            text,
+            text = text,
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
             fontSize = 18.sp,
+            fontFamily = FontFamily(Font(R.font.satoshi_medium)),
             color = if (isFromUser) Color.White else Color.Black,
-            fontFamily = FontFamily(Font(R.font.satoshi_medium))
         )
-
-
     }
-
-
 }
 
 

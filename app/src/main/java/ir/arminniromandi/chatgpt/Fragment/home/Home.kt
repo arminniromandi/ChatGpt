@@ -22,19 +22,27 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGri
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonElevation
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -68,21 +76,38 @@ fun Home(navController: NavController) {
 
         TopApp()
 
-        Button(
+        ElevatedButton(
             onClick = { navController.navigate(HomeScreens.ChatPage.screenName) },
+            colors = ButtonDefaults.elevatedButtonColors(
+                contentColor = Color.Black,
+                containerColor = Color.White
+
+            ),
             modifier = Modifier
                 .fillMaxWidth()
+                .shadow(
+                    elevation = 20.dp,
+                    shape = ButtonDefaults.elevatedShape,
+                    ambientColor = Color.White,
+                    spotColor = Color.White,
+                    clip = true
+                )
                 .padding(horizontal = 10.dp, vertical = 8.dp),
 
             ) {
             Text(
                 text = context.getString(R.string.new_chat),
                 modifier = Modifier
-                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                    .padding(horizontal = 8.dp, vertical = 8.dp),
                 fontFamily = FontFamily(Font(R.font.satoshi_medium)),
                 fontSize = 20.sp
             )
         }
+
+
+
+
+
 
         Column(
             modifier = Modifier
@@ -105,22 +130,33 @@ private fun TopApp(context: Context = LocalContext.current) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painter = painterResource(R.drawable.logo),
-            modifier = Modifier.size(48.dp),
-            contentDescription = "logo"
-        )
-        Spacer(Modifier.width(8.dp))
+        Row(
+            modifier = Modifier,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Image(
+                painter = painterResource(R.drawable.logo),
+                modifier = Modifier.size(48.dp),
+                contentDescription = "logo"
+            )
+            Spacer(Modifier.width(8.dp))
 
-        Text(
-            text = context.getString(R.string.app_name),
-            fontFamily = FontFamily(Font(R.font.satoshi_medium)),
-            fontSize = 18.sp
-        )
+            Text(
+                text = context.getString(R.string.app_name),
+                fontFamily = FontFamily(Font(R.font.satoshi_medium)),
+                fontSize = 18.sp
+            )
+        }
+
+        Icon(
+            painter = painterResource(R.drawable.profile_circle), contentDescription = "profile",
+            tint = Color.White,
+            modifier = Modifier.size(38.dp)
+            )
     }
-
     Spacer(Modifier.height(8.dp))
 }
 
@@ -138,20 +174,22 @@ private fun Explore() {
 
         Text(
             text = "Explore More",
-            fontSize = 28.sp,
+            fontSize = 24.sp,
             fontFamily = FontFamily(Font(R.font.satoshi_medium))
         )
 
 
-        
-        FloatingActionButton ({})  {
+
+        FloatingActionButton(
+            {},
+            containerColor = Color.White,
+            shape = CircleShape
+        ) {
             Image(
-                imageVector = Icons.AutoMirrored.Default.ArrowForward ,
+                imageVector = Icons.AutoMirrored.Default.ArrowForward,
                 contentDescription = "Explore More"
             )
         }
-
-
 
 
     }
@@ -162,7 +200,7 @@ private fun Explore() {
         Items("job", Icons.Outlined.Email, "lorem ipsom a text that make perfect")
     )
 
-
+    Spacer(Modifier.height(4.dp))
 
     LazyRow(
         modifier = Modifier.fillMaxWidth()
@@ -234,24 +272,33 @@ private fun Prompt() {
         Text(
             text = "Prompt Library",
 
-            fontSize = 28.sp,
+            fontSize = 24.sp,
             fontFamily = FontFamily(Font(R.font.satoshi_medium))
         )
 
-        Image(
-            painter = painterResource(R.drawable.more),
-            modifier = Modifier.size(44.dp),
-            contentDescription = "Explore More"
-        )
+
+        FloatingActionButton (
+            {},
+            elevation = FloatingActionButtonDefaults.elevation(10.dp),
+            containerColor = Color.White,
+            shape = CircleShape
+        ) {
+            Image(
+                imageVector = Icons.AutoMirrored.Default.ArrowForward,
+                contentDescription = "Explore More"
+            )
+        }
 
     }
 
     val a = arrayOf("Seo", "Develope", "Marketing", "job", "Code")
 
+    Spacer(Modifier.height(4.dp))
+
     LazyHorizontalStaggeredGrid(
         modifier = Modifier
             .fillMaxWidth()
-            .height(150.dp),
+            .height(125.dp),
         rows = StaggeredGridCells.Fixed(2),
         horizontalItemSpacing = 4.dp
     ) {
@@ -268,9 +315,16 @@ private fun PromptItems(text: String) {
 
     Row(
         modifier = Modifier
-            .padding(horizontal = 6.dp, vertical = 4.dp)
-            .clip(RoundedCornerShape(28.dp))
-            .background(Color.Black),
+            .padding(vertical = 2.dp)
+            .clip(CircleShape)
+            .border(
+                width = 1.dp,
+                brush = Brush.horizontalGradient(whiteGradient),
+                shape = CircleShape
+            )
+            .background(Color.Black)
+            .padding(horizontal = 13.dp),
+
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -278,7 +332,7 @@ private fun PromptItems(text: String) {
         Text(
             text,
             fontFamily = FontFamily(Font(R.font.satoshi_bold)),
-            fontSize = 20.sp,
+            fontSize = 18.sp,
             modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
             color = white
         )
@@ -299,7 +353,7 @@ private data class Items(
     showSystemUi = true, showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL,
 
-)
+    )
 @Composable
 private fun HomePagePre() {
     AppTheme {

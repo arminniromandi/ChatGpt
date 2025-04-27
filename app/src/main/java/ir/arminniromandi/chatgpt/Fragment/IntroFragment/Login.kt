@@ -68,7 +68,7 @@ fun Login(modifier: Modifier, viewModel: SignUpViewModel) {
 
     Column(
         modifier
-            .background(brush = Brush.verticalGradient(gradient))
+            .background(brush = Brush.verticalGradient(colorStops = gradient))
             .padding(8.dp)
             .fillMaxSize(),
         verticalArrangement = Arrangement.SpaceBetween

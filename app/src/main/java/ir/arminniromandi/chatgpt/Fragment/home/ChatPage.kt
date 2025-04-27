@@ -31,7 +31,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -57,7 +56,13 @@ import ir.arminniromandi.chatgpt.model.Role
 import ir.arminniromandi.chatgpt.transparent
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 import ir.arminniromandi.chatgpt.white
+import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatRequest
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.Message
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlin.enums.EnumEntries
 
 val introP = mutableStateOf(true)
@@ -74,10 +79,13 @@ fun ChatPage(viewModel: MainViewModel) {
 
 
 
+
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(),
+            .fillMaxHeight()
+            .background(Color(0xFF282F32)),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
@@ -246,20 +254,21 @@ private fun Intro(modelSelected: String = "ChatGpt") {
 private fun ChatLayout(viewModel: MainViewModel) {
 
 
-    var content = viewModel.chatResponse.observeAsState().value?.choices?.get(0)?.message?.content
-
-    if (!content.isNullOrEmpty())
-        viewModel.allMessage.add(Message(Role.Assistant.value, content))
 
 
-    val error = viewModel.error.value
+
+
+    val error = viewModel.error.observeAsState().value
     if (error != null) {
         Log.i("error", error)
     }
+    
 
     val listState = rememberLazyListState()
     LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth()
+            .fillMaxHeight(0.80f)
+            ,
         state = listState,
         verticalArrangement = Arrangement.Top
     ) {
@@ -323,8 +332,8 @@ private fun TextBoxAndSend(
                 .size(58.dp)
                 .clickable {
 
-                    viewModel.saveMessageAndSendReq(text.value , modelSelected)
-
+                    viewModel.saveMessageAndSendReq(text.value, modelSelected)
+                    viewModel.sendReq(ChatRequest(AiModel.Gpt35T.value, viewModel.allMessage))
                     text.value = ""
                     introP.value = false
                 }

@@ -39,7 +39,7 @@ fun BoxIntro(modifier: Modifier , image : Int ,text:String ){
             .padding(bottom = 10.dp)
             .border(
                 width = 1.dp,
-                brush = Brush.verticalGradient(gradient),
+                brush = Brush.verticalGradient(colorStops = gradient),
                 shape = RoundedCornerShape(40.dp)
             )
             .clip(RoundedCornerShape(40.dp))

@@ -1,6 +1,7 @@
 package ir.arminniromandi.chatgpt.viewmodel
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,29 +32,42 @@ class MainViewModel @Inject constructor(
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
-    val allMessage = mutableListOf<Message>()
+    val allMessage = mutableStateListOf<Message>()
 
     fun saveMessageAndSendReq(text :String , model : String){
-        sendReq(ChatRequest(model, allMessage))
+        Log.i("test", "saveMessageAndSendReq: ${text} ")
+
         allMessage.add(Message(Role.User.value, text))
+        Log.i("test", "saveMessageAndSendReq: $allMessage")
     }
+    
 
 
 
 
     fun sendReq(chatRequest: ChatRequest) {
+        Log.i("test", "sendReq: req sent ")
         viewModelScope.launch {
 
             try {
                 _loading.postValue(true)
-                val response = apiRepository.getChatResponse(chatRequest)
+                delay(2500)
+                allMessage.add(Message(Role.Assistant.value , "سلام عزیزم عزییزم سلام"))
+
+                /*val response = apiRepository.getChatResponse(chatRequest)
                 if (response.isSuccessful) {
                     Log.i("test", "sendReq: sent ")
-                    _chatResponse.postValue(response.body())
-                }else {
-                    _error.postValue(response.message())
-                }
+                    Log.i("test", "sendReq: ${response.body()}")
+                    _chatResponse.postValue(response.body())*/
 
+
+                /*}else {
+                    _error.postValue(response.message())
+                    Log.i("test", "sendReq: ${response.message()}")
+
+                }
+                Log.i("test", "sendReq: ${response.code()}")
+*/
             }catch (e:Exception){
                 _error.postValue(e.message)
             }finally {
