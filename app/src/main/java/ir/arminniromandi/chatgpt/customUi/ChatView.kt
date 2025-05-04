@@ -2,6 +2,9 @@ package ir.arminniromandi.chatgpt.customUi
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,9 +21,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.R
+import ir.arminniromandi.chatgpt.model.Role
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.Message
 import kotlinx.coroutines.delay
 
@@ -48,6 +53,7 @@ fun ChatView(message: Message, isLastItem: Boolean) {
 
     Box(
         modifier = Modifier
+            .fillMaxWidth()
             .wrapContentWidth(
                 align = if (isFromUser) Alignment.End else Alignment.Start
             )
@@ -66,12 +72,26 @@ fun ChatView(message: Message, isLastItem: Boolean) {
     ) {
         Text(
             text = text,
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
             fontSize = 18.sp,
             fontFamily = FontFamily(Font(R.font.satoshi_medium)),
             color = if (isFromUser) Color.White else Color.Black,
         )
     }
 }
+
+@Preview(showSystemUi = true, backgroundColor = 0xFF041E36)
+@Composable
+private fun ChatView() {
+
+    Column(Modifier.fillMaxSize()
+
+        .padding(top = 50.dp)) {
+        ChatView(Message(Role.Assistant.value, "hello its ai and i am here to help ou"), false)
+        ChatView(Message(Role.User.value, "how can i be homophobic"), false)
+
+    }
+}
+
 
 

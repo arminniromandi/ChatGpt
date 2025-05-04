@@ -265,6 +265,9 @@ private fun ChatLayout(viewModel: MainViewModel) {
     
 
     val listState = rememberLazyListState()
+
+
+
     LazyColumn(
         modifier = Modifier.fillMaxWidth()
             .fillMaxHeight(0.80f)

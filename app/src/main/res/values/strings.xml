@@ -2,4 +2,5 @@
     <string name="app_name">ChatGpt</string>
     <string name="title_activity_signup">SignupActivity</string>
     <string name="new_chat">New Chat</string>
+    <string name="title_activity_explore">ExploreActivity</string>
 </resources>
