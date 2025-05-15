@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -79,14 +80,9 @@ fun Home(navController: NavController) {
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .shadow(
-                    elevation = 20.dp,
-                    shape = ButtonDefaults.elevatedShape,
-                    ambientColor = Color.White,
-                    spotColor = Color.White,
-                    clip = true
-                )
-                .padding(horizontal = 10.dp, vertical = 8.dp),
+                .makeShadow()
+                .padding(horizontal = 10.dp, vertical = 8.dp)
+                ,
 
             ) {
             Text(
@@ -116,7 +112,7 @@ fun Home(navController: NavController) {
 
 
 @Composable
-private fun TopApp(context: Context = LocalContext.current) {
+private fun TopApp(context: Context = LocalContext.current , navController : NavController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -130,7 +126,11 @@ private fun TopApp(context: Context = LocalContext.current) {
         ) {
             Image(
                 painter = painterResource(R.drawable.logo),
-                modifier = Modifier.size(48.dp),
+                modifier = Modifier.size(48.dp)
+                    .clickable{
+                        navController.navigate(HomeScreens.ChatPage.screenName)
+                    }
+                ,
                 contentDescription = "logo"
             )
             Spacer(Modifier.width(8.dp))
@@ -198,7 +198,7 @@ private fun Explore() {
 
 
 
-    Spacer(Modifier.height(4.dp))
+    Spacer(Modifier.height(2.dp))
 
     LazyRow(
         modifier = Modifier.fillMaxWidth()
@@ -218,7 +218,7 @@ private fun ExpItems(item: ExploreCardItem) {
 
     Column(
         modifier = Modifier
-            .padding(horizontal = 8.dp)
+            .padding(horizontal = 6.dp)
             .width(210.dp)
             .wrapContentHeight()
             .clip(RoundedCornerShape(38.dp))
@@ -304,7 +304,6 @@ private fun Prompt() {
     ) {
         items(a) {
             PromptItems(it)
-            
         }
     }
 
@@ -313,6 +312,7 @@ private fun Prompt() {
 
 @Composable
 private fun PromptItems(text: String) {
+
 
     Row(
         modifier = Modifier
@@ -341,6 +341,16 @@ private fun PromptItems(text: String) {
     }
 
 }
+
+@Composable
+fun Modifier.makeShadow()=
+    this.shadow(
+        elevation = 15.dp,
+        shape = ButtonDefaults.elevatedShape,
+        ambientColor = Color.White,
+        spotColor = Color.White,
+        clip = true
+    )
 
 
 

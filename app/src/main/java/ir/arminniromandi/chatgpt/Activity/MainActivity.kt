@@ -1,5 +1,6 @@
 package ir.arminniromandi.chatgpt.Activity
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
@@ -9,6 +10,8 @@ import androidx.activity.viewModels
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -41,13 +44,15 @@ import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-     private val viewModel by viewModels<MainViewModel>()
+    private val viewModel by viewModels<MainViewModel>()
+
+    @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val item = arrayOf(
-            BottomNavItems("Home" ,R.drawable.home ),
-            BottomNavItems("ChatPage" , R.drawable.edit_icon)
+            BottomNavItems("Home", R.drawable.home),
+            BottomNavItems("ChatPage", R.drawable.edit_icon)
         )
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
@@ -56,6 +61,8 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
+
+
 
                 Scaffold(
                     modifier = Modifier
@@ -68,7 +75,7 @@ class MainActivity : ComponentActivity() {
                                 end = Offset(
                                     0f,
                                     size.height
-                                )           // پایین چپ یا هر جهتی که بخوای
+                                )
                             )
                             onDrawBehind {
                                 drawRect(brush = gradientB)
@@ -85,27 +92,27 @@ class MainActivity : ComponentActivity() {
                         ) {
                             item.forEachIndexed { _, item ->
                                 BottomNavItem(currentRoute, item, navController)
-                                }
                             }
+                        }
                     }
-                ) { it ->
+                ) {
+
 
                     NavHost(
                         navController = navController,
                         startDestination = HomeScreens.Home.screenName,
                         enterTransition = {
                             fadeIn(
+                                animationSpec = tween(500)
+                            ) + slideInHorizontally(animationSpec = tween(500))
+                        },
+                        exitTransition = {
+                            fadeOut(animationSpec = tween(500)) + slideOutHorizontally(
                                 animationSpec = tween(
-                                    durationMillis = 500
+                                    500
                                 )
                             )
                         },
-                        exitTransition ={
-                            fadeOut(
-                                animationSpec = tween(500)
-                            )
-                        }
-                        ,
 
                         modifier = Modifier.padding(it)
                     ) {
@@ -116,17 +123,9 @@ class MainActivity : ComponentActivity() {
                 }
 
 
-
-
-
             }
         }
     }
-
-
-
-
-
 
 
 }

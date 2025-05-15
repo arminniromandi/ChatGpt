@@ -2,10 +2,10 @@ package ir.arminniromandi.chatgpt.viewmodel
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.arminniromandi.chatgpt.model.Role
@@ -33,6 +33,9 @@ class MainViewModel @Inject constructor(
     val error: LiveData<String?> = _error
 
     val allMessage = mutableStateListOf<Message>()
+    val isAnimationRun = mutableStateOf(false)
+
+
 
     fun saveMessageAndSendReq(text :String , model : String){
         Log.i("test", "saveMessageAndSendReq: ${text} ")
@@ -40,34 +43,31 @@ class MainViewModel @Inject constructor(
         allMessage.add(Message(Role.User.value, text))
         Log.i("test", "saveMessageAndSendReq: $allMessage")
     }
-    
+
 
 
 
 
     fun sendReq(chatRequest: ChatRequest) {
-        Log.i("test", "sendReq: req sent ")
         viewModelScope.launch {
 
             try {
                 _loading.postValue(true)
-                delay(2500)
-                allMessage.add(Message(Role.Assistant.value , "سلام عزیزم عزییزم سلام"))
+                isAnimationRun.value = true
+                delay(500)
+                allMessage.add(Message(Role.Assistant.value , "hello user how can i assist you today"))
 
-                /*val response = apiRepository.getChatResponse(chatRequest)
+                 /*val response = apiRepository.getChatResponse(chatRequest)
                 if (response.isSuccessful) {
-                    Log.i("test", "sendReq: sent ")
-                    Log.i("test", "sendReq: ${response.body()}")
-                    _chatResponse.postValue(response.body())*/
 
-
-                /*}else {
+                    allMessage.add(Message(Role.Assistant.value , response.body()!!.choices[0]
+                        .message.content
+                    ))
+                }else {
                     _error.postValue(response.message())
                     Log.i("test", "sendReq: ${response.message()}")
 
-                }
-                Log.i("test", "sendReq: ${response.code()}")
-*/
+                }*/
             }catch (e:Exception){
                 _error.postValue(e.message)
             }finally {

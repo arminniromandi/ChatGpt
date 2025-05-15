@@ -1,16 +1,23 @@
 package ir.arminniromandi.chatgpt.customUi
 
+import android.util.Log
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.VectorConverter
+import androidx.compose.animation.core.animateValue
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,49 +26,46 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ir.arminniromandi.chatgpt.R
-import ir.arminniromandi.chatgpt.model.Role
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.Message
 import kotlinx.coroutines.delay
 
-
 @Composable
-fun ChatView(message: Message, isLastItem: Boolean) {
+fun ChatView(message: Message,
+             isLastItem: Boolean,
+             isAnimationRunned : MutableState<Boolean>
+) {
+
+    Log.i("Tag", isAnimationRunned.value.toString())
     val isFromUser = message.role == "user"
     var text by remember { mutableStateOf("") }
+    var isTyping by remember { mutableStateOf(false) }
 
-    if (!isFromUser && isLastItem) {
+    if (!isFromUser && isLastItem && isAnimationRunned.value) {
         LaunchedEffect(message.content) {
             text = ""
+            isTyping = true
             message.content.forEach { char ->
                 text += char
-                delay(50) // سرعت تایپ
+                delay(30)
             }
+            isTyping = false
+            isAnimationRunned.value = false
+
         }
     } else {
         text = message.content
     }
 
-
-    // TODO: animate bubble chat item
-
-
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentWidth(
-                align = if (isFromUser) Alignment.End else Alignment.Start
-            )
             .padding(horizontal = 8.dp, vertical = 4.dp)
             .clip(
                 RoundedCornerShape(
-                    topStart = if (isFromUser) 20.dp else 4.dp,
-                    topEnd = if (isFromUser) 4.dp else 20.dp,
+                    topStart = if (isFromUser) 4.dp else 20.dp,
+                    topEnd = if (isFromUser) 20.dp else 4.dp,
                     bottomStart = 20.dp,
                     bottomEnd = 20.dp
                 )
@@ -70,28 +74,38 @@ fun ChatView(message: Message, isLastItem: Boolean) {
             .padding(horizontal = 8.dp, vertical = 4.dp),
         contentAlignment = Alignment.CenterStart
     ) {
-        Text(
-            text = text,
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-            fontSize = 18.sp,
-            fontFamily = FontFamily(Font(R.font.satoshi_medium)),
-            color = if (isFromUser) Color.White else Color.Black,
-        )
+        Column {
+            Text(
+                text = text,
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                fontSize = 18.sp,
+                color = if (isFromUser) Color.White else Color.Black,
+            )
+
+            if (isTyping) {
+                TypingDots()
+            }
+        }
     }
 }
 
-@Preview(showSystemUi = true, backgroundColor = 0xFF041E36)
 @Composable
-private fun ChatView() {
+fun TypingDots() {
+    val dotCount = rememberInfiniteTransition(label = "dots").animateValue(
+        initialValue = 0,
+        targetValue = 3,
+        typeConverter = Int.VectorConverter,
+        animationSpec = infiniteRepeatable(
+            animation = tween(750, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "dotAnimation"
+    )
 
-    Column(Modifier.fillMaxSize()
-
-        .padding(top = 50.dp)) {
-        ChatView(Message(Role.Assistant.value, "hello its ai and i am here to help ou"), false)
-        ChatView(Message(Role.User.value, "how can i be homophobic"), false)
-
-    }
+    Text(
+        text = ".".repeat(dotCount.value),
+        fontSize = 20.sp,
+        color = Color.Gray,
+        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
+    )
 }
-
-
-

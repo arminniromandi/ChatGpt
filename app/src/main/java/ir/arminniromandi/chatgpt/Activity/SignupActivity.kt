@@ -27,6 +27,7 @@ class SignupActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+
         setContent {
             AppTheme {
 

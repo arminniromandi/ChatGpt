@@ -1,6 +1,5 @@
 package ir.arminniromandi.chatgpt.Fragment.home
 
-import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -21,11 +20,13 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -50,19 +51,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.black
+import ir.arminniromandi.chatgpt.customUi.AlertDialogYesNo
 import ir.arminniromandi.chatgpt.customUi.ChatView
 import ir.arminniromandi.chatgpt.model.AiModel
-import ir.arminniromandi.chatgpt.model.Role
 import ir.arminniromandi.chatgpt.transparent
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 import ir.arminniromandi.chatgpt.white
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatRequest
-import ir.arminniromandi.myapplication.Api.ChatAi.Model.Message
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlin.enums.EnumEntries
 
 val introP = mutableStateOf(true)
@@ -76,10 +71,6 @@ fun ChatPage(viewModel: MainViewModel) {
 
     val modelIndex = remember { mutableIntStateOf(0) }
     val chatItem = AiModel.entries
-
-
-
-
 
     Column(
         modifier = Modifier
@@ -96,27 +87,39 @@ fun ChatPage(viewModel: MainViewModel) {
         else
             ChatLayout(viewModel)
 
-        TextBoxAndSend(viewModel ,chatItem[modelIndex.intValue].value )
+        TextBoxAndSend(viewModel, chatItem[modelIndex.intValue].value)
 
     }
 
 
 }
 
+
 @Composable
 private fun TopBar(chatItem: EnumEntries<AiModel>, modelIndex: MutableIntState) {
 
+
     val expanded = remember { mutableStateOf(false) }
+
     val rotateAnimation = animateFloatAsState(
         targetValue = if (expanded.value) -180f else 0f,
         animationSpec = tween(
             durationMillis = 300
         )
     )
+    val dialogState = remember {
+        mutableStateOf(false)
+    }
+
+
+    if (dialogState.value)
+        AlertDialogYesNo(dialogState) {
+
+        }
+
 
     Row(
         modifier = Modifier
-
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -128,69 +131,99 @@ private fun TopBar(chatItem: EnumEntries<AiModel>, modelIndex: MutableIntState) 
             contentDescription = "Back"
         )
 
+
+
         Text(
-            "New Chat",
+            if (introP.value) "NewChat" else "",
             fontFamily = FontFamily(Font(R.font.satoshi_medium)),
             fontSize = 18.sp,
             color = white
         )
 
+        if (introP.value) {
 
-        Box(
-            modifier = Modifier
-                .clickable { expanded.value = !expanded.value }
-                .wrapContentWidth()
-                .padding(4.dp)
-                .clip(RoundedCornerShape(60.dp))
-                .background(white)
-                .padding(vertical = 10.dp, horizontal = 8.dp)
-        ) {
-            Row(
+
+            Box(
                 modifier = Modifier
+                    .clickable { expanded.value = !expanded.value }
                     .wrapContentWidth()
-                    .padding(horizontal = 8.dp)
-                    .clickable { expanded.value = !expanded.value },
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                    .padding(4.dp)
+                    .clip(RoundedCornerShape(60.dp))
+                    .background(white)
+                    .padding(vertical = 10.dp, horizontal = 8.dp)
             ) {
-                Text(
-                    chatItem[modelIndex.intValue].value,
-                    fontFamily = FontFamily(Font(R.font.satoshi_medium)),
-                    color = Color.Black,
-                    fontSize = 18.sp
-                )
-                Icon(
-                    imageVector = Icons.Rounded.KeyboardArrowDown,
-                    contentDescription = "chose ai model",
-                    tint = black,
+                Row(
                     modifier = Modifier
-                        .clickable { expanded.value = !expanded.value }
-                        .rotate(rotateAnimation.value)
-
-                )
-            }
-
-            DropdownMenu(
-                expanded.value,
-                onDismissRequest = { expanded.value = false }
-            ) {
-
-                chatItem.forEachIndexed { index, model ->
-                    DropdownMenuItem(
-                        text = {
-                            Text(
-                                model.value
-                            )
-                        },
-                        onClick = {
-                            expanded.value = false
-                            modelIndex.intValue = index
-
-                        }
+                        .wrapContentWidth()
+                        .padding(horizontal = 8.dp)
+                        .clickable { expanded.value = !expanded.value },
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        chatItem[modelIndex.intValue].value,
+                        fontFamily = FontFamily(Font(R.font.satoshi_medium)),
+                        color = Color.Black,
+                        fontSize = 18.sp
                     )
+                    Icon(
+                        imageVector = Icons.Rounded.KeyboardArrowDown,
+                        contentDescription = "chose ai model",
+                        tint = black,
+                        modifier = Modifier
+                            .clickable { expanded.value = !expanded.value }
+                            .rotate(rotateAnimation.value)
+
+                    )
+
+                    DropdownMenu(
+                        expanded.value,
+                        onDismissRequest = { expanded.value = false }
+                    ) {
+
+                        chatItem.forEachIndexed { index, model ->
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        model.value
+                                    )
+                                },
+                                onClick = {
+                                    expanded.value = false
+                                    modelIndex.intValue = index
+
+                                }
+                            )
+                        }
+
+
+                    }
+
+
                 }
             }
-        }
+        } else
+
+            FloatingActionButton(
+                onClick = {
+                    dialogState.value = true
+
+                },
+                containerColor = white,
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .size(48.dp)
+
+            ) {
+
+
+                Icon(
+                    painter = painterResource(R.drawable.trash),
+                    contentDescription = "delete Chat",
+                    modifier = Modifier.size(24.dp)
+                )
+
+            }
     }
 
 
@@ -198,6 +231,10 @@ private fun TopBar(chatItem: EnumEntries<AiModel>, modelIndex: MutableIntState) 
 
 @Composable
 private fun Intro(modelSelected: String = "ChatGpt") {
+
+
+
+
 
     Column(
         Modifier.fillMaxWidth(),
@@ -246,41 +283,42 @@ private fun Intro(modelSelected: String = "ChatGpt") {
 
     }
 
+
+
 }
 
 
-@SuppressLint("SuspiciousIndentation", "CoroutineCreationDuringComposition")
 @Composable
 private fun ChatLayout(viewModel: MainViewModel) {
-
-
-
-
 
 
     val error = viewModel.error.observeAsState().value
     if (error != null) {
         Log.i("error", error)
     }
-    
+
 
     val listState = rememberLazyListState()
 
 
+    val isAnimationRuned = viewModel.isAnimationRun
+
 
     LazyColumn(
-        modifier = Modifier.fillMaxWidth()
-            .fillMaxHeight(0.80f)
-            ,
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(0.80f),
         state = listState,
         verticalArrangement = Arrangement.Top
     ) {
 
-        itemsIndexed(viewModel.allMessage) {index , massage ->
-            val isLastItem by remember{
-                derivedStateOf{index == viewModel.allMessage.lastIndex}
+        itemsIndexed(viewModel.allMessage) { index, massage ->
+            val isLastItem by remember {
+                derivedStateOf { index == viewModel.allMessage.lastIndex }
             }
-            ChatView(massage , isLastItem)
+
+
+            ChatView(massage, isLastItem, isAnimationRuned)
 
 
         }
