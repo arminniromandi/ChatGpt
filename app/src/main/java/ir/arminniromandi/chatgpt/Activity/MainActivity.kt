@@ -62,67 +62,68 @@ class MainActivity : ComponentActivity() {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
 
-
-
-                Scaffold(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color(0xFF282828))
-                        .drawWithCache {
-                            val gradientB = Brush.linearGradient(
-                                colorStops = gradient,
-                                start = Offset(size.width, 0f),         // بالا راست
-                                end = Offset(
-                                    0f,
-                                    size.height
+                setContent {
+                    Scaffold(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color(0xFF282828))
+                            .drawWithCache {
+                                val gradientB = Brush.linearGradient(
+                                    colorStops = gradient,
+                                    start = Offset(size.width, 0f),         // بالا راست
+                                    end = Offset(
+                                        0f,
+                                        size.height
+                                    )
                                 )
-                            )
-                            onDrawBehind {
-                                drawRect(brush = gradientB)
-                            }
-                        },
-                    bottomBar = {
-                        NavigationBar(
-                            modifier = Modifier
-                                .navigationBarsPadding()
-                                .padding(horizontal = 8.dp, vertical = 4.dp)
-                                .clip(RoundedCornerShape(60.dp)),
-                            containerColor = Color(0xFF000000),
-                            tonalElevation = 4.dp,
-                        ) {
-                            item.forEachIndexed { _, item ->
-                                BottomNavItem(currentRoute, item, navController)
+                                onDrawBehind {
+                                    drawRect(brush = gradientB)
+                                }
+                            },
+                        bottomBar = {
+                            NavigationBar(
+                                modifier = Modifier
+                                    .navigationBarsPadding()
+                                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                                    .clip(RoundedCornerShape(60.dp)),
+                                containerColor = Color(0xFF000000),
+                                tonalElevation = 4.dp,
+                            ) {
+                                item.forEachIndexed { _, item ->
+                                    BottomNavItem(currentRoute, item, navController)
+                                }
                             }
                         }
-                    }
-                ) {
-
-
-                    NavHost(
-                        navController = navController,
-                        startDestination = HomeScreens.Home.screenName,
-                        enterTransition = {
-                            fadeIn(
-                                animationSpec = tween(500)
-                            ) + slideInHorizontally(animationSpec = tween(500))
-                        },
-                        exitTransition = {
-                            fadeOut(animationSpec = tween(500)) + slideOutHorizontally(
-                                animationSpec = tween(
-                                    500
-                                )
-                            )
-                        },
-
-                        modifier = Modifier.padding(it)
                     ) {
-                        composable(HomeScreens.Home.screenName) { Home(navController) }
-                        composable(HomeScreens.ChatPage.screenName) { ChatPage(viewModel) }
 
+
+                        NavHost(
+                            navController = navController,
+                            startDestination = HomeScreens.Home.screenName,
+                            enterTransition = {
+                                slideInHorizontally(animationSpec = tween(500)) +
+                                        fadeIn(
+                                            animationSpec = tween(150)
+                                        )
+                            },
+                            exitTransition = {
+                                slideOutHorizontally(
+                                    animationSpec = tween(
+                                        500
+                                    )
+                                ) + fadeOut(animationSpec = tween(150))
+                            },
+
+                            modifier = Modifier.padding(it)
+                        ) {
+                            composable(HomeScreens.Home.screenName) { Home(navController) }
+                            composable(HomeScreens.ChatPage.screenName) { ChatPage(viewModel) }
+
+                        }
                     }
+
+
                 }
-
-
             }
         }
     }

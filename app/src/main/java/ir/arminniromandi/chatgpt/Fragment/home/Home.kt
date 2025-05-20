@@ -51,6 +51,7 @@ import androidx.navigation.NavController
 import ir.arminniromandi.chatgpt.Activity.ExploreActivity
 import ir.arminniromandi.chatgpt.Fragment.HomeScreens
 import ir.arminniromandi.chatgpt.R
+import ir.arminniromandi.chatgpt.Tool.util.ExploreData
 import ir.arminniromandi.chatgpt.gray_300
 import ir.arminniromandi.chatgpt.gray_700
 import ir.arminniromandi.chatgpt.model.ExploreCardItem
@@ -69,7 +70,7 @@ fun Home(navController: NavController) {
             .padding(horizontal = 8.dp)
     ) {
 
-        TopApp()
+        TopApp(navController = navController)
 
         ElevatedButton(
             onClick = { navController.navigate(HomeScreens.ChatPage.screenName) },
@@ -190,13 +191,6 @@ private fun Explore() {
 
     }
 
-    val a = arrayOf(
-        ExploreCardItem("job", R.drawable.pen_writing, "lorem ipsom a text that make perfect"),
-    )
-
-
-
-
 
     Spacer(Modifier.height(2.dp))
 
@@ -205,7 +199,7 @@ private fun Explore() {
     ) {
 
 
-        items(a) {
+        items(items = ExploreData.items) {
             ExpItems(it)
         }
     }

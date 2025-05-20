@@ -45,11 +45,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.R
+import ir.arminniromandi.chatgpt.Tool.util.TextDirectionUtil.getTextDirection
 import ir.arminniromandi.chatgpt.black
 import ir.arminniromandi.chatgpt.customUi.AlertDialogYesNo
 import ir.arminniromandi.chatgpt.customUi.ChatView
@@ -80,6 +82,7 @@ fun ChatPage(viewModel: MainViewModel) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
+
         TopBar(chatItem, modelIndex)
 
         if (introP.value)
@@ -121,7 +124,7 @@ private fun TopBar(chatItem: EnumEntries<AiModel>, modelIndex: MutableIntState) 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 4.dp),
+            .padding(horizontal = 8.dp, vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -203,7 +206,6 @@ private fun TopBar(chatItem: EnumEntries<AiModel>, modelIndex: MutableIntState) 
                 }
             }
         } else
-
             FloatingActionButton(
                 onClick = {
                     dialogState.value = true
@@ -219,8 +221,9 @@ private fun TopBar(chatItem: EnumEntries<AiModel>, modelIndex: MutableIntState) 
 
                 Icon(
                     painter = painterResource(R.drawable.trash),
+                    tint = Color.Black,
                     contentDescription = "delete Chat",
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(22.dp)
                 )
 
             }
@@ -231,10 +234,6 @@ private fun TopBar(chatItem: EnumEntries<AiModel>, modelIndex: MutableIntState) 
 
 @Composable
 private fun Intro(modelSelected: String = "ChatGpt") {
-
-
-
-
 
     Column(
         Modifier.fillMaxWidth(),
@@ -335,6 +334,9 @@ private fun TextBoxAndSend(
 ) {
 
     val text = remember { mutableStateOf("") }
+    val textDirection = remember {
+        getTextDirection(text.value)
+    }
 
 
     Row(
@@ -356,8 +358,11 @@ private fun TextBoxAndSend(
             modifier = Modifier.fillMaxWidth(0.8f),
             shape = RoundedCornerShape(50.dp),
             label = {
-                Text("Type your question ...")
+                if(text.value.isEmpty())Text("Type your question ...")
             },
+            textStyle = TextStyle(
+                textDirection = textDirection
+            ),
             maxLines = 10,
             colors = TextFieldDefaults.colors(
                 focusedIndicatorColor = transparent,
@@ -372,7 +377,6 @@ private fun TextBoxAndSend(
             modifier = Modifier
                 .size(58.dp)
                 .clickable {
-
                     viewModel.saveMessageAndSendReq(text.value, modelSelected)
                     viewModel.sendReq(ChatRequest(AiModel.Gpt35T.value, viewModel.allMessage))
                     text.value = ""

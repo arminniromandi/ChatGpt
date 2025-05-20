@@ -40,6 +40,7 @@ android {
     buildFeatures {
         compose = true
     }
+
 }
 
 dependencies {
@@ -67,5 +68,9 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+
+
+    implementation("com.github.jeziellago:compose-markdown:0.5.7")
+
 
 }
