@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -28,6 +29,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -50,6 +52,8 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import ir.arminniromandi.chatgpt.Fragment.HomeScreens
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.Tool.util.TextDirectionUtil.getTextDirection
 import ir.arminniromandi.chatgpt.black
@@ -59,38 +63,33 @@ import ir.arminniromandi.chatgpt.model.AiModel
 import ir.arminniromandi.chatgpt.transparent
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 import ir.arminniromandi.chatgpt.white
-import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatRequest
 import kotlin.enums.EnumEntries
-
-val introP = mutableStateOf(true)
-
-
-// assistant
 
 
 @Composable
-fun ChatPage(viewModel: MainViewModel) {
+fun ChatPage(viewModel: MainViewModel, navController: NavController) {
 
     val modelIndex = remember { mutableIntStateOf(0) }
     val chatItem = AiModel.entries
 
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight()
-            .background(Color(0xFF282F32)),
+            .fillMaxHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
 
-        TopBar(chatItem, modelIndex)
+        TopBar(chatItem, modelIndex, viewModel, navController)
 
-        if (introP.value)
+        if (viewModel.showIntro)
             Intro(chatItem[modelIndex.intValue].value)
         else
             ChatLayout(viewModel)
 
         TextBoxAndSend(viewModel, chatItem[modelIndex.intValue].value)
+
 
     }
 
@@ -99,7 +98,12 @@ fun ChatPage(viewModel: MainViewModel) {
 
 
 @Composable
-private fun TopBar(chatItem: EnumEntries<AiModel>, modelIndex: MutableIntState) {
+private fun TopBar(
+    chatItem: EnumEntries<AiModel>,
+    modelIndex: MutableIntState,
+    viewModel: MainViewModel,
+    navController: NavController
+) {
 
 
     val expanded = remember { mutableStateOf(false) }
@@ -117,6 +121,7 @@ private fun TopBar(chatItem: EnumEntries<AiModel>, modelIndex: MutableIntState) 
 
     if (dialogState.value)
         AlertDialogYesNo(dialogState) {
+            viewModel.deleteChat()
 
         }
 
@@ -128,22 +133,28 @@ private fun TopBar(chatItem: EnumEntries<AiModel>, modelIndex: MutableIntState) 
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painter = painterResource(R.drawable.back),
-            modifier = Modifier.size(48.dp),
-            contentDescription = "Back"
-        )
+
+
+        IconButton(
+            { navController.navigate(HomeScreens.Home.screenName) }
+        ) {
+            Image(
+                painter = painterResource(R.drawable.back),
+                modifier = Modifier.size(48.dp),
+                contentDescription = "Back"
+            )
+        }
 
 
 
         Text(
-            if (introP.value) "NewChat" else "",
+            if (viewModel.showIntro) "NewChat" else "",
             fontFamily = FontFamily(Font(R.font.satoshi_medium)),
             fontSize = 18.sp,
             color = white
         )
 
-        if (introP.value) {
+        if (viewModel.showIntro) {
 
 
             Box(
@@ -185,11 +196,20 @@ private fun TopBar(chatItem: EnumEntries<AiModel>, modelIndex: MutableIntState) 
                     ) {
 
                         chatItem.forEachIndexed { index, model ->
+
                             DropdownMenuItem(
                                 text = {
-                                    Text(
-                                        model.value
-                                    )
+                                    Row {
+                                        Text(
+                                            model.value
+                                        )
+                                        Spacer(Modifier.width(4.dp))
+                                        Icon(
+                                            imageVector = model.icon,
+                                            contentDescription = model.name,
+                                            modifier = Modifier.size(24.dp)
+                                        )
+                                    }
                                 },
                                 onClick = {
                                     expanded.value = false
@@ -197,13 +217,15 @@ private fun TopBar(chatItem: EnumEntries<AiModel>, modelIndex: MutableIntState) 
 
                                 }
                             )
+
+
                         }
-
-
                     }
 
 
                 }
+
+
             }
         } else
             FloatingActionButton(
@@ -213,8 +235,10 @@ private fun TopBar(chatItem: EnumEntries<AiModel>, modelIndex: MutableIntState) 
                 },
                 containerColor = white,
                 modifier = Modifier
-                    .clip(CircleShape)
-                    .size(48.dp)
+                    .size(56.dp)
+                    .padding(4.dp),
+                shape = CircleShape,
+                contentColor = white
 
             ) {
 
@@ -281,7 +305,6 @@ private fun Intro(modelSelected: String = "ChatGpt") {
 
 
     }
-
 
 
 }
@@ -358,7 +381,7 @@ private fun TextBoxAndSend(
             modifier = Modifier.fillMaxWidth(0.8f),
             shape = RoundedCornerShape(50.dp),
             label = {
-                if(text.value.isEmpty())Text("Type your question ...")
+                if (text.value.isEmpty()) Text("Type your question ...")
             },
             textStyle = TextStyle(
                 textDirection = textDirection
@@ -378,9 +401,8 @@ private fun TextBoxAndSend(
                 .size(58.dp)
                 .clickable {
                     viewModel.saveMessageAndSendReq(text.value, modelSelected)
-                    viewModel.sendReq(ChatRequest(AiModel.Gpt35T.value, viewModel.allMessage))
                     text.value = ""
-                    introP.value = false
+                    viewModel.showIntro = false
                 }
         )
     }

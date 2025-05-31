@@ -26,15 +26,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.jeziellago.compose.markdowntext.MarkdownText
+import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.Message
 import kotlinx.coroutines.delay
 
+fun dff(): Unit {
+}
 @Composable
-fun ChatView(message: Message,
-             isLastItem: Boolean,
-             isAnimationRunned : MutableState<Boolean>
+fun ChatView(
+    message: Message,
+    isLastItem: Boolean,
+    isAnimationRunned: MutableState<Boolean>
 ) {
 
     Log.i("Tag", isAnimationRunned.value.toString())
@@ -75,16 +83,28 @@ fun ChatView(message: Message,
         contentAlignment = Alignment.CenterStart
     ) {
         Column {
-            Text(
-                text = text,
-                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
-                fontSize = 18.sp,
-                color = if (isFromUser) Color.White else Color.Black,
-            )
+            if (isFromUser) {
+                Text(
+                    text = text,
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                    fontSize = 18.sp,
+                    color = if (isFromUser) Color.White else Color.Black,
+                )
+            } else{
 
-            if (isTyping) {
-                TypingDots()
+                MarkdownText(text ,
+                    style = TextStyle(
+                        fontFamily = FontFamily(Font(R.font.satoshi_medium)),
+                        fontSize = 18.sp
+                    )
+
+                )
+
             }
+
+                if (isTyping) {
+                    TypingDots()
+                }
         }
     }
 }

@@ -89,8 +89,7 @@ class ExploreActivity : ComponentActivity() {
                         composable(ExploreScreens.Writing.screenName) { ExploreWriting() }
                         composable(ExploreScreens.Home.screenName) {
                             HomeExplore(
-                                items,
-                                navController
+                                items, navController
                             )
                         }
 
@@ -141,15 +140,15 @@ private fun dnfd() {
 
     Column(Modifier.fillMaxSize()) {
 
-        SelectionContainer(modifier = Modifier.wrapContentHeight()){
-        MarkdownText(
-            text , 
+        SelectionContainer(modifier = Modifier.wrapContentHeight()) {
+            MarkdownText(
+                text
 
             )
 
-    }
-        }
 
+        }
+    }
 
 
 }

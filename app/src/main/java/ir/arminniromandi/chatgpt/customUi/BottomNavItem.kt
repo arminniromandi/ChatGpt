@@ -50,7 +50,7 @@ fun RowScope.BottomNavItem(
             Icon(
                 painter = painterResource(item.icon),
                 contentDescription = item.name,
-                modifier = Modifier.size(32.dp),
+                modifier = Modifier.size(30.dp),
                 tint = if (currentRoute == item.name) Color.White else gray_700
             )
 

@@ -3,4 +3,5 @@
     <string name="title_activity_signup">SignupActivity</string>
     <string name="new_chat">New Chat</string>
     <string name="title_activity_explore">ExploreActivity</string>
+    <string name="title_activity_prompt_library">PromptLibraryActivity</string>
 </resources>

@@ -1,6 +1,5 @@
 package ir.arminniromandi.chatgpt.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
@@ -9,19 +8,31 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.arminniromandi.chatgpt.model.Role
+import ir.arminniromandi.composeapplication.ConectivityObserver
 import ir.arminniromandi.myapplication.Api.ChatAi.ApiRepository
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatRequest
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatResponse
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.Choice
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.Message
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val apiRepository: ApiRepository
+    private val apiRepository: ApiRepository,
+    private val conectivityObserver: ConectivityObserver
 ) : ViewModel() {
+
+    val isConnected = conectivityObserver.isConnected
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000L),
+            false
+        )
+
 
     private val _chatResponse = MutableLiveData<ChatResponse>(ChatResponse(listOf(Choice(Message("user" ,"" )))))
     val chatResponse = _chatResponse
@@ -29,20 +40,22 @@ class MainViewModel @Inject constructor(
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
 
-    private val _error = MutableLiveData<String?>()
-    val error: LiveData<String?> = _error
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String> = _error
+
 
     val allMessage = mutableStateListOf<Message>()
+
     val isAnimationRun = mutableStateOf(false)
 
-
+    var showIntro = allMessage.isEmpty()
 
     fun saveMessageAndSendReq(text :String , model : String){
-        Log.i("test", "saveMessageAndSendReq: ${text} ")
-
         allMessage.add(Message(Role.User.value, text))
-        Log.i("test", "saveMessageAndSendReq: $allMessage")
+        sendReq(ChatRequest(model , allMessage))
     }
+
+
 
 
 
@@ -57,7 +70,7 @@ class MainViewModel @Inject constructor(
                 delay(500)
                 allMessage.add(Message(Role.Assistant.value , "hello user how can i assist you today"))
 
-                 /*val response = apiRepository.getChatResponse(chatRequest)
+                 val response = apiRepository.getChatResponse(chatRequest)
                 if (response.isSuccessful) {
 
                     allMessage.add(Message(Role.Assistant.value , response.body()!!.choices[0]
@@ -65,9 +78,8 @@ class MainViewModel @Inject constructor(
                     ))
                 }else {
                     _error.postValue(response.message())
-                    Log.i("test", "sendReq: ${response.message()}")
 
-                }*/
+                }
             }catch (e:Exception){
                 _error.postValue(e.message)
             }finally {
@@ -75,6 +87,10 @@ class MainViewModel @Inject constructor(
             }
 
         }
+    }
+
+    fun deleteChat() {
+        allMessage.clear()
     }
 
 

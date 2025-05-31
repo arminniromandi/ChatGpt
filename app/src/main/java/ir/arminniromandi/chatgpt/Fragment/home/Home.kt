@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGrid
@@ -33,6 +32,7 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -45,9 +45,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import ir.arminniromandi.chatgpt.Activity.ExploreActivity
 import ir.arminniromandi.chatgpt.Fragment.HomeScreens
 import ir.arminniromandi.chatgpt.R
@@ -59,14 +62,13 @@ import ir.arminniromandi.chatgpt.white
 import ir.arminniromandi.chatgpt.whiteGradient
 
 @Composable
-fun Home(navController: NavController) {
+fun Home(navController: NavHostController) {
     val context = LocalContext.current
 
     Column(
         Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-
             .padding(horizontal = 8.dp)
     ) {
 
@@ -82,8 +84,7 @@ fun Home(navController: NavController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .makeShadow()
-                .padding(horizontal = 10.dp, vertical = 8.dp)
-                ,
+                .padding(horizontal = 10.dp, vertical = 8.dp),
 
             ) {
             Text(
@@ -113,7 +114,7 @@ fun Home(navController: NavController) {
 
 
 @Composable
-private fun TopApp(context: Context = LocalContext.current , navController : NavController) {
+private fun TopApp(context: Context = LocalContext.current, navController: NavController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -127,11 +128,11 @@ private fun TopApp(context: Context = LocalContext.current , navController : Nav
         ) {
             Image(
                 painter = painterResource(R.drawable.logo),
-                modifier = Modifier.size(48.dp)
-                    .clickable{
+                modifier = Modifier
+                    .size(48.dp)
+                    .clickable {
                         navController.navigate(HomeScreens.ChatPage.screenName)
-                    }
-                ,
+                    },
                 contentDescription = "logo"
             )
             Spacer(Modifier.width(8.dp))
@@ -143,11 +144,16 @@ private fun TopApp(context: Context = LocalContext.current , navController : Nav
             )
         }
 
-        Icon(
-            painter = painterResource(R.drawable.profile_circle), contentDescription = "profile",
-            tint = Color.White,
-            modifier = Modifier.size(38.dp)
+        IconButton({
+            navController.navigate(HomeScreens.Setting.screenName)
+        }) {
+            Icon(
+                painter = painterResource(R.drawable.profile_circle),
+                contentDescription = "profile",
+                tint = Color.White,
+                modifier = Modifier.size(38.dp)
             )
+        }
     }
     Spacer(Modifier.height(8.dp))
 }
@@ -177,7 +183,7 @@ private fun Explore() {
 
         FloatingActionButton(
             {
-                context.startActivity(Intent(context,ExploreActivity::class.java))
+                context.startActivity(Intent(context, ExploreActivity::class.java))
             },
             containerColor = Color.White,
             shape = CircleShape
@@ -214,7 +220,7 @@ private fun ExpItems(item: ExploreCardItem) {
         modifier = Modifier
             .padding(horizontal = 6.dp)
             .width(210.dp)
-            .wrapContentHeight()
+            .height(158.dp)
             .clip(RoundedCornerShape(38.dp))
             .border(
                 width = (1.5).dp,
@@ -222,7 +228,7 @@ private fun ExpItems(item: ExploreCardItem) {
                 shape = RoundedCornerShape(38.dp)
             )
             .background(gray_700)
-            .padding(18.dp),
+            .padding(12.dp),
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
@@ -271,7 +277,7 @@ private fun Prompt() {
         )
 
 
-        FloatingActionButton (
+        FloatingActionButton(
             {},
             elevation = FloatingActionButtonDefaults.elevation(10.dp),
             containerColor = Color.White,
@@ -337,7 +343,7 @@ private fun PromptItems(text: String) {
 }
 
 @Composable
-fun Modifier.makeShadow()=
+fun Modifier.makeShadow() =
     this.shadow(
         elevation = 15.dp,
         shape = ButtonDefaults.elevatedShape,
@@ -346,9 +352,11 @@ fun Modifier.makeShadow()=
         clip = true
     )
 
-
-
-
+@Preview
+@Composable
+private fun deds() {
+    Home(rememberNavController())
+}
 
 
 

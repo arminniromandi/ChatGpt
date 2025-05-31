@@ -22,6 +22,7 @@ class AndroidConectivityObserver(
                     trySend(true)
                 }
 
+
                 override fun onLost(network: Network) {
                     super.onLost(network)
                     trySend(false)

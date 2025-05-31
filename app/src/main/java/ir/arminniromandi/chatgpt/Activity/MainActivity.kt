@@ -2,6 +2,7 @@ package ir.arminniromandi.chatgpt.Activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -27,6 +28,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -37,10 +39,13 @@ import ir.arminniromandi.chatgpt.Fragment.HomeScreens
 import ir.arminniromandi.chatgpt.Fragment.home.BottomNavItems
 import ir.arminniromandi.chatgpt.Fragment.home.ChatPage
 import ir.arminniromandi.chatgpt.Fragment.home.Home
+import ir.arminniromandi.chatgpt.Fragment.home.Setting
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.customUi.BottomNavItem
 import ir.arminniromandi.chatgpt.gradient
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -56,16 +61,23 @@ class MainActivity : ComponentActivity() {
         )
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
+        lifecycleScope.launch(Dispatchers.Default) {
+            viewModel.isConnected.collect {
+                Log.i("test Connect", "onCreate: $it")
+            }
+        }
+
         setContent {
             AppTheme {
                 val navController = rememberNavController()
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
 
-                setContent {
+
                     Scaffold(
                         modifier = Modifier
                             .fillMaxSize()
+
                             .background(Color(0xFF282828))
                             .drawWithCache {
                                 val gradientB = Brush.linearGradient(
@@ -117,13 +129,13 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.padding(it)
                         ) {
                             composable(HomeScreens.Home.screenName) { Home(navController) }
-                            composable(HomeScreens.ChatPage.screenName) { ChatPage(viewModel) }
+                            composable(HomeScreens.Setting.screenName) { Setting(viewModel) }
+                            composable(HomeScreens.ChatPage.screenName) { ChatPage(viewModel , navController) }
 
                         }
                     }
 
 
-                }
             }
         }
     }
