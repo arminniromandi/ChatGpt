@@ -69,7 +69,8 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
 
-
+    var lottieVersion = "6.6.6"
+    implementation ("com.airbnb.android:lottie-compose:$lottieVersion")
     implementation("com.github.jeziellago:compose-markdown:0.5.7")
 
 

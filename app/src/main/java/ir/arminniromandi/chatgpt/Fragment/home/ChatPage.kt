@@ -1,6 +1,7 @@
 package ir.arminniromandi.chatgpt.Fragment.home
 
 import android.util.Log
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -42,6 +43,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
@@ -59,6 +61,7 @@ import ir.arminniromandi.chatgpt.Tool.util.TextDirectionUtil.getTextDirection
 import ir.arminniromandi.chatgpt.black
 import ir.arminniromandi.chatgpt.customUi.AlertDialogYesNo
 import ir.arminniromandi.chatgpt.customUi.ChatView
+import ir.arminniromandi.chatgpt.customUi.NoNetworkOverlay
 import ir.arminniromandi.chatgpt.model.AiModel
 import ir.arminniromandi.chatgpt.transparent
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
@@ -66,12 +69,20 @@ import ir.arminniromandi.chatgpt.white
 import kotlin.enums.EnumEntries
 
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun ChatPage(viewModel: MainViewModel, navController: NavController) {
+fun ChatPage(
+    viewModel: MainViewModel,
+    navController: NavController,
+    isConnect: Boolean
+) {
 
     val modelIndex = remember { mutableIntStateOf(0) }
     val chatItem = AiModel.entries
 
+
+    if (viewModel.allMessage.isEmpty())
+        viewModel.showIntro.value = true
 
     Column(
         modifier = Modifier
@@ -83,12 +94,12 @@ fun ChatPage(viewModel: MainViewModel, navController: NavController) {
 
         TopBar(chatItem, modelIndex, viewModel, navController)
 
-        if (viewModel.showIntro)
+        if (viewModel.showIntro.value)
             Intro(chatItem[modelIndex.intValue].value)
         else
             ChatLayout(viewModel)
 
-        TextBoxAndSend(viewModel, chatItem[modelIndex.intValue].value)
+        TextBoxAndSend(viewModel, chatItem[modelIndex.intValue].value, isConnect)
 
 
     }
@@ -122,7 +133,6 @@ private fun TopBar(
     if (dialogState.value)
         AlertDialogYesNo(dialogState) {
             viewModel.deleteChat()
-
         }
 
 
@@ -148,13 +158,13 @@ private fun TopBar(
 
 
         Text(
-            if (viewModel.showIntro) "NewChat" else "",
+            if (viewModel.showIntro.value) "NewChat" else "",
             fontFamily = FontFamily(Font(R.font.satoshi_medium)),
             fontSize = 18.sp,
             color = white
         )
 
-        if (viewModel.showIntro) {
+        if (viewModel.showIntro.value) {
 
 
             Box(
@@ -323,43 +333,77 @@ private fun ChatLayout(viewModel: MainViewModel) {
     val listState = rememberLazyListState()
 
 
+    val showScrollButton by remember {
+        derivedStateOf {
+            listState.firstVisibleItemIndex < viewModel.allMessage.lastIndex - 5
+        }
+    }
+
     val isAnimationRuned = viewModel.isAnimationRun
 
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(0.80f),
-        state = listState,
-        verticalArrangement = Arrangement.Top
-    ) {
+    listState.requestScrollToItem(viewModel.allMessage.lastIndex)
 
-        itemsIndexed(viewModel.allMessage) { index, massage ->
-            val isLastItem by remember {
-                derivedStateOf { index == viewModel.allMessage.lastIndex }
+    Box(modifier = Modifier.fillMaxHeight(0.80f)) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(),
+            state = listState,
+            verticalArrangement = Arrangement.Top
+        ) {
+
+            itemsIndexed(viewModel.allMessage) { index, massage ->
+                val isLastItem by remember {
+                    derivedStateOf { index == viewModel.allMessage.lastIndex }
+                }
+
+
+                ChatView(massage, isLastItem, isAnimationRuned)
+
+
             }
-
-
-            ChatView(massage, isLastItem, isAnimationRuned)
-
 
         }
 
+        AnimatedVisibility(
+            showScrollButton,
+
+
+        ) {
+
+            FloatingActionButton(
+                onClick = { listState.requestScrollToItem(viewModel.allMessage.lastIndex) },
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(16.dp)
+            ) {
+                Icon(Icons.Rounded.KeyboardArrowDown, contentDescription = "Scroll to bottom")
+            }
+
+        }
     }
 
-
 }
+
+
+
 
 @Composable
 private fun TextBoxAndSend(
     viewModel: MainViewModel,
-    modelSelected: String
+    modelSelected: String,
+    isConnect: Boolean
 ) {
 
     val text = remember { mutableStateOf("") }
     val textDirection = remember {
         getTextDirection(text.value)
     }
+    val showOverlay = remember {
+        mutableStateOf(false)
+    }
+    NoNetworkOverlay(showOverlay.value)
 
 
     Row(
@@ -393,18 +437,28 @@ private fun TextBoxAndSend(
                 disabledIndicatorColor = transparent
             )
         )
-
-        Image(
-            painter = painterResource(R.drawable.send),
-            contentDescription = "send",
-            modifier = Modifier
-                .size(58.dp)
-                .clickable {
+        IconButton(
+            enabled = text.value.isEmpty(),
+            onClick = {
+                if (isConnect) {
                     viewModel.saveMessageAndSendReq(text.value, modelSelected)
                     text.value = ""
-                    viewModel.showIntro = false
-                }
-        )
+                    viewModel.showIntro.value = false
+                } else
+                    showOverlay.value = true
+            }
+        ) {
+            Image(
+                painter = painterResource(R.drawable.send),
+
+                contentDescription = "send",
+                modifier = Modifier
+                    .size(58.dp)
+
+            )
+        }
+
+
     }
 }
 

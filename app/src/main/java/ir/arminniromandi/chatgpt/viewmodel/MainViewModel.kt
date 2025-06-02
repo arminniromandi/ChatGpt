@@ -48,7 +48,7 @@ class MainViewModel @Inject constructor(
 
     val isAnimationRun = mutableStateOf(false)
 
-    var showIntro = allMessage.isEmpty()
+    var showIntro = mutableStateOf(true)
 
     fun saveMessageAndSendReq(text :String , model : String){
         allMessage.add(Message(Role.User.value, text))

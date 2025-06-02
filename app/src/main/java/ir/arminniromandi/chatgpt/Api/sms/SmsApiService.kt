@@ -1,7 +1,7 @@
 package ir.arminniromandi.myapplication
 
 import ir.arminniromandi.myapplication.response.response
-import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -14,5 +14,5 @@ interface SmsApiService {
     )
     @POST("send/verify")
     fun sendRequest(
-        @Body requestSmsBody: RequestSmsBody): Call<response>
+        @Body requestSmsBody: RequestSmsBody): Response<response>
 }

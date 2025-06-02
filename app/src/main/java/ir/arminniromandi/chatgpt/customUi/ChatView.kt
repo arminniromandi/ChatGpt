@@ -36,8 +36,6 @@ import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.Message
 import kotlinx.coroutines.delay
 
-fun dff(): Unit {
-}
 @Composable
 fun ChatView(
     message: Message,
@@ -95,6 +93,7 @@ fun ChatView(
                 MarkdownText(text ,
                     style = TextStyle(
                         fontFamily = FontFamily(Font(R.font.satoshi_medium)),
+                        color = Color.Black,
                         fontSize = 18.sp
                     )
 
@@ -116,7 +115,7 @@ fun TypingDots() {
         targetValue = 3,
         typeConverter = Int.VectorConverter,
         animationSpec = infiniteRepeatable(
-            animation = tween(750, easing = LinearEasing),
+            animation = tween(1000, easing = LinearEasing),
             repeatMode = RepeatMode.Restart
         ),
         label = "dotAnimation"

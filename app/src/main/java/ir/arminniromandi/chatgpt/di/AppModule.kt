@@ -18,7 +18,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
+object AppModule {
 
     private const val SMS_URL = "https://api.sms.ir/v1/"
     private const val CHAT_URL = "https://api.avalai.ir/"
