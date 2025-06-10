@@ -1,5 +1,6 @@
 package ir.arminniromandi.chatgpt.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
@@ -7,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ir.arminniromandi.chatgpt.dataBase.ChatRepository
 import ir.arminniromandi.chatgpt.model.Role
 import ir.arminniromandi.composeapplication.ConectivityObserver
 import ir.arminniromandi.myapplication.Api.ChatAi.ApiRepository
@@ -23,7 +25,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val apiRepository: ApiRepository,
-    private val conectivityObserver: ConectivityObserver
+    private val conectivityObserver: ConectivityObserver,
+    private val chatRepository: ChatRepository
 ) : ViewModel() {
 
     val isConnected = conectivityObserver.isConnected
@@ -33,6 +36,9 @@ class MainViewModel @Inject constructor(
             false
         )
 
+
+    //ساخت چت مادل برای جابه جایی این متغیر ها و سبک سازی todo:
+    private val currentSessionId = mutableStateOf<Int>(-1)
 
     private val _chatResponse = MutableLiveData<ChatResponse>(ChatResponse(listOf(Choice(Message("user" ,"" )))))
     val chatResponse = _chatResponse
@@ -58,17 +64,15 @@ class MainViewModel @Inject constructor(
 
 
 
-
-
-
     fun sendReq(chatRequest: ChatRequest) {
         viewModelScope.launch {
+
+
 
             try {
                 _loading.postValue(true)
                 isAnimationRun.value = true
                 delay(500)
-                allMessage.add(Message(Role.Assistant.value , "hello user how can i assist you today"))
 
                  val response = apiRepository.getChatResponse(chatRequest)
                 if (response.isSuccessful) {
@@ -76,12 +80,15 @@ class MainViewModel @Inject constructor(
                     allMessage.add(Message(Role.Assistant.value , response.body()!!.choices[0]
                         .message.content
                     ))
+
                 }else {
                     _error.postValue(response.message())
 
                 }
             }catch (e:Exception){
                 _error.postValue(e.message)
+                Log.i("api", "is S ${e.message}" )
+
             }finally {
                 _loading.postValue(false)
             }

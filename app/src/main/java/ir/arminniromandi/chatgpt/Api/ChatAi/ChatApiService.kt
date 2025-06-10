@@ -1,14 +1,13 @@
 package ir.arminniromandi.myapplication.Api.ChatAi
 
-
-
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatRequest
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatResponse
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+
 
 interface ChatApiService {
     @Headers(
@@ -17,5 +16,21 @@ interface ChatApiService {
     )
     @POST("v1/chat/completions")
     suspend fun getChatResponse(@Body request: ChatRequest): Response<ChatResponse>
+
+
+    @POST("chat/completions")
+    suspend fun getChatWithLiara(
+        @Body request: ChatRequest,
+        @Header("Authorization") apiKey: String
+    ): Response<ChatResponse>
+
+
+
+
+
+
+
+
+
 }
 

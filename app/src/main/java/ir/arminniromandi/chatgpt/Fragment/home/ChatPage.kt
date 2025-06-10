@@ -6,6 +6,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,6 +25,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material3.DropdownMenu
@@ -32,8 +34,6 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.derivedStateOf
@@ -42,16 +42,20 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -62,27 +66,27 @@ import ir.arminniromandi.chatgpt.black
 import ir.arminniromandi.chatgpt.customUi.AlertDialogYesNo
 import ir.arminniromandi.chatgpt.customUi.ChatView
 import ir.arminniromandi.chatgpt.customUi.NoNetworkOverlay
+import ir.arminniromandi.chatgpt.gray_400
+import ir.arminniromandi.chatgpt.gray_600
 import ir.arminniromandi.chatgpt.model.AiModel
-import ir.arminniromandi.chatgpt.transparent
+import ir.arminniromandi.chatgpt.textFieldColor
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 import ir.arminniromandi.chatgpt.white
+import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 import kotlin.enums.EnumEntries
 
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ChatPage(
-    viewModel: MainViewModel,
-    navController: NavController,
-    isConnect: Boolean
+    viewModel: MainViewModel, navController: NavController, isConnect: Boolean
 ) {
 
     val modelIndex = remember { mutableIntStateOf(0) }
     val chatItem = AiModel.entries
 
 
-    if (viewModel.allMessage.isEmpty())
-        viewModel.showIntro.value = true
+    if (viewModel.allMessage.isEmpty()) viewModel.showIntro.value = true
 
     Column(
         modifier = Modifier
@@ -94,10 +98,8 @@ fun ChatPage(
 
         TopBar(chatItem, modelIndex, viewModel, navController)
 
-        if (viewModel.showIntro.value)
-            Intro(chatItem[modelIndex.intValue].value)
-        else
-            ChatLayout(viewModel)
+        if (viewModel.showIntro.value) Intro(chatItem[modelIndex.intValue].value)
+        else ChatLayout(viewModel)
 
         TextBoxAndSend(viewModel, chatItem[modelIndex.intValue].value, isConnect)
 
@@ -120,8 +122,7 @@ private fun TopBar(
     val expanded = remember { mutableStateOf(false) }
 
     val rotateAnimation = animateFloatAsState(
-        targetValue = if (expanded.value) -180f else 0f,
-        animationSpec = tween(
+        targetValue = if (expanded.value) -180f else 0f, animationSpec = tween(
             durationMillis = 300
         )
     )
@@ -130,10 +131,9 @@ private fun TopBar(
     }
 
 
-    if (dialogState.value)
-        AlertDialogYesNo(dialogState) {
-            viewModel.deleteChat()
-        }
+    if (dialogState.value) AlertDialogYesNo(dialogState) {
+        viewModel.deleteChat()
+    }
 
 
     Row(
@@ -145,12 +145,12 @@ private fun TopBar(
     ) {
 
 
-        IconButton(
-            { navController.navigate(HomeScreens.Home.screenName) }
-        ) {
-            Image(
-                painter = painterResource(R.drawable.back),
-                modifier = Modifier.size(48.dp),
+        FloatingActionButton (
+            { navController.navigate(HomeScreens.Home.screenName) }) {
+            Icon(
+                painter = painterResource(R.drawable.arrow_left),
+                modifier = FloatingActionButtonModifier
+                ,
                 contentDescription = "Back"
             )
         }
@@ -167,15 +167,13 @@ private fun TopBar(
         if (viewModel.showIntro.value) {
 
 
-            Box(
-                modifier = Modifier
-                    .clickable { expanded.value = !expanded.value }
-                    .wrapContentWidth()
-                    .padding(4.dp)
-                    .clip(RoundedCornerShape(60.dp))
-                    .background(white)
-                    .padding(vertical = 10.dp, horizontal = 8.dp)
-            ) {
+            Box(modifier = Modifier
+                .clickable { expanded.value = !expanded.value }
+                .wrapContentWidth()
+                .padding(4.dp)
+                .clip(RoundedCornerShape(60.dp))
+                .background(white)
+                .padding(vertical = 10.dp, horizontal = 8.dp)) {
                 Row(
                     modifier = Modifier
                         .wrapContentWidth()
@@ -201,32 +199,27 @@ private fun TopBar(
                     )
 
                     DropdownMenu(
-                        expanded.value,
-                        onDismissRequest = { expanded.value = false }
-                    ) {
+                        expanded.value, onDismissRequest = { expanded.value = false }) {
 
                         chatItem.forEachIndexed { index, model ->
 
-                            DropdownMenuItem(
-                                text = {
-                                    Row {
-                                        Text(
-                                            model.value
-                                        )
-                                        Spacer(Modifier.width(4.dp))
-                                        Icon(
-                                            imageVector = model.icon,
-                                            contentDescription = model.name,
-                                            modifier = Modifier.size(24.dp)
-                                        )
-                                    }
-                                },
-                                onClick = {
-                                    expanded.value = false
-                                    modelIndex.intValue = index
-
+                            DropdownMenuItem(text = {
+                                Row {
+                                    Text(
+                                        model.value
+                                    )
+                                    Spacer(Modifier.width(4.dp))
+                                    Icon(
+                                        imageVector = model.icon,
+                                        contentDescription = model.name,
+                                        modifier = Modifier.size(24.dp)
+                                    )
                                 }
-                            )
+                            }, onClick = {
+                                expanded.value = false
+                                modelIndex.intValue = index
+
+                            })
 
 
                         }
@@ -237,35 +230,32 @@ private fun TopBar(
 
 
             }
-        } else
-            FloatingActionButton(
-                onClick = {
-                    dialogState.value = true
+        } else FloatingActionButton(
+            onClick = {
+                dialogState.value = true
 
-                },
-                containerColor = white,
-                modifier = Modifier
-                    .size(56.dp)
-                    .padding(4.dp),
-                shape = CircleShape,
-                contentColor = white
+            },
+            containerColor = white,
+            modifier = FloatingActionButtonModifier,
+            shape = CircleShape,
+            contentColor = white
 
-            ) {
+        ) {
 
 
-                Icon(
-                    painter = painterResource(R.drawable.trash),
-                    tint = Color.Black,
-                    contentDescription = "delete Chat",
-                    modifier = Modifier.size(22.dp)
-                )
+            Icon(
+                painter = painterResource(R.drawable.trash),
+                tint = Color.Black,
+                contentDescription = "delete Chat",
+                modifier = Modifier.size(22.dp)
+            )
 
-            }
+        }
     }
 
 
 }
-
+@Preview(showBackground = true, showSystemUi = false, backgroundColor = 0xFF009688)
 @Composable
 private fun Intro(modelSelected: String = "ChatGpt") {
 
@@ -275,39 +265,53 @@ private fun Intro(modelSelected: String = "ChatGpt") {
         verticalArrangement = Arrangement.SpaceBetween
     ) {
 
-        Image(
-            painter = painterResource(R.drawable.logo),
-            modifier = Modifier.size(72.dp),
-            contentDescription = "logo"
-        )
-        Spacer(Modifier.height(12.dp))
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(R.drawable.logo),
+                modifier = Modifier.size(72.dp),
+                contentDescription = "logo"
+            )
+            Spacer(Modifier.height(12.dp))
+
+            Text(
+                stringResource(R.string.app_name),
+                fontFamily = FontFamily(Font(R.font.satoshi_black)),
+                color = Color.White,
+                fontSize = 28.sp
+            )
+        }
+        Spacer(Modifier.height(18.dp))
 
         Column(
             Modifier
 
-                .padding(horizontal = 12.dp),
-            horizontalAlignment = Alignment.Start
+                .padding(horizontal = 2.dp), horizontalAlignment = Alignment.Start,
         ) {
             Text(
                 text = "hello and welcome to new Chat.",
                 fontSize = 18.sp,
-                color = Color.White,
+                color = gray_400,
                 fontFamily = FontFamily(Font(R.font.satoshi_medium)),
-
                 )
+            Spacer(Modifier.height(4.dp))
+
 
             Text(
                 "Please chose your ai model from top.",
                 fontSize = 18.sp,
-                color = Color.White,
+                color = gray_400,
                 fontFamily = FontFamily(Font(R.font.satoshi_medium)),
 
                 )
+            Spacer(Modifier.height(4.dp))
+
 
             Text(
                 "Current Model : $modelSelected",
                 fontSize = 18.sp,
-                color = Color.White,
+                color = gray_400,
                 fontFamily = FontFamily(Font(R.font.satoshi_medium)),
 
                 )
@@ -370,7 +374,7 @@ private fun ChatLayout(viewModel: MainViewModel) {
             showScrollButton,
 
 
-        ) {
+            ) {
 
             FloatingActionButton(
                 onClick = { listState.requestScrollToItem(viewModel.allMessage.lastIndex) },
@@ -387,13 +391,9 @@ private fun ChatLayout(viewModel: MainViewModel) {
 }
 
 
-
-
 @Composable
 private fun TextBoxAndSend(
-    viewModel: MainViewModel,
-    modelSelected: String,
-    isConnect: Boolean
+    viewModel: MainViewModel, modelSelected: String, isConnect: Boolean
 ) {
 
     val text = remember { mutableStateOf("") }
@@ -412,48 +412,59 @@ private fun TextBoxAndSend(
             .padding(bottom = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly
-    )
-    {
+    ) {
 
 
-        TextField(
-            value = text.value,
-            onValueChange = {
-                text.value = it
-            },
+        var isFocused by remember { mutableStateOf(false) }
 
-            modifier = Modifier.fillMaxWidth(0.8f),
-            shape = RoundedCornerShape(50.dp),
-            label = {
-                if (text.value.isEmpty()) Text("Type your question ...")
-            },
-            textStyle = TextStyle(
-                textDirection = textDirection
-            ),
-            maxLines = 10,
-            colors = TextFieldDefaults.colors(
-                focusedIndicatorColor = transparent,
-                unfocusedIndicatorColor = transparent,
-                disabledIndicatorColor = transparent
-            )
+        BasicTextField(
+            value = text.value, modifier = Modifier
+                .fillMaxWidth(0.8f)
+                .onFocusChanged {
+                    isFocused = it.isFocused
+
+                }
+                .padding(horizontal = 12.dp)
+                .clip(CircleShape)
+                .background(textFieldColor)
+                .border(
+                    1.dp, gray_600, CircleShape
+                )
+                .padding(2.dp), onValueChange = {
+            text.value = it
+        }, textStyle = TextStyle(
+            color = white, textDirection = textDirection
+
+        ), decorationBox = { innerTextField ->
+
+            Box(modifier = Modifier.padding(16.dp)) {
+                if (text.value.isEmpty()) Text(
+                    "Type Your Question...", color = gray_400
+                )
+
+            }
+
+            innerTextField()
+
+        }
+
+
         )
+
+
         IconButton(
-            enabled = text.value.isEmpty(),
-            onClick = {
+            enabled = !text.value.isEmpty(), onClick = {
                 if (isConnect) {
+
                     viewModel.saveMessageAndSendReq(text.value, modelSelected)
                     text.value = ""
                     viewModel.showIntro.value = false
-                } else
-                    showOverlay.value = true
-            }
-        ) {
+                } else showOverlay.value = true
+            }) {
             Image(
                 painter = painterResource(R.drawable.send),
 
-                contentDescription = "send",
-                modifier = Modifier
-                    .size(58.dp)
+                contentDescription = "send", modifier = Modifier.size(58.dp)
 
             )
         }
@@ -461,6 +472,14 @@ private fun TextBoxAndSend(
 
     }
 }
+
+
+
+
+
+
+
+
 
 
 

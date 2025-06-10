@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -22,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.Activity.MainActivity
 import ir.arminniromandi.chatgpt.R
+import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 
 @Composable
 fun TopBarExplore() {
@@ -36,9 +36,7 @@ fun TopBarExplore() {
     ) {
 
         FloatingActionButton(
-            modifier = Modifier
-                .size(56.dp)
-                .padding(4.dp),
+            modifier = FloatingActionButtonModifier,
 
             onClick = {
                 context.startActivity(Intent(context, MainActivity::class.java))

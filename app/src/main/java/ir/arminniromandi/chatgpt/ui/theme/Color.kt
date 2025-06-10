@@ -28,6 +28,7 @@ var UnFoucosedtextFieldColor = Color(0xFFADADAD)
 
 var gray_900 = Color(0xFF242424)
 var gray_700 = Color(0xFF616161)
+var gray_600 = Color(0xFF757575)
 var gray_400 = Color(0xFFC2C2C2)
 var gray_300 = Color(0xFFE0E0E0)
 

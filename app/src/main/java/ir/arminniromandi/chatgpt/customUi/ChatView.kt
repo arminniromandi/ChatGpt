@@ -1,6 +1,5 @@
 package ir.arminniromandi.chatgpt.customUi
 
-import android.util.Log
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.VectorConverter
@@ -43,7 +42,6 @@ fun ChatView(
     isAnimationRunned: MutableState<Boolean>
 ) {
 
-    Log.i("Tag", isAnimationRunned.value.toString())
     val isFromUser = message.role == "user"
     var text by remember { mutableStateOf("") }
     var isTyping by remember { mutableStateOf(false) }
@@ -91,6 +89,8 @@ fun ChatView(
             } else{
 
                 MarkdownText(text ,
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+
                     style = TextStyle(
                         fontFamily = FontFamily(Font(R.font.satoshi_medium)),
                         color = Color.Black,

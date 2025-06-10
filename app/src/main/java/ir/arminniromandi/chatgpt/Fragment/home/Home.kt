@@ -55,11 +55,13 @@ import ir.arminniromandi.chatgpt.Activity.ExploreActivity
 import ir.arminniromandi.chatgpt.Fragment.HomeScreens
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.Tool.util.ExploreData
+import ir.arminniromandi.chatgpt.black
 import ir.arminniromandi.chatgpt.gray_300
 import ir.arminniromandi.chatgpt.gray_700
 import ir.arminniromandi.chatgpt.model.ExploreCardItem
 import ir.arminniromandi.chatgpt.white
 import ir.arminniromandi.chatgpt.whiteGradient
+import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 
 @Composable
 fun Home(navController: NavHostController) {
@@ -101,8 +103,10 @@ fun Home(navController: NavHostController) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 10.dp)
+
         ) {
+            History()
+
             Explore()
 
             Prompt()
@@ -190,12 +194,15 @@ private fun Explore() {
         ) {
             Image(
                 imageVector = Icons.AutoMirrored.Default.ArrowForward,
+                modifier = FloatingActionButtonModifier,
                 contentDescription = "Explore More"
             )
         }
 
 
     }
+
+
 
 
     Spacer(Modifier.height(2.dp))
@@ -212,6 +219,85 @@ private fun Explore() {
 
 
 }
+
+
+@Composable
+private fun History() {
+
+
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp, bottom = 4.dp)
+            ,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+
+        Text(
+            text = "Chat History",
+            fontSize = 24.sp,
+            fontFamily = FontFamily(Font(R.font.satoshi_medium))
+        )
+
+
+
+        FloatingActionButton(
+            {
+            },
+            containerColor = Color.White,
+            shape = CircleShape
+        ) {
+            Image(
+                imageVector = Icons.AutoMirrored.Default.ArrowForward,
+                modifier = FloatingActionButtonModifier,
+                contentDescription = "History"
+            )
+        }
+
+
+    }
+
+
+
+
+    Spacer(Modifier.height(2.dp))
+
+    LazyRow(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+
+
+        // TODO: make fix items
+        items(10) {
+            Row(
+                modifier = Modifier
+                    .padding(vertical = 2.dp)
+                    .clip(CircleShape)
+                    .background(gray_300)
+                    .padding(horizontal = 13.dp),
+
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Text(
+                    "sample",
+                    fontFamily = FontFamily(Font(R.font.satoshi_bold)),
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
+                    color = black
+                )
+
+            }
+        }
+    }
+
+
+}
+
+
 
 @Composable
 private fun ExpItems(item: ExploreCardItem) {
@@ -285,6 +371,7 @@ private fun Prompt() {
         ) {
             Image(
                 imageVector = Icons.AutoMirrored.Default.ArrowForward,
+                modifier = FloatingActionButtonModifier,
                 contentDescription = "Explore More"
             )
         }

@@ -4,5 +4,6 @@ sealed class HomeScreens (val screenName: String){
     data object Home: HomeScreens("Home")
     data object ChatPage: HomeScreens("ChatPage")
     data object Setting: HomeScreens("Setting")
+    data object History: HomeScreens("History")
 
 }

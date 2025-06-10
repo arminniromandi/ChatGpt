@@ -1,6 +1,5 @@
 package ir.arminniromandi.chatgpt.Activity
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
@@ -37,6 +36,7 @@ import ir.arminniromandi.chatgpt.AppTheme
 import ir.arminniromandi.chatgpt.Fragment.HomeScreens
 import ir.arminniromandi.chatgpt.Fragment.home.BottomNavItems
 import ir.arminniromandi.chatgpt.Fragment.home.ChatPage
+import ir.arminniromandi.chatgpt.Fragment.home.History
 import ir.arminniromandi.chatgpt.Fragment.home.Home
 import ir.arminniromandi.chatgpt.Fragment.home.Setting
 import ir.arminniromandi.chatgpt.R
@@ -48,13 +48,13 @@ import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 class MainActivity : ComponentActivity() {
     private val viewModel by viewModels<MainViewModel>()
 
-    @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val item = arrayOf(
             BottomNavItems("Home", R.drawable.home),
-            BottomNavItems("ChatPage", R.drawable.edit_icon)
+            BottomNavItems("ChatPage", R.drawable.edit_icon),
+            BottomNavItems("History", R.drawable.clock)
         )
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
@@ -70,67 +70,72 @@ class MainActivity : ComponentActivity() {
 
 
                 Scaffold(
-                        modifier = Modifier
-                            .fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
 
-                            .background(Color(0xFF282828))
-                            .drawWithCache {
-                                val gradientB = Brush.linearGradient(
-                                    colorStops = gradient,
-                                    start = Offset(size.width, 0f),         // بالا راست
-                                    end = Offset(
-                                        0f,
-                                        size.height
-                                    )
+                        .background(Color(0xFF282828))
+                        .drawWithCache {
+                            val gradientB = Brush.linearGradient(
+                                colorStops = gradient,
+                                start = Offset(size.width, 0f),         // بالا راست
+                                end = Offset(
+                                    0f, size.height
                                 )
-                                onDrawBehind {
-                                    drawRect(brush = gradientB)
-                                }
-                            },
-                        bottomBar = {
-                            NavigationBar(
-                                modifier = Modifier
-                                    .navigationBarsPadding()
-                                    .padding(horizontal = 8.dp, vertical = 4.dp)
-                                    .clip(RoundedCornerShape(60.dp)),
-                                containerColor = Color(0xFF000000),
-                                tonalElevation = 4.dp,
-                            ) {
-                                item.forEachIndexed { _, item ->
-                                    BottomNavItem(currentRoute, item, navController)
-                                }
+                            )
+                            onDrawBehind {
+                                drawRect(brush = gradientB)
                             }
-                        }
+                        }, bottomBar = {
+                    NavigationBar(
+                        modifier = Modifier
+                            .navigationBarsPadding()
+                            .padding(horizontal = 8.dp, vertical = 4.dp)
+                            .clip(RoundedCornerShape(60.dp)),
+                        containerColor = Color(0xFF000000),
+                        tonalElevation = 4.dp,
                     ) {
-
-
-                        NavHost(
-                            navController = navController,
-                            startDestination = HomeScreens.Home.screenName,
-                            enterTransition = {
-                                slideInHorizontally(animationSpec = tween(500)) +
-                                        fadeIn(
-                                            animationSpec = tween(150)
-                                        )
-                            },
-                            exitTransition = {
-                                slideOutHorizontally(
-                                    animationSpec = tween(
-                                        500
-                                    )
-                                ) + fadeOut(animationSpec = tween(150))
-                            },
-
-                            modifier = Modifier.padding(it)
-                        ) {
-                            composable(HomeScreens.Home.screenName) { Home(navController) }
-                            composable(HomeScreens.Setting.screenName) { Setting(viewModel) }
-                            composable(HomeScreens.ChatPage.screenName) { ChatPage(viewModel , navController , isConnected) }
-
+                        item.forEachIndexed { _, item ->
+                            BottomNavItem(currentRoute, item, navController)
                         }
+                    }
+                }) {
 
+
+                    NavHost(
+                        navController = navController,
+                        startDestination = HomeScreens.Home.screenName,
+                        enterTransition = {
+                            slideInHorizontally(animationSpec = tween(500)) + fadeIn(
+                                animationSpec = tween(150)
+                            )
+                        },
+                        exitTransition = {
+                            slideOutHorizontally(
+                                animationSpec = tween(
+                                    500
+                                )
+                            ) + fadeOut(animationSpec = tween(150))
+                        },
+
+                        modifier = Modifier.padding(it)
+                    ) {
+                        composable(HomeScreens.Home.screenName) { Home(navController) }
+                        composable(HomeScreens.Setting.screenName) { Setting(viewModel) }
+                        composable(HomeScreens.History.screenName) {
+                            History(
+                                navController, viewModel
+                            )
+                        }
+                        composable(HomeScreens.ChatPage.screenName) {
+                            ChatPage(
+                                viewModel, navController, isConnected
+                            )
+                        }
 
                     }
+
+
+                }
 
 
             }
