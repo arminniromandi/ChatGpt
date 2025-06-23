@@ -49,6 +49,7 @@ fun History(navController: NavController, viewModel: MainViewModel) {
 
         ) {
 
+
             Text(
                 text = "Chat History",
                 color = white,

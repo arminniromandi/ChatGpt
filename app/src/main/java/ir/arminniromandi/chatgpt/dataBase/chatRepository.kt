@@ -10,11 +10,12 @@ import javax.inject.Inject
 class ChatRepository @Inject  constructor(
     val chatDao: ChatDao,
     val sessionDao : ChatSessionDao
-
 ) {
 
 
     fun getAllSessions(): Flow<List<ChatSession>> = sessionDao.getAllSessions()
+
+    fun isTableEmpty(): Boolean = sessionDao.isTableEmpty()
 
     suspend fun createNewSession(modelName: String): Int {
         val session = ChatSession(

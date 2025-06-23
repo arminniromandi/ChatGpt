@@ -25,6 +25,10 @@ interface ChatSessionDao {
     @Query("SELECT * FROM ${AppDatabase.SESSION_TABLE} ORDER BY timestamp DESC")
     fun getAllSessions(): Flow<List<ChatSession>>
 
+
+    @Query("SELECT COUNT(*) == 0 FROM ${AppDatabase.SESSION_TABLE}")
+    fun isTableEmpty(): Boolean
+
     @Query("SELECT * FROM ${AppDatabase.SESSION_TABLE} WHERE session_id = :sessionId")
     suspend fun getSessionById(sessionId: Int): ChatSession?
 }

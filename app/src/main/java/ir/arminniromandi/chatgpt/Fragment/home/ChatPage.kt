@@ -84,6 +84,9 @@ fun ChatPage(
 
     val modelIndex = remember { mutableIntStateOf(0) }
     val chatItem = AiModel.entries
+    val model by remember {
+        mutableStateOf(chatItem[modelIndex.intValue])
+    }
 
 
     if (viewModel.allMessage.isEmpty()) viewModel.showIntro.value = true
@@ -98,10 +101,10 @@ fun ChatPage(
 
         TopBar(chatItem, modelIndex, viewModel, navController)
 
-        if (viewModel.showIntro.value) Intro(chatItem[modelIndex.intValue].value)
+        if (viewModel.showIntro.value) Intro(model.value)
         else ChatLayout(viewModel)
 
-        TextBoxAndSend(viewModel, chatItem[modelIndex.intValue].value, isConnect)
+        TextBoxAndSend(viewModel, model, isConnect)
 
 
     }
@@ -145,12 +148,11 @@ private fun TopBar(
     ) {
 
 
-        FloatingActionButton (
+        FloatingActionButton(
             { navController.navigate(HomeScreens.Home.screenName) }) {
             Icon(
                 painter = painterResource(R.drawable.arrow_left),
-                modifier = FloatingActionButtonModifier
-                ,
+                modifier = FloatingActionButtonModifier,
                 contentDescription = "Back"
             )
         }
@@ -167,13 +169,14 @@ private fun TopBar(
         if (viewModel.showIntro.value) {
 
 
-            Box(modifier = Modifier
-                .clickable { expanded.value = !expanded.value }
-                .wrapContentWidth()
-                .padding(4.dp)
-                .clip(RoundedCornerShape(60.dp))
-                .background(white)
-                .padding(vertical = 10.dp, horizontal = 8.dp)) {
+            Box(
+                modifier = Modifier
+                    .clickable { expanded.value = !expanded.value }
+                    .wrapContentWidth()
+                    .padding(4.dp)
+                    .clip(RoundedCornerShape(60.dp))
+                    .background(white)
+                    .padding(vertical = 10.dp, horizontal = 8.dp)) {
                 Row(
                     modifier = Modifier
                         .wrapContentWidth()
@@ -255,6 +258,7 @@ private fun TopBar(
 
 
 }
+
 @Preview(showBackground = true, showSystemUi = false, backgroundColor = 0xFF009688)
 @Composable
 private fun Intro(modelSelected: String = "ChatGpt") {
@@ -287,14 +291,15 @@ private fun Intro(modelSelected: String = "ChatGpt") {
         Column(
             Modifier
 
-                .padding(horizontal = 2.dp), horizontalAlignment = Alignment.Start,
+                .padding(horizontal = 2.dp),
+            horizontalAlignment = Alignment.Start,
         ) {
             Text(
                 text = "hello and welcome to new Chat.",
                 fontSize = 18.sp,
                 color = gray_400,
                 fontFamily = FontFamily(Font(R.font.satoshi_medium)),
-                )
+            )
             Spacer(Modifier.height(4.dp))
 
 
@@ -393,7 +398,9 @@ private fun ChatLayout(viewModel: MainViewModel) {
 
 @Composable
 private fun TextBoxAndSend(
-    viewModel: MainViewModel, modelSelected: String, isConnect: Boolean
+    viewModel: MainViewModel,
+    modelSelected: AiModel,
+    isConnect: Boolean
 ) {
 
     val text = remember { mutableStateOf("") }
@@ -403,7 +410,6 @@ private fun TextBoxAndSend(
     val showOverlay = remember {
         mutableStateOf(false)
     }
-    NoNetworkOverlay(showOverlay.value)
 
 
     Row(
@@ -431,22 +437,22 @@ private fun TextBoxAndSend(
                     1.dp, gray_600, CircleShape
                 )
                 .padding(2.dp), onValueChange = {
-            text.value = it
-        }, textStyle = TextStyle(
-            color = white, textDirection = textDirection
+                text.value = it
+            }, textStyle = TextStyle(
+                color = white, textDirection = textDirection
 
-        ), decorationBox = { innerTextField ->
+            ), decorationBox = { innerTextField ->
 
-            Box(modifier = Modifier.padding(16.dp)) {
-                if (text.value.isEmpty()) Text(
-                    "Type Your Question...", color = gray_400
-                )
+                Box(modifier = Modifier.padding(16.dp)) {
+                    if (text.value.isEmpty()) Text(
+                        "Type Your Question...", color = gray_400
+                    )
+
+                }
+
+                innerTextField()
 
             }
-
-            innerTextField()
-
-        }
 
 
         )
@@ -456,7 +462,7 @@ private fun TextBoxAndSend(
             enabled = !text.value.isEmpty(), onClick = {
                 if (isConnect) {
 
-                    viewModel.saveMessageAndSendReq(text.value, modelSelected)
+                    viewModel.saveMessageAndSendReq(text.value, modelSelected.value , modelSelected.isLiara)
                     text.value = ""
                     viewModel.showIntro.value = false
                 } else showOverlay.value = true

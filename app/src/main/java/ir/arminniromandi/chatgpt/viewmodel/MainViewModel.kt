@@ -56,15 +56,18 @@ class MainViewModel @Inject constructor(
 
     var showIntro = mutableStateOf(true)
 
-    fun saveMessageAndSendReq(text :String , model : String){
+    //fixme: todo: need to change (in change)
+    var showHistory = mutableStateOf(true)
+
+    fun saveMessageAndSendReq(text :String , model : String , isLiara: Boolean ){
         allMessage.add(Message(Role.User.value, text))
-        sendReq(ChatRequest(model , allMessage))
+        sendReq(ChatRequest(model , allMessage) , isLiara )
     }
 
 
 
 
-    fun sendReq(chatRequest: ChatRequest) {
+    fun sendReq(chatRequest: ChatRequest , isLiara : Boolean) {
         viewModelScope.launch {
 
 
@@ -74,7 +77,7 @@ class MainViewModel @Inject constructor(
                 isAnimationRun.value = true
                 delay(500)
 
-                 val response = apiRepository.getChatResponse(chatRequest)
+                 val response = apiRepository.getChatResponse(chatRequest , isLiara)
                 if (response.isSuccessful) {
 
                     allMessage.add(Message(Role.Assistant.value , response.body()!!.choices[0]

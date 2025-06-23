@@ -105,7 +105,7 @@ fun Home(navController: NavHostController) {
                 .fillMaxWidth()
 
         ) {
-            History()
+            History(navController)
 
             Explore()
 
@@ -220,9 +220,8 @@ private fun Explore() {
 
 }
 
-
 @Composable
-private fun History() {
+private fun History(navController: NavController) {
 
 
 
@@ -244,8 +243,7 @@ private fun History() {
 
 
         FloatingActionButton(
-            {
-            },
+            { navController.navigate(HomeScreens.History.screenName)},
             containerColor = Color.White,
             shape = CircleShape
         ) {

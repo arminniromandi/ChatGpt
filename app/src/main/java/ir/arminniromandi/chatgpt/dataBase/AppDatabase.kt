@@ -15,7 +15,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         const val MESSAGE_TABLE = "ChatMessage_table"
-        const val SESSION_TABLE = "session_Table"
+        const val SESSION_TABLE = "sessionTable"
         const val DATABASE_NAME = "chat_database"
     }
 
