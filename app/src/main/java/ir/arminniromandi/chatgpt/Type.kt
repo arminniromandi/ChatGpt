@@ -11,13 +11,8 @@ import androidx.compose.ui.unit.sp
 
 val satoshi = FontFamily(
     Font(
-        resId = R.font.satoshi_regular,
-        weight = FontWeight.Normal
-    ),
-    Font(
-        resId = R.font.satoshi_italic,
-        weight = FontWeight.Normal,
-        style = FontStyle.Italic
+        resId = R.font.satoshi_medium,
+        weight = FontWeight.Medium
     ),
     Font(
         resId = R.font.satoshi_bold,
@@ -66,8 +61,8 @@ val Typography = Typography(
     ),
     headlineMedium = TextStyle( // این استایل رو خودتون داشتید
         fontFamily = satoshi,
-        fontWeight = FontWeight.Bold, // شما Bold گذاشته بودید که می‌تونه برای تیتر مناسب باشه
-        fontSize = 28.sp, // از 18sp به 28sp (پیش‌فرض Material Design 3) تغییر دادم
+        fontWeight = FontWeight.Medium, // شما Bold گذاشته بودید که می‌تونه برای تیتر مناسب باشه
+        fontSize = 18.sp, // از 18sp به 28sp (پیش‌فرض Material Design 3) تغییر دادم
         lineHeight = 36.sp,
         letterSpacing = 0.sp,
     ),
@@ -139,7 +134,7 @@ val Typography = Typography(
     labelMedium = TextStyle( // این استایل رو خودتون داشتید
         fontFamily = satoshi,
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp, // به 12sp (پیش‌فرض Material Design 3) تغییر دادم
+        fontSize = 18.sp, // به 12sp (پیش‌فرض Material Design 3) تغییر دادم
         lineHeight = 16.sp,
         letterSpacing = 0.5.sp,
     ),
