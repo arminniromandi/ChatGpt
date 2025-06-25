@@ -26,7 +26,6 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import ir.arminniromandi.chatgpt.Fragment.HomeScreens
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.Typography
@@ -36,7 +35,7 @@ import ir.arminniromandi.chatgpt.white
 import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 
 @Composable
-fun HistorySection(navController : NavHostController) {
+fun HistorySection(onRoute: (route : String)->Unit) {
 
 
 
@@ -59,7 +58,7 @@ fun HistorySection(navController : NavHostController) {
 
 
         FloatingActionButton(
-            { navController.navigate(HomeScreens.History.screenName)},
+            { onRoute(HomeScreens.Home.screenName) },
             containerColor = Color.White,
             modifier = Modifier.size(52.dp),
             shape = CircleShape

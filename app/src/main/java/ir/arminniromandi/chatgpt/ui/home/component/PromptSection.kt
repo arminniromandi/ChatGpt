@@ -1,5 +1,7 @@
 package ir.arminniromandi.chatgpt.ui.home.component
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,13 +28,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import ir.arminniromandi.chatgpt.Activity.PromptLibraryActivity
 import ir.arminniromandi.chatgpt.Typography
 import ir.arminniromandi.chatgpt.white
 import ir.arminniromandi.chatgpt.whiteGradient
 import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 
 @Composable
-fun PromptSection() {
+fun PromptSection(context : Context) {
 
 
     Row(
@@ -51,7 +54,9 @@ fun PromptSection() {
 
 
         FloatingActionButton(
-            {},
+            {
+                context.startActivity(Intent(context, PromptLibraryActivity::class.java))
+            },
             elevation = FloatingActionButtonDefaults.elevation(10.dp),
             containerColor = Color.White,
             modifier = Modifier.size(52.dp),

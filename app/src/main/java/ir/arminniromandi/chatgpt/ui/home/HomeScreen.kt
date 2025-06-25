@@ -19,7 +19,6 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import ir.arminniromandi.chatgpt.Fragment.HomeScreens
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.Tool.util.makeShadow
@@ -27,12 +26,12 @@ import ir.arminniromandi.chatgpt.ui.home.component.ExploreSection
 import ir.arminniromandi.chatgpt.ui.home.component.HistorySection
 import ir.arminniromandi.chatgpt.ui.home.component.HomeHeader
 import ir.arminniromandi.chatgpt.ui.home.component.PromptSection
+import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 
 @Composable
-fun HomeScreen(navController: NavHostController) {
-
-
+fun HomeScreen(viewModel: MainViewModel) {
     val context = LocalContext.current
+
 
     Column(
         Modifier
@@ -42,11 +41,13 @@ fun HomeScreen(navController: NavHostController) {
     ) {
 
         HomeHeader(
-            context = context, navController = navController
+            context = context, onRoute = {
+                viewModel.navigate(it)
+            }
         )
 
         ElevatedButton(
-            onClick = { navController.navigate(HomeScreens.ChatPage.screenName) },
+            onClick = { viewModel.navigate(HomeScreens.ChatPage.screenName) },
             colors = ButtonDefaults.elevatedButtonColors(
                 contentColor = Color.Black, containerColor = Color.White
 
@@ -74,7 +75,11 @@ fun HomeScreen(navController: NavHostController) {
             Spacer(modifier = Modifier.height(8.dp))
 
 
-            HistorySection(navController)
+            HistorySection(
+                onRoute = {
+                    viewModel.navigate(it)
+                }
+            )
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -84,7 +89,7 @@ fun HomeScreen(navController: NavHostController) {
             Spacer(modifier = Modifier.height(8.dp))
 
 
-            PromptSection()
+            PromptSection(context)
         }
 
 

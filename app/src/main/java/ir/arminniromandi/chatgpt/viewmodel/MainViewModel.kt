@@ -17,7 +17,9 @@ import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatResponse
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.Choice
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.Message
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -35,6 +37,8 @@ class MainViewModel @Inject constructor(
             SharingStarted.WhileSubscribed(5000L),
             false
         )
+
+
 
 
     //ساخت چت مادل برای جابه جایی این متغیر ها و سبک سازی todo:
@@ -58,6 +62,20 @@ class MainViewModel @Inject constructor(
 
     //fixme: todo: need to change (in change)
     var showHistory = mutableStateOf(true)
+
+
+    private val _navEvent = MutableStateFlow<String?>(null)
+    val navEvent: StateFlow<String?> = _navEvent
+
+    fun navigate(page : String) {
+        _navEvent.value = page
+    }
+
+    fun onNavDone() {
+        _navEvent.value = null
+    }
+
+
 
     fun saveMessageAndSendReq(text :String , model : String , isLiara: Boolean ){
         allMessage.add(Message(Role.User.value, text))

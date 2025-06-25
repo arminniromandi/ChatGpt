@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import ir.arminniromandi.chatgpt.Fragment.HomeScreens
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.Typography
@@ -29,7 +28,7 @@ import ir.arminniromandi.chatgpt.white
 @Composable
 fun HomeHeader(
     context : Context,
-    navController : NavHostController
+    onRoute:(String) -> Unit
 ) {
 
 
@@ -49,7 +48,7 @@ fun HomeHeader(
                 modifier = Modifier
                     .size(48.dp)
                     .clickable {
-                        navController.navigate(HomeScreens.ChatPage.screenName)
+                        onRoute(HomeScreens.ChatPage.screenName)
                     },
                 contentDescription = "logo"
             )
@@ -63,7 +62,7 @@ fun HomeHeader(
         }
 
         IconButton({
-            navController.navigate(HomeScreens.Setting.screenName)
+            onRoute(HomeScreens.Setting.screenName)
         }) {
             Icon(
                 painter = painterResource(R.drawable.profile_circle),

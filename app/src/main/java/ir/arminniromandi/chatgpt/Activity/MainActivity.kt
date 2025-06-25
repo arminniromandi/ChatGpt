@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -35,13 +36,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import ir.arminniromandi.chatgpt.AppTheme
 import ir.arminniromandi.chatgpt.Fragment.HomeScreens
 import ir.arminniromandi.chatgpt.Fragment.home.BottomNavItems
-import ir.arminniromandi.chatgpt.Fragment.home.ChatPage
-import ir.arminniromandi.chatgpt.Fragment.home.History
-import ir.arminniromandi.chatgpt.Fragment.home.Home
-import ir.arminniromandi.chatgpt.Fragment.home.Setting
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.customUi.BottomNavItem
 import ir.arminniromandi.chatgpt.gradient
+import ir.arminniromandi.chatgpt.ui.History.HistoryScreen
+import ir.arminniromandi.chatgpt.ui.Setting.SettingScreen
+import ir.arminniromandi.chatgpt.ui.chat.ChatScreen
+import ir.arminniromandi.chatgpt.ui.home.HomeScreen
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 
 @AndroidEntryPoint
@@ -65,7 +66,16 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
-                val isConnected by viewModel.isConnected.collectAsState()
+                val nav = viewModel.navEvent.collectAsState()
+
+
+                LaunchedEffect(nav) {
+                    nav.value?.let {
+                        navController.navigate(it)
+                        viewModel.onNavDone()
+                    }
+
+                }
 
 
 
@@ -119,16 +129,23 @@ class MainActivity : ComponentActivity() {
 
                         modifier = Modifier.padding(it)
                     ) {
-                        composable(HomeScreens.Home.screenName) { Home(navController) }
-                        composable(HomeScreens.Setting.screenName) { Setting(viewModel) }
+                        composable(HomeScreens.Home.screenName) {
+                            HomeScreen(
+                                 viewModel
+                            )
+                        }
+                        composable(HomeScreens.Setting.screenName) {
+                            SettingScreen()
+
+                        }
                         composable(HomeScreens.History.screenName) {
-                            History(
-                                navController, viewModel
+                            HistoryScreen(
+                                 viewModel
                             )
                         }
                         composable(HomeScreens.ChatPage.screenName) {
-                            ChatPage(
-                                viewModel, navController, isConnected
+                            ChatScreen(
+                                viewModel
                             )
                         }
 

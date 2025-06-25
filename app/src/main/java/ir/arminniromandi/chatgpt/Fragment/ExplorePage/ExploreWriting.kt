@@ -31,6 +31,7 @@ fun ExploreWriting (){
     ) {
 
         TopBarExplore()
+        Body()
 
 
 
