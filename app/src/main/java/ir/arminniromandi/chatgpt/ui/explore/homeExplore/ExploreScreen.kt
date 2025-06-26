@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import ir.arminniromandi.chatgpt.Tool.util.ExploreData.items
 import ir.arminniromandi.chatgpt.customUi.topBar.TopBarExplore
 import ir.arminniromandi.chatgpt.ui.explore.homeExplore.component.ExploreItems
-
+i
 @Composable
 fun ExploreScreen(navController : NavHostController) {
 
@@ -22,7 +22,7 @@ fun ExploreScreen(navController : NavHostController) {
         ) {
 
         TopBarExplore()
-        ExploreItems(items , )
+        ExploreItems(items , navController )
 
 
     }
