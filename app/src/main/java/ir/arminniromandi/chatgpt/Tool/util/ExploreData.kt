@@ -1,8 +1,8 @@
 package ir.arminniromandi.chatgpt.Tool.util
 
-import ir.arminniromandi.chatgpt.Fragment.ExploreScreens
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.model.ExploreCardItem
+import ir.arminniromandi.chatgpt.ui.explore.ExploreScreens
 
 object ExploreData {
 

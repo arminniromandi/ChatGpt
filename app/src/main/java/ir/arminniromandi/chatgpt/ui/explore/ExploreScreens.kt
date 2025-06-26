@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.Fragment
+package ir.arminniromandi.chatgpt.ui.explore
 
 sealed class ExploreScreens(val screenName: String) {
     data object Writing : ExploreScreens("Writing")

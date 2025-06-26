@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.ui.chat.component
+package ir.arminniromandi.chatgpt.ui.main.chat.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

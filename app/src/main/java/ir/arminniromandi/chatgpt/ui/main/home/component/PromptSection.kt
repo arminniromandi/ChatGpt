@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.ui.home.component
+package ir.arminniromandi.chatgpt.ui.main.home.component
 
 import android.content.Context
 import android.content.Intent

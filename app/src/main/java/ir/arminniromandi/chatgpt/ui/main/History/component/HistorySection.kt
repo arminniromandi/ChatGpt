@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.ui.History.component
+package ir.arminniromandi.chatgpt.ui.main.History.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

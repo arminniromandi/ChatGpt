@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.ui.History
+package ir.arminniromandi.chatgpt.ui.main.History
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -9,12 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ir.arminniromandi.chatgpt.background2
-import ir.arminniromandi.chatgpt.ui.History.component.HistoryHeader
-import ir.arminniromandi.chatgpt.ui.History.component.HistorySection
+import ir.arminniromandi.chatgpt.ui.main.History.component.HistoryHeader
+import ir.arminniromandi.chatgpt.ui.main.History.component.HistorySection
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 
 @Composable
-fun HistoryScreen( viewModel: MainViewModel) {
+fun HistoryScreen(viewModel: MainViewModel) {
 
     Column(
         modifier = Modifier
@@ -30,6 +30,7 @@ fun HistoryScreen( viewModel: MainViewModel) {
         HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
 
         HistorySection()
+
 
 
     }

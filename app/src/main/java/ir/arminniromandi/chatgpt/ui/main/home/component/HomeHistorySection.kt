@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.ui.home.component
+package ir.arminniromandi.chatgpt.ui.main.home.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,7 +26,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ir.arminniromandi.chatgpt.Fragment.HomeScreens
+import ir.arminniromandi.chatgpt.ui.main.MainScreens
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.Typography
 import ir.arminniromandi.chatgpt.black
@@ -35,10 +35,7 @@ import ir.arminniromandi.chatgpt.white
 import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 
 @Composable
-fun HistorySection(onRoute: (route : String)->Unit) {
-
-
-
+fun HomeHistorySection(onRoute: (route : String)->Unit) {
 
     Row(
         modifier = Modifier
@@ -55,10 +52,8 @@ fun HistorySection(onRoute: (route : String)->Unit) {
             color = white
         )
 
-
-
         FloatingActionButton(
-            { onRoute(HomeScreens.Home.screenName) },
+            { onRoute(MainScreens.Main.screenName) },
             containerColor = Color.White,
             modifier = Modifier.size(52.dp),
             shape = CircleShape

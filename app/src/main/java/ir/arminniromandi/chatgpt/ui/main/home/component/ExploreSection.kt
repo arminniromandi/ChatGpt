@@ -1,7 +1,5 @@
-package ir.arminniromandi.chatgpt.ui.home.component
+package ir.arminniromandi.chatgpt.ui.main.home.component
 
-import android.content.Context
-import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -34,7 +32,6 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ir.arminniromandi.chatgpt.Activity.ExploreActivity
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.Tool.util.ExploreData
 import ir.arminniromandi.chatgpt.Typography
@@ -46,7 +43,7 @@ import ir.arminniromandi.chatgpt.whiteGradient
 import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 
 @Composable
-fun ExploreSection(context : Context) {
+fun ExploreSection(expClick:()-> Unit) {
 
 
 
@@ -66,9 +63,7 @@ fun ExploreSection(context : Context) {
 
 
         FloatingActionButton(
-            {
-                context.startActivity(Intent(context, ExploreActivity::class.java))
-            },
+            { expClick },
             containerColor = Color.White,
             modifier = Modifier.size(52.dp),
             shape = CircleShape

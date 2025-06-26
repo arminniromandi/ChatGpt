@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.ui.chat.component
+package ir.arminniromandi.chatgpt.ui.main.chat.component
 
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility

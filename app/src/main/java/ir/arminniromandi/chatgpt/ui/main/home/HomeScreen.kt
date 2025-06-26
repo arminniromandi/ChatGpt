@@ -1,5 +1,6 @@
-package ir.arminniromandi.chatgpt.ui.home
+package ir.arminniromandi.chatgpt.ui.main.home
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,13 +20,14 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ir.arminniromandi.chatgpt.Fragment.HomeScreens
+import ir.arminniromandi.chatgpt.Activity.ExploreActivity
+import ir.arminniromandi.chatgpt.ui.main.MainScreens
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.Tool.util.makeShadow
-import ir.arminniromandi.chatgpt.ui.home.component.ExploreSection
-import ir.arminniromandi.chatgpt.ui.home.component.HistorySection
-import ir.arminniromandi.chatgpt.ui.home.component.HomeHeader
-import ir.arminniromandi.chatgpt.ui.home.component.PromptSection
+import ir.arminniromandi.chatgpt.ui.main.home.component.ExploreSection
+import ir.arminniromandi.chatgpt.ui.main.home.component.HomeHeader
+import ir.arminniromandi.chatgpt.ui.main.home.component.HomeHistorySection
+import ir.arminniromandi.chatgpt.ui.main.home.component.PromptSection
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 
 @Composable
@@ -47,7 +49,7 @@ fun HomeScreen(viewModel: MainViewModel) {
         )
 
         ElevatedButton(
-            onClick = { viewModel.navigate(HomeScreens.ChatPage.screenName) },
+            onClick = { viewModel.navigate(MainScreens.ChatPage.screenName) },
             colors = ButtonDefaults.elevatedButtonColors(
                 contentColor = Color.Black, containerColor = Color.White
 
@@ -75,7 +77,7 @@ fun HomeScreen(viewModel: MainViewModel) {
             Spacer(modifier = Modifier.height(8.dp))
 
 
-            HistorySection(
+            HomeHistorySection(
                 onRoute = {
                     viewModel.navigate(it)
                 }
@@ -84,7 +86,14 @@ fun HomeScreen(viewModel: MainViewModel) {
             Spacer(modifier = Modifier.height(8.dp))
 
 
-            ExploreSection(context)
+            ExploreSection(expClick = {
+                context.startActivity(
+                    Intent(
+                        context,
+                        ExploreActivity::class.java
+                    )
+                )
+            })
 
             Spacer(modifier = Modifier.height(8.dp))
 

@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.ui.home.component
+package ir.arminniromandi.chatgpt.ui.main.home.component
 
 import android.content.Context
 import androidx.compose.foundation.Image
@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import ir.arminniromandi.chatgpt.Fragment.HomeScreens
+import ir.arminniromandi.chatgpt.ui.main.MainScreens
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.Typography
 import ir.arminniromandi.chatgpt.white
@@ -48,7 +48,7 @@ fun HomeHeader(
                 modifier = Modifier
                     .size(48.dp)
                     .clickable {
-                        onRoute(HomeScreens.ChatPage.screenName)
+                        onRoute(MainScreens.ChatPage.screenName)
                     },
                 contentDescription = "logo"
             )
@@ -62,7 +62,7 @@ fun HomeHeader(
         }
 
         IconButton({
-            onRoute(HomeScreens.Setting.screenName)
+            onRoute(MainScreens.Setting.screenName)
         }) {
             Icon(
                 painter = painterResource(R.drawable.profile_circle),

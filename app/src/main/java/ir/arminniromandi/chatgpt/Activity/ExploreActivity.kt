@@ -30,8 +30,8 @@ import dev.jeziellago.compose.markdowntext.MarkdownText
 import ir.arminniromandi.chatgpt.AppTheme
 import ir.arminniromandi.chatgpt.Fragment.ExplorePage.ExploreWriting
 import ir.arminniromandi.chatgpt.Fragment.ExplorePage.HomeExplore
-import ir.arminniromandi.chatgpt.Fragment.ExploreScreens
-import ir.arminniromandi.chatgpt.Fragment.HomeScreens
+import ir.arminniromandi.chatgpt.ui.explore.ExploreScreens
+import ir.arminniromandi.chatgpt.ui.main.MainScreens
 import ir.arminniromandi.chatgpt.Tool.util.ExploreData.items
 
 class ExploreActivity : ComponentActivity() {
@@ -62,7 +62,7 @@ class ExploreActivity : ComponentActivity() {
 
                     NavHost(
                         navController = navController,
-                        startDestination = HomeScreens.Home.screenName,
+                        startDestination = MainScreens.Main.screenName,
                         enterTransition = {
                             fadeIn(
                                 animationSpec = tween(

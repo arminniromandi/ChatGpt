@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.ui.chat.component
+package ir.arminniromandi.chatgpt.ui.main.chat.component
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -36,7 +36,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ir.arminniromandi.chatgpt.Fragment.HomeScreens
+import ir.arminniromandi.chatgpt.ui.main.MainScreens
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.black
 import ir.arminniromandi.chatgpt.customUi.AlertDialogYesNo
@@ -82,7 +82,7 @@ fun ChatHeader(
 
 
         FloatingActionButton(
-            { onRoute(HomeScreens.Home.screenName) }) {
+            { onRoute(MainScreens.Main.screenName) }) {
             Icon(
                 painter = painterResource(R.drawable.arrow_left),
                 modifier = FloatingActionButtonModifier,

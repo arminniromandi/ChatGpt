@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.Fragment.ExplorePage
+package ir.arminniromandi.chatgpt.ui.explore.homeExplore.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -6,7 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,41 +27,19 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import ir.arminniromandi.chatgpt.Fragment.ExploreScreens
 import ir.arminniromandi.chatgpt.R
-import ir.arminniromandi.chatgpt.customUi.topBar.TopBarExplore
 import ir.arminniromandi.chatgpt.gray_300
 import ir.arminniromandi.chatgpt.gray_700
 import ir.arminniromandi.chatgpt.model.ExploreCardItem
+import ir.arminniromandi.chatgpt.ui.explore.ExploreScreens
 import ir.arminniromandi.chatgpt.white
 import ir.arminniromandi.chatgpt.whiteGradient
 
-@Composable
-fun HomeExplore(items: List<ExploreCardItem> , navController: NavController) {
 
-    Column(
-        Modifier
-            .fillMaxHeight()
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-
-    ) {
-
-        TopBarExplore()
-        ExploreItems(items , navController)
-
-
-    }
-
-
-
-
-}
-
-
+// TODO: config nav controller in vM
 
 @Composable
-private fun ExploreItems(item: List<ExploreCardItem> , navController: NavController) {
+fun ExploreItems(item: List<ExploreCardItem> , navController: NavController) {
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -72,8 +49,6 @@ private fun ExploreItems(item: List<ExploreCardItem> , navController: NavControl
         }
 
     }
-
-
 }
 
 
@@ -125,11 +100,3 @@ private fun ExploreCard(item: ExploreCardItem , navController: NavController ,ro
 
 
 }
-
-
-
-
-
-
-
-

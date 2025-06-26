@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.ui.Setting
+package ir.arminniromandi.chatgpt.ui.main.Setting
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

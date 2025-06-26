@@ -34,15 +34,15 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ir.arminniromandi.chatgpt.AppTheme
-import ir.arminniromandi.chatgpt.Fragment.HomeScreens
+import ir.arminniromandi.chatgpt.ui.main.MainScreens
 import ir.arminniromandi.chatgpt.Fragment.home.BottomNavItems
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.customUi.BottomNavItem
 import ir.arminniromandi.chatgpt.gradient
-import ir.arminniromandi.chatgpt.ui.History.HistoryScreen
-import ir.arminniromandi.chatgpt.ui.Setting.SettingScreen
-import ir.arminniromandi.chatgpt.ui.chat.ChatScreen
-import ir.arminniromandi.chatgpt.ui.home.HomeScreen
+import ir.arminniromandi.chatgpt.ui.main.History.HistoryScreen
+import ir.arminniromandi.chatgpt.ui.main.Setting.SettingScreen
+import ir.arminniromandi.chatgpt.ui.main.chat.ChatScreen
+import ir.arminniromandi.chatgpt.ui.main.home.HomeScreen
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 
 @AndroidEntryPoint
@@ -113,7 +113,7 @@ class MainActivity : ComponentActivity() {
 
                     NavHost(
                         navController = navController,
-                        startDestination = HomeScreens.Home.screenName,
+                        startDestination = MainScreens.Main.screenName,
                         enterTransition = {
                             slideInHorizontally(animationSpec = tween(500)) + fadeIn(
                                 animationSpec = tween(150)
@@ -129,21 +129,21 @@ class MainActivity : ComponentActivity() {
 
                         modifier = Modifier.padding(it)
                     ) {
-                        composable(HomeScreens.Home.screenName) {
+                        composable(MainScreens.Main.screenName) {
                             HomeScreen(
                                  viewModel
                             )
                         }
-                        composable(HomeScreens.Setting.screenName) {
+                        composable(MainScreens.Setting.screenName) {
                             SettingScreen()
 
                         }
-                        composable(HomeScreens.History.screenName) {
+                        composable(MainScreens.History.screenName) {
                             HistoryScreen(
                                  viewModel
                             )
                         }
-                        composable(HomeScreens.ChatPage.screenName) {
+                        composable(MainScreens.ChatPage.screenName) {
                             ChatScreen(
                                 viewModel
                             )
