@@ -22,8 +22,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import ir.arminniromandi.chatgpt.ui.main.MainScreens
 import ir.arminniromandi.chatgpt.R
-import ir.arminniromandi.chatgpt.Typography
-import ir.arminniromandi.chatgpt.white
+import ir.arminniromandi.chatgpt.ui.theme.Typography
+import ir.arminniromandi.chatgpt.ui.theme.white
 
 @Composable
 fun HomeHeader(

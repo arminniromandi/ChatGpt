@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.R
-import ir.arminniromandi.chatgpt.white
+import ir.arminniromandi.chatgpt.ui.theme.white
 import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 
 @Composable

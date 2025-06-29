@@ -26,25 +26,24 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
+import androidx.hilt.navigation.compose.hiltViewModel
 import ir.arminniromandi.chatgpt.R
-import ir.arminniromandi.chatgpt.gray_300
-import ir.arminniromandi.chatgpt.gray_700
 import ir.arminniromandi.chatgpt.model.ExploreCardItem
 import ir.arminniromandi.chatgpt.ui.explore.ExploreScreens
-import ir.arminniromandi.chatgpt.white
-import ir.arminniromandi.chatgpt.whiteGradient
+import ir.arminniromandi.chatgpt.ui.theme.gray_300
+import ir.arminniromandi.chatgpt.ui.theme.gray_700
+import ir.arminniromandi.chatgpt.ui.theme.white
+import ir.arminniromandi.chatgpt.ui.theme.whiteGradient
+import ir.arminniromandi.chatgpt.viewmodel.ExploreViewModel
 
-
-// TODO: config nav controller in vM
 
 @Composable
-fun ExploreItems(item: List<ExploreCardItem> , navController: NavController) {
+fun ExploreItems(item: List<ExploreCardItem> ) {
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         itemsIndexed(item) { index, item ->
-            ExploreCard(item = item , navController , ExploreScreens.Writing.screenName)
+            ExploreCard(item = item  , ExploreScreens.Writing.screenName)
 
         }
 
@@ -53,7 +52,8 @@ fun ExploreItems(item: List<ExploreCardItem> , navController: NavController) {
 
 
 @Composable
-private fun ExploreCard(item: ExploreCardItem , navController: NavController ,route : String) {
+private fun ExploreCard(item: ExploreCardItem ,route : String) {
+    val viewModel = hiltViewModel<ExploreViewModel>()
 
 
     Column(
@@ -70,7 +70,7 @@ private fun ExploreCard(item: ExploreCardItem , navController: NavController ,ro
             .background(gray_700)
             .padding(16.dp)
             .clickable {
-                navController.navigate(route)
+                viewModel.navigate(route)
             },
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.SpaceBetween

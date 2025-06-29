@@ -38,11 +38,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.ui.main.MainScreens
 import ir.arminniromandi.chatgpt.R
-import ir.arminniromandi.chatgpt.black
+import ir.arminniromandi.chatgpt.ui.theme.black
 import ir.arminniromandi.chatgpt.customUi.AlertDialogYesNo
 import ir.arminniromandi.chatgpt.model.AiModel
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
-import ir.arminniromandi.chatgpt.white
+import ir.arminniromandi.chatgpt.ui.theme.white
 import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 import kotlin.enums.EnumEntries
 

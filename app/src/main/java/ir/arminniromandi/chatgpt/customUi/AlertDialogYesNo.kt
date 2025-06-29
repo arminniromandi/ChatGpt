@@ -19,7 +19,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ir.arminniromandi.chatgpt.R
-import ir.arminniromandi.chatgpt.Typography
+import ir.arminniromandi.chatgpt.ui.theme.Typography
 
 @Preview(showBackground = false, device = "id:pixel_5", showSystemUi = false)
 @Composable

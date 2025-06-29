@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "ir.arminniromandi.chatgpt"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "ir.arminniromandi.chatgpt"
@@ -67,7 +67,9 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.hilt.android)
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     ksp(libs.hilt.android.compiler)
+
 
     var lottieVersion = "6.6.6"
     implementation ("com.airbnb.android:lottie-compose:$lottieVersion")

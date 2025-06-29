@@ -28,12 +28,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.Tool.util.TextDirectionUtil.getTextDirection
-import ir.arminniromandi.chatgpt.gray_400
-import ir.arminniromandi.chatgpt.gray_600
+import ir.arminniromandi.chatgpt.ui.theme.gray_400
+import ir.arminniromandi.chatgpt.ui.theme.gray_600
 import ir.arminniromandi.chatgpt.model.AiModel
-import ir.arminniromandi.chatgpt.textFieldColor
+import ir.arminniromandi.chatgpt.ui.theme.textFieldColor
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
-import ir.arminniromandi.chatgpt.white
+import ir.arminniromandi.chatgpt.ui.theme.white
 
 
 @Composable

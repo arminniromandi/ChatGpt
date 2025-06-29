@@ -20,7 +20,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ir.arminniromandi.chatgpt.white
+import ir.arminniromandi.chatgpt.ui.theme.white
 
 @Composable
 fun OtpView(otpValue: MutableState<String>) {

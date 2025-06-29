@@ -24,11 +24,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.R
-import ir.arminniromandi.chatgpt.gradient
-import ir.arminniromandi.chatgpt.gray_700
-import ir.arminniromandi.chatgpt.gray_900
-import ir.arminniromandi.chatgpt.white
-import ir.arminniromandi.chatgpt.whiteGradient
+import ir.arminniromandi.chatgpt.ui.theme.gradient
+import ir.arminniromandi.chatgpt.ui.theme.gray_700
+import ir.arminniromandi.chatgpt.ui.theme.gray_900
+import ir.arminniromandi.chatgpt.ui.theme.white
+import ir.arminniromandi.chatgpt.ui.theme.whiteGradient
 
 @Composable
 fun BoxIntro(modifier: Modifier , image : Int ,text:String ){

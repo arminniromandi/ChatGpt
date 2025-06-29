@@ -1,6 +1,5 @@
 package ir.arminniromandi.chatgpt.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
@@ -108,7 +107,6 @@ class MainViewModel @Inject constructor(
                 }
             }catch (e:Exception){
                 _error.postValue(e.message)
-                Log.i("api", "is S ${e.message}" )
 
             }finally {
                 _loading.postValue(false)

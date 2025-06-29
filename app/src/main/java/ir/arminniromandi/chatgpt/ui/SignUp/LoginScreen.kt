@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.Fragment.IntroFragment
+package ir.arminniromandi.chatgpt.ui.SignUp
 
 import android.content.Intent
 import android.widget.Toast
@@ -41,18 +41,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.Activity.MainActivity
 import ir.arminniromandi.chatgpt.R
-import ir.arminniromandi.chatgpt.black
 import ir.arminniromandi.chatgpt.customUi.MText
 import ir.arminniromandi.chatgpt.customUi.OtpView
-import ir.arminniromandi.chatgpt.gradient
-import ir.arminniromandi.chatgpt.textFieldColor
-import ir.arminniromandi.chatgpt.transparent
+import ir.arminniromandi.chatgpt.ui.theme.black
+import ir.arminniromandi.chatgpt.ui.theme.gradient
+import ir.arminniromandi.chatgpt.ui.theme.textFieldColor
+import ir.arminniromandi.chatgpt.ui.theme.transparent
+import ir.arminniromandi.chatgpt.ui.theme.white
 import ir.arminniromandi.chatgpt.viewmodel.SignUpViewModel
-import ir.arminniromandi.chatgpt.white
 
 @Composable
-fun Login(modifier: Modifier, viewModel: SignUpViewModel) {
-
+fun LoginScreen(modifier: Modifier, viewModel: SignUpViewModel) {
 
     val context = LocalContext.current
     val phoneNumber = remember { mutableStateOf("") }
@@ -208,7 +207,7 @@ fun Login(modifier: Modifier, viewModel: SignUpViewModel) {
                     onClick = {
                         if (viewModel.isOtpValid(otp.value))
                             context.startActivity(Intent(context , MainActivity::class.java))
-                            else
+                        else
                             Toast.makeText(context , "Code is incorrect" , Toast.LENGTH_LONG).show()
 
                     },
@@ -233,5 +232,6 @@ fun Login(modifier: Modifier, viewModel: SignUpViewModel) {
 
 
     }
-}
 
+
+}

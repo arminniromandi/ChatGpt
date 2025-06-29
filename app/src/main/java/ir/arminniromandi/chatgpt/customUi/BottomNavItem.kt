@@ -17,10 +17,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import ir.arminniromandi.chatgpt.Fragment.home.BottomNavItems
+import ir.arminniromandi.chatgpt.model.BottomNavItems
 import ir.arminniromandi.chatgpt.R
-import ir.arminniromandi.chatgpt.gray_700
-import ir.arminniromandi.chatgpt.white
+import ir.arminniromandi.chatgpt.ui.theme.gray_700
+import ir.arminniromandi.chatgpt.ui.theme.white
 
 @Composable
 fun RowScope.BottomNavItem(

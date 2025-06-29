@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.customUi.topBar
+package ir.arminniromandi.chatgpt.ui.explore
 
 import android.content.Intent
 import androidx.compose.foundation.layout.Box
@@ -10,18 +10,17 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.Activity.MainActivity
-import ir.arminniromandi.chatgpt.R
+import ir.arminniromandi.chatgpt.ui.theme.white
 import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
+
 
 @Composable
 fun TopBarExplore() {
@@ -40,7 +39,7 @@ fun TopBarExplore() {
 
             onClick = {
                 context.startActivity(Intent(context, MainActivity::class.java))
-            }, shape = CircleShape, containerColor = Color.White
+            }, shape = CircleShape, containerColor = white
         ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -51,15 +50,16 @@ fun TopBarExplore() {
         }
 
 
+
         Text(
             modifier = Modifier.align(Alignment.Center),
             text = "Explore",
             color = Color.White,
-            fontFamily = FontFamily(Font(R.font.satoshi_medium)),
-            fontSize = 24.sp
+            style = Typography().headlineMedium
         )
 
 
     }
+
 
 }

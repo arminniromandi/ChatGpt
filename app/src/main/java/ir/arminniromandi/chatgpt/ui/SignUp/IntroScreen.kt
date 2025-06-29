@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.Fragment.IntroFragment
+package ir.arminniromandi.chatgpt.ui.SignUp
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,18 +23,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.R
-import ir.arminniromandi.chatgpt.black
 import ir.arminniromandi.chatgpt.customUi.BoxIntro
 import ir.arminniromandi.chatgpt.customUi.MText
-import ir.arminniromandi.chatgpt.gradient
-import ir.arminniromandi.chatgpt.white
+import ir.arminniromandi.chatgpt.ui.theme.black
+import ir.arminniromandi.chatgpt.ui.theme.gradient
+import ir.arminniromandi.chatgpt.ui.theme.white
 
 @Composable
-fun Intro(modifier: Modifier) {
+fun IntroScreen(modifier : Modifier = Modifier) {
+
     Column(
         modifier
             .background(brush = Brush.verticalGradient(colorStops = gradient))
@@ -42,7 +42,7 @@ fun Intro(modifier: Modifier) {
             .fillMaxSize(),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        
+
         Column(
             Modifier.fillMaxWidth(),
 
@@ -80,7 +80,7 @@ fun Intro(modifier: Modifier) {
                     fontFamily = FontFamily(Font(R.font.satoshi_regular))
                 )
             }
-            
+
             HorizontalDivider(modifier.height(1.dp))
             MText("Explore", 64, R.font.satoshi_regular, white)
             MText("Infinite", 64, R.font.satoshi_regular, Color(0xFFA7BA88))
@@ -125,11 +125,6 @@ fun Intro(modifier: Modifier) {
         }
 
     }
-}
 
-@Preview
-@Composable
-private fun Prev() {
-    Intro(Modifier)
-}
 
+}

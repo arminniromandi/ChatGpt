@@ -34,12 +34,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.Tool.util.ExploreData
-import ir.arminniromandi.chatgpt.Typography
-import ir.arminniromandi.chatgpt.gray_300
-import ir.arminniromandi.chatgpt.gray_700
+import ir.arminniromandi.chatgpt.ui.theme.Typography
+import ir.arminniromandi.chatgpt.ui.theme.gray_300
+import ir.arminniromandi.chatgpt.ui.theme.gray_700
 import ir.arminniromandi.chatgpt.model.ExploreCardItem
-import ir.arminniromandi.chatgpt.white
-import ir.arminniromandi.chatgpt.whiteGradient
+import ir.arminniromandi.chatgpt.ui.theme.white
+import ir.arminniromandi.chatgpt.ui.theme.whiteGradient
 import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 
 @Composable

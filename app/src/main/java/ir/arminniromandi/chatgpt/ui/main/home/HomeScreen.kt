@@ -20,10 +20,11 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import ir.arminniromandi.chatgpt.Activity.ExploreActivity
-import ir.arminniromandi.chatgpt.ui.main.MainScreens
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.Tool.util.makeShadow
+import ir.arminniromandi.chatgpt.ui.main.MainScreens
 import ir.arminniromandi.chatgpt.ui.main.home.component.ExploreSection
 import ir.arminniromandi.chatgpt.ui.main.home.component.HomeHeader
 import ir.arminniromandi.chatgpt.ui.main.home.component.HomeHistorySection
@@ -31,7 +32,7 @@ import ir.arminniromandi.chatgpt.ui.main.home.component.PromptSection
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 
 @Composable
-fun HomeScreen(viewModel: MainViewModel) {
+fun HomeScreen(viewModel: MainViewModel = hiltViewModel()) {
     val context = LocalContext.current
 
 

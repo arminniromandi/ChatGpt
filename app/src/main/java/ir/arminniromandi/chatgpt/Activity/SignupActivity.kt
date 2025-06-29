@@ -14,10 +14,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import ir.arminniromandi.chatgpt.AppTheme
-import ir.arminniromandi.chatgpt.Fragment.IntroFragment.Intro
-import ir.arminniromandi.chatgpt.Fragment.IntroFragment.Login
-import ir.arminniromandi.chatgpt.Fragment.IntroScreens
+import ir.arminniromandi.chatgpt.ui.SignUp.IntroScreen
+import ir.arminniromandi.chatgpt.ui.SignUp.IntroScreens
+import ir.arminniromandi.chatgpt.ui.SignUp.LoginScreen
+import ir.arminniromandi.chatgpt.ui.theme.AppTheme
 import ir.arminniromandi.chatgpt.viewmodel.SignUpViewModel
 
 @AndroidEntryPoint
@@ -52,8 +52,8 @@ class SignupActivity : ComponentActivity() {
 
                         modifier = Modifier.padding(it)
                     ) {
-                        composable(IntroScreens.Intro.screenName) { Intro(Modifier) }
-                        composable(IntroScreens.Login.screenName) { Login(Modifier  ,viewModel) }
+                        composable(IntroScreens.Intro.screenName) { IntroScreen(Modifier) }
+                        composable(IntroScreens.Login.screenName) { LoginScreen(Modifier  ,viewModel) }
 
                     }
                 }

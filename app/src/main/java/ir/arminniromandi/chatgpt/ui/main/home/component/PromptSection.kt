@@ -29,9 +29,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import ir.arminniromandi.chatgpt.Activity.PromptLibraryActivity
-import ir.arminniromandi.chatgpt.Typography
-import ir.arminniromandi.chatgpt.white
-import ir.arminniromandi.chatgpt.whiteGradient
+import ir.arminniromandi.chatgpt.ui.theme.Typography
+import ir.arminniromandi.chatgpt.ui.theme.white
+import ir.arminniromandi.chatgpt.ui.theme.whiteGradient
 import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 
 @Composable

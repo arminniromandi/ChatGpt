@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt
+package ir.arminniromandi.chatgpt.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

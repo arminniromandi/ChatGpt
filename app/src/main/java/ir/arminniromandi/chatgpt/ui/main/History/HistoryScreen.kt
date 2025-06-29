@@ -7,14 +7,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ir.arminniromandi.chatgpt.background2
+import androidx.hilt.navigation.compose.hiltViewModel
 import ir.arminniromandi.chatgpt.ui.main.History.component.HistoryHeader
 import ir.arminniromandi.chatgpt.ui.main.History.component.HistorySection
+import ir.arminniromandi.chatgpt.ui.theme.background2
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 
 @Composable
-fun HistoryScreen(viewModel: MainViewModel) {
+fun HistoryScreen(viewModel: MainViewModel = hiltViewModel()) {
 
     Column(
         modifier = Modifier
@@ -35,4 +37,10 @@ fun HistoryScreen(viewModel: MainViewModel) {
 
     }
 
+}
+
+@Preview
+@Composable
+private fun dfsfgsr() {
+    HistoryHeader()
 }

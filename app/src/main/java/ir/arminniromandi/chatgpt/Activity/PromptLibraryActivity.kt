@@ -15,9 +15,9 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import ir.arminniromandi.chatgpt.AppTheme
 import ir.arminniromandi.chatgpt.R
-import ir.arminniromandi.chatgpt.background2
+import ir.arminniromandi.chatgpt.ui.theme.AppTheme
+import ir.arminniromandi.chatgpt.ui.theme.background2
 
 class PromptLibraryActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

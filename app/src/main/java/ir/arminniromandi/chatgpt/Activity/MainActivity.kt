@@ -33,30 +33,23 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import ir.arminniromandi.chatgpt.AppTheme
-import ir.arminniromandi.chatgpt.ui.main.MainScreens
-import ir.arminniromandi.chatgpt.Fragment.home.BottomNavItems
-import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.customUi.BottomNavItem
-import ir.arminniromandi.chatgpt.gradient
 import ir.arminniromandi.chatgpt.ui.main.History.HistoryScreen
+import ir.arminniromandi.chatgpt.ui.main.MainScreens
 import ir.arminniromandi.chatgpt.ui.main.Setting.SettingScreen
 import ir.arminniromandi.chatgpt.ui.main.chat.ChatScreen
 import ir.arminniromandi.chatgpt.ui.main.home.HomeScreen
+import ir.arminniromandi.chatgpt.ui.theme.AppTheme
+import ir.arminniromandi.chatgpt.ui.theme.gradient
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
+import ir.arminniromandi.myapplication.Tool.Constance.BottomNavHomeItems
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val viewModel by viewModels<MainViewModel>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val item = arrayOf(
-            BottomNavItems("Home", R.drawable.home),
-            BottomNavItems("ChatPage", R.drawable.edit_icon),
-            BottomNavItems("History", R.drawable.clock)
-        )
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
 
@@ -104,7 +97,7 @@ class MainActivity : ComponentActivity() {
                         containerColor = Color(0xFF000000),
                         tonalElevation = 4.dp,
                     ) {
-                        item.forEachIndexed { _, item ->
+                        BottomNavHomeItems.forEachIndexed { _, item ->
                             BottomNavItem(currentRoute, item, navController)
                         }
                     }
@@ -130,18 +123,14 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(it)
                     ) {
                         composable(MainScreens.Main.screenName) {
-                            HomeScreen(
-                                 viewModel
-                            )
+                            HomeScreen()
                         }
                         composable(MainScreens.Setting.screenName) {
                             SettingScreen()
 
                         }
                         composable(MainScreens.History.screenName) {
-                            HistoryScreen(
-                                 viewModel
-                            )
+                            HistoryScreen()
                         }
                         composable(MainScreens.ChatPage.screenName) {
                             ChatScreen(

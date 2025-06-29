@@ -6,8 +6,10 @@ import ir.arminniromandi.chatgpt.dataBase.model.ChatMessage
 import ir.arminniromandi.chatgpt.dataBase.model.ChatSession
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class ChatRepository @Inject  constructor(
+@Singleton
+class ChatRepository @Inject constructor(
     val chatDao: ChatDao,
     val sessionDao : ChatSessionDao
 ) {

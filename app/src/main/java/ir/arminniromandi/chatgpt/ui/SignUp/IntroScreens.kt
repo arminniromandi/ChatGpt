@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.Fragment
+package ir.arminniromandi.chatgpt.ui.SignUp
 
 sealed class IntroScreens (val screenName : String) {
     data object Intro : IntroScreens("Intro")

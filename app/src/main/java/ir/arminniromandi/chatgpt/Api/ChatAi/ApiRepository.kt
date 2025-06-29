@@ -4,7 +4,9 @@ import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatRequest
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatResponse
 import retrofit2.Response
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class ApiRepository @Inject constructor(
     private val apiService: ChatApiService
 ) {

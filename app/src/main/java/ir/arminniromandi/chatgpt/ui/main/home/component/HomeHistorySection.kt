@@ -28,10 +28,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.ui.main.MainScreens
 import ir.arminniromandi.chatgpt.R
-import ir.arminniromandi.chatgpt.Typography
-import ir.arminniromandi.chatgpt.black
-import ir.arminniromandi.chatgpt.gray_300
-import ir.arminniromandi.chatgpt.white
+import ir.arminniromandi.chatgpt.ui.theme.Typography
+import ir.arminniromandi.chatgpt.ui.theme.black
+import ir.arminniromandi.chatgpt.ui.theme.gray_300
+import ir.arminniromandi.chatgpt.ui.theme.white
 import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 
 @Composable
