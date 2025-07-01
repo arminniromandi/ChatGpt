@@ -32,7 +32,7 @@ import ir.arminniromandi.chatgpt.ui.main.home.component.PromptSection
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 
 @Composable
-fun HomeScreen(viewModel: MainViewModel = hiltViewModel()) {
+fun HomeScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>()) {
     val context = LocalContext.current
 
 

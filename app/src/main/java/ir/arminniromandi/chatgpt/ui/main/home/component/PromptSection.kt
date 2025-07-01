@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import ir.arminniromandi.chatgpt.Activity.PromptLibraryActivity
+import ir.arminniromandi.chatgpt.Tool.util.SampleData.samplePromptLib
 import ir.arminniromandi.chatgpt.ui.theme.Typography
 import ir.arminniromandi.chatgpt.ui.theme.white
 import ir.arminniromandi.chatgpt.ui.theme.whiteGradient
@@ -71,7 +72,6 @@ fun PromptSection(context : Context) {
 
     }
 
-    val a = arrayOf("Seo", "Develope", "Marketing", "job", "Code")
 
     Spacer(Modifier.height(4.dp))
 
@@ -82,9 +82,10 @@ fun PromptSection(context : Context) {
         rows = StaggeredGridCells.Fixed(2),
         horizontalItemSpacing = 4.dp
     ) {
-        items(a) {
+        items(samplePromptLib) {
             PromptChip(it)
         }
+
     }
 
 

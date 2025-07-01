@@ -26,7 +26,6 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.model.ExploreCardItem
 import ir.arminniromandi.chatgpt.ui.explore.ExploreScreens
@@ -38,12 +37,12 @@ import ir.arminniromandi.chatgpt.viewmodel.ExploreViewModel
 
 
 @Composable
-fun ExploreItems(item: List<ExploreCardItem> ) {
+fun ExploreItems(item: List<ExploreCardItem> , viewModel: ExploreViewModel ) {
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         itemsIndexed(item) { index, item ->
-            ExploreCard(item = item  , ExploreScreens.Writing.screenName)
+            ExploreCard(item = item  , ExploreScreens.Writing.screenName , viewModel)
 
         }
 
@@ -52,8 +51,7 @@ fun ExploreItems(item: List<ExploreCardItem> ) {
 
 
 @Composable
-private fun ExploreCard(item: ExploreCardItem ,route : String) {
-    val viewModel = hiltViewModel<ExploreViewModel>()
+private fun ExploreCard(item: ExploreCardItem ,route : String , viewModel: ExploreViewModel) {
 
 
     Column(

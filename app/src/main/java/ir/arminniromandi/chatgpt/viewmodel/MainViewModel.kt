@@ -66,13 +66,15 @@ class MainViewModel @Inject constructor(
     private val _navEvent = MutableStateFlow<String?>(null)
     val navEvent: StateFlow<String?> = _navEvent
 
-    fun navigate(page : String) {
-        _navEvent.value = page
+    fun navigate(route: String) {
+        _navEvent.value = route
     }
 
-    fun onNavDone() {
+    fun clearNavigation() {
         _navEvent.value = null
     }
+
+
 
 
 

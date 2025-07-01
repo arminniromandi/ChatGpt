@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -36,13 +37,13 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ir.arminniromandi.chatgpt.ui.main.MainScreens
 import ir.arminniromandi.chatgpt.R
-import ir.arminniromandi.chatgpt.ui.theme.black
 import ir.arminniromandi.chatgpt.customUi.AlertDialogYesNo
 import ir.arminniromandi.chatgpt.model.AiModel
-import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
+import ir.arminniromandi.chatgpt.ui.main.MainScreens
+import ir.arminniromandi.chatgpt.ui.theme.black
 import ir.arminniromandi.chatgpt.ui.theme.white
+import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 import kotlin.enums.EnumEntries
 
@@ -82,9 +83,13 @@ fun ChatHeader(
 
 
         FloatingActionButton(
-            { onRoute(MainScreens.Main.screenName) }) {
+            { onRoute(MainScreens.Main.screenName) },
+            shape = CircleShape,
+            containerColor =  white
+            ) {
             Icon(
-                painter = painterResource(R.drawable.arrow_left),
+                imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                tint = black,
                 modifier = FloatingActionButtonModifier,
                 contentDescription = "Back"
             )

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -33,11 +34,11 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.R
-import ir.arminniromandi.chatgpt.Tool.util.ExploreData
+import ir.arminniromandi.chatgpt.Tool.util.SampleData
+import ir.arminniromandi.chatgpt.model.ExploreCardItem
 import ir.arminniromandi.chatgpt.ui.theme.Typography
 import ir.arminniromandi.chatgpt.ui.theme.gray_300
 import ir.arminniromandi.chatgpt.ui.theme.gray_700
-import ir.arminniromandi.chatgpt.model.ExploreCardItem
 import ir.arminniromandi.chatgpt.ui.theme.white
 import ir.arminniromandi.chatgpt.ui.theme.whiteGradient
 import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
@@ -58,12 +59,13 @@ fun ExploreSection(expClick:()-> Unit) {
         Text(
             text = "Explore More",
             color = white,
-            style = Typography.headlineSmall)
+            style = Typography.headlineSmall
+        )
 
 
 
         FloatingActionButton(
-            { expClick },
+            { expClick() },
             containerColor = Color.White,
             modifier = Modifier.size(52.dp),
             shape = CircleShape
@@ -83,14 +85,23 @@ fun ExploreSection(expClick:()-> Unit) {
 
     Spacer(Modifier.height(2.dp))
 
+    val listState = rememberLazyListState()
+
+
     LazyRow(
+        state = listState,
         modifier = Modifier.fillMaxWidth()
     ) {
 
-
-        items(items = ExploreData.items) {
+        items(
+            SampleData.items ,
+            key ={
+                it.title
+            }
+        ) {
             ExploreItemCard(it)
         }
+
     }
 
 

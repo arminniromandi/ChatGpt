@@ -5,7 +5,6 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -28,6 +27,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -46,7 +46,7 @@ import ir.arminniromandi.myapplication.Tool.Constance.BottomNavHomeItems
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val viewModel by viewModels<MainViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -55,19 +55,20 @@ class MainActivity : ComponentActivity() {
 
 
         setContent {
+            val viewModel: MainViewModel = hiltViewModel()
+
             AppTheme {
                 val navController = rememberNavController()
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
-                val nav = viewModel.navEvent.collectAsState()
+                val navEvent by viewModel.navEvent.collectAsState()
 
-
-                LaunchedEffect(nav) {
-                    nav.value?.let {
+                // اینجا به تغییرات navEvent گوش میدیم
+                LaunchedEffect(navEvent) {
+                    navEvent?.let {
                         navController.navigate(it)
-                        viewModel.onNavDone()
+                        viewModel.clearNavigation()
                     }
-
                 }
 
 
@@ -123,14 +124,14 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(it)
                     ) {
                         composable(MainScreens.Main.screenName) {
-                            HomeScreen()
+                            HomeScreen(viewModel)
                         }
                         composable(MainScreens.Setting.screenName) {
                             SettingScreen()
 
                         }
                         composable(MainScreens.History.screenName) {
-                            HistoryScreen()
+                            HistoryScreen(viewModel)
                         }
                         composable(MainScreens.ChatPage.screenName) {
                             ChatScreen(

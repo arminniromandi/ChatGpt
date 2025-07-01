@@ -35,8 +35,6 @@ fun TopBarExplore() {
     ) {
 
         FloatingActionButton(
-            modifier = FloatingActionButtonModifier,
-
             onClick = {
                 context.startActivity(Intent(context, MainActivity::class.java))
             }, shape = CircleShape, containerColor = white
@@ -44,6 +42,7 @@ fun TopBarExplore() {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 tint = Color.Black,
+                modifier = FloatingActionButtonModifier,
                 contentDescription = "back"
             )
 
@@ -55,7 +54,7 @@ fun TopBarExplore() {
             modifier = Modifier.align(Alignment.Center),
             text = "Explore",
             color = Color.White,
-            style = Typography().headlineMedium
+            style = Typography().headlineSmall
         )
 
 

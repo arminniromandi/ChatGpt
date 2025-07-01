@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -19,10 +18,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ir.arminniromandi.chatgpt.ui.explore.ExploreScreens
 import ir.arminniromandi.chatgpt.ui.explore.exploreWriting.ExploreWriting
 import ir.arminniromandi.chatgpt.ui.explore.homeExplore.ExploreScreen
@@ -30,8 +31,8 @@ import ir.arminniromandi.chatgpt.ui.main.MainScreens
 import ir.arminniromandi.chatgpt.ui.theme.AppTheme
 import ir.arminniromandi.chatgpt.viewmodel.ExploreViewModel
 
+@AndroidEntryPoint
 class ExploreActivity : ComponentActivity() {
-    private val viewModel by viewModels<ExploreViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,7 @@ class ExploreActivity : ComponentActivity() {
 
 
         setContent {
+            val viewModel: ExploreViewModel = hiltViewModel<ExploreViewModel>()
             val navController = rememberNavController()
             val nav = viewModel.navEvent.collectAsState()
 
@@ -93,7 +95,7 @@ class ExploreActivity : ComponentActivity() {
                         modifier = Modifier.padding(it)
                     ) {
                         composable(ExploreScreens.Writing.screenName) { ExploreWriting() }
-                        composable(ExploreScreens.Home.screenName) { ExploreScreen() }
+                        composable(ExploreScreens.Home.screenName) { ExploreScreen(viewModel) }
 
                     }
 

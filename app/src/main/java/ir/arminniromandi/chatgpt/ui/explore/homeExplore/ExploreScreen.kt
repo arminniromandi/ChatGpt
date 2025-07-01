@@ -6,12 +6,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import ir.arminniromandi.chatgpt.Tool.util.ExploreData.items
+import ir.arminniromandi.chatgpt.Tool.util.SampleData.items
 import ir.arminniromandi.chatgpt.ui.explore.TopBarExplore
 import ir.arminniromandi.chatgpt.ui.explore.homeExplore.component.ExploreItems
-i
+import ir.arminniromandi.chatgpt.viewmodel.ExploreViewModel
+
 @Composable
-fun ExploreScreen() {
+fun ExploreScreen(viewModel: ExploreViewModel) {
 
     Column(
         Modifier
@@ -22,7 +23,7 @@ fun ExploreScreen() {
         ) {
 
         TopBarExplore()
-        ExploreItems(items)
+        ExploreItems(items , viewModel)
 
 
     }
