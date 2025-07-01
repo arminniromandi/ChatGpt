@@ -1,6 +1,7 @@
 package ir.arminniromandi.chatgpt.ui.theme
 
 import androidx.compose.material3.Typography
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -35,6 +36,7 @@ val Typography = Typography(
         fontSize = 57.sp,
         lineHeight = 64.sp,
         letterSpacing = (-0.25).sp,
+        color = Color.White
     ),
     displayMedium = TextStyle(
         fontFamily = satoshi,
@@ -42,6 +44,7 @@ val Typography = Typography(
         fontSize = 45.sp,
         lineHeight = 52.sp,
         letterSpacing = 0.sp,
+        color = Color.White
     ),
     displaySmall = TextStyle(
         fontFamily = satoshi,
@@ -49,30 +52,35 @@ val Typography = Typography(
         fontSize = 36.sp,
         lineHeight = 44.sp,
         letterSpacing = 0.sp,
+        color = Color.White
     ),
 
     // --- Headline Styles ---
     // برای عناوین بخش‌ها یا تیترهای مهم
     headlineLarge = TextStyle(
         fontFamily = satoshi,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.Medium,
         fontSize = 32.sp,
-        lineHeight = 40.sp,
+        color = white,
         letterSpacing = 0.sp,
     ),
+    // TODO: Add color = Color.White
     headlineMedium = TextStyle( // این استایل رو خودتون داشتید
         fontFamily = satoshi,
         fontWeight = FontWeight.Medium, // شما Bold گذاشته بودید که می‌تونه برای تیتر مناسب باشه
         fontSize = 18.sp, // از 18sp به 28sp (پیش‌فرض Material Design 3) تغییر دادم
-        lineHeight = 36.sp,
+        lineHeight = 32.sp,
+        color = white,
         letterSpacing = 0.sp,
     ),
+    // TODO: Add color = Color.White
     headlineSmall = TextStyle(
         fontFamily = satoshi,
         fontWeight = FontWeight.Normal,
         fontSize = 24.sp,
         lineHeight = 32.sp,
         letterSpacing = 0.sp,
+        color = Color.White
     ),
 
     // --- Title Styles ---
@@ -83,6 +91,7 @@ val Typography = Typography(
         fontSize = 22.sp,
         lineHeight = 28.sp,
         letterSpacing = 0.sp,
+        color = Color.White
     ),
     titleMedium = TextStyle(
         fontFamily = satoshi,
@@ -90,6 +99,7 @@ val Typography = Typography(
         fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.15.sp,
+        color = Color.White
     ),
     titleSmall = TextStyle(
         fontFamily = satoshi,
@@ -97,6 +107,7 @@ val Typography = Typography(
         fontSize = 14.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.1.sp,
+        color = Color.White
     ),
 
     // --- Body Styles ---
@@ -107,6 +118,7 @@ val Typography = Typography(
         fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp,
+        color = Color.White
     ),
     bodyMedium = TextStyle( // این استایل رو خودتون داشتید
         fontFamily = satoshi,
@@ -114,6 +126,7 @@ val Typography = Typography(
         fontSize = 14.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.25.sp,
+        color = Color.White
     ),
     bodySmall = TextStyle( // این استایل رو خودتون داشتید
         fontFamily = satoshi,
@@ -121,6 +134,7 @@ val Typography = Typography(
         fontSize = 12.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.4.sp,
+        color = Color.White
     ),
 
     // --- Label Styles ---
@@ -131,6 +145,7 @@ val Typography = Typography(
         fontSize = 14.sp, // این همون 14sp پیش‌فرضه Material Design 3 هست
         lineHeight = 20.sp,
         letterSpacing = 0.1.sp,
+        color = Color.White
     ),
     labelMedium = TextStyle( // این استایل رو خودتون داشتید
         fontFamily = satoshi,
@@ -138,6 +153,7 @@ val Typography = Typography(
         fontSize = 18.sp, // به 12sp (پیش‌فرض Material Design 3) تغییر دادم
         lineHeight = 16.sp,
         letterSpacing = 0.5.sp,
+        color = Color.White
     ),
     labelSmall = TextStyle(
         fontFamily = satoshi,
@@ -145,5 +161,6 @@ val Typography = Typography(
         fontSize = 11.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.5.sp,
+        color = Color.White
     )
 )

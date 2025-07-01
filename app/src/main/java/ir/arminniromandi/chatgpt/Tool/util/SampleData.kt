@@ -4,9 +4,9 @@ import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.model.ExploreCardItem
 import ir.arminniromandi.chatgpt.ui.explore.ExploreScreens
 
-object ExploreData {
+object SampleData {
 
-    val items = listOf(
+    val items = listOf<ExploreCardItem>(
         ExploreCardItem(
             "Writing",
             R.drawable.pen_writing,
@@ -18,9 +18,24 @@ object ExploreData {
             R.drawable.pen_writing,
             "Create code quickly with any programming language",
             ExploreScreens.Code.screenName
+        ),
+        ExploreCardItem(
+            "idk",
+            R.drawable.pen_writing,
+            "Create code quickly with any programming language",
+            ExploreScreens.Code.screenName
+        ),
+        ExploreCardItem(
+            "animate",
+            R.drawable.pen_writing,
+            "Create code quickly with any programming language",
+            ExploreScreens.Code.screenName
         )
 
     )
+
+    val samplePromptLib = arrayOf("Develope","Seo", "Marketing", "job", "Code")
+
 
 
 }
