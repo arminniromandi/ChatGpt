@@ -11,8 +11,9 @@ object Constance {
     const val CHAT_URL = "https://api.avalai.ir/"
     val TAG = "test"
 
-    val FloatingActionButtonModifier = Modifier.size(28.dp)
-    val SettingIconSize = 32.dp
+
+    val FloatingActionButtonModifier = Modifier.size(24.dp) // Placeholder
+    val SettingIconSize = 28.dp // Placeholder
 
     val BottomNavHomeItems = arrayOf(
         BottomNavItems("Home", R.drawable.home),

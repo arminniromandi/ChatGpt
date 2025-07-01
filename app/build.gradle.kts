@@ -69,6 +69,8 @@ dependencies {
     implementation(libs.hilt.android)
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     ksp(libs.hilt.android.compiler)
+    implementation("androidx.compose.material:material-icons-core:1.7.7")
+    implementation("androidx.compose.material:material-icons-extended:1.7.7")
 
 
     var lottieVersion = "6.6.6"
