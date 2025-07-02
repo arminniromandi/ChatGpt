@@ -1,5 +1,7 @@
-package ir.arminniromandi.chatgpt.ui.main.Setting
+package ir.arminniromandi.chatgpt.ui.Setting
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -34,9 +36,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ir.arminniromandi.chatgpt.Activity.MainActivity
 import ir.arminniromandi.chatgpt.model.SettingItem
 import ir.arminniromandi.chatgpt.model.SettingSection
 import ir.arminniromandi.chatgpt.ui.theme.AppTheme
@@ -46,11 +50,8 @@ import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifi
 import ir.arminniromandi.myapplication.Tool.Constance.SettingIconSize
 
 
-
-
-
 @Composable
-fun SettingScreen() {
+fun SettingScreen(modifier: Modifier = Modifier , context: Context) {
 
 
     // Sample Data
@@ -81,8 +82,7 @@ fun SettingScreen() {
     )
 
     Column(
-        Modifier
-            .fillMaxSize()
+        modifier= modifier.fillMaxSize()
             .background(background2), // Ensure background2 is defined in your theme
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -99,7 +99,7 @@ fun SettingScreen() {
                 style = MaterialTheme.typography.headlineSmall
             )
             FloatingActionButton(
-                onClick = { /*viewModel.navigate(MainScreens.Main.screenName) */},
+                onClick = { context.startActivity(Intent(context , MainActivity::class.java))},
                 containerColor = Color.White,
                 modifier = Modifier.size(52.dp),
                 shape = CircleShape
@@ -178,6 +178,7 @@ fun SettingRow(icon: ImageVector, title: String, onClick: () -> Unit) {
 @Composable
 fun SettingPagePreview() {
     AppTheme {
-        SettingScreen()
+        val context = LocalContext.current
+        SettingScreen(context = context)
     }
 }

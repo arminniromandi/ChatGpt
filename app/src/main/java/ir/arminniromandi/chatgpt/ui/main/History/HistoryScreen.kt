@@ -1,5 +1,6 @@
 package ir.arminniromandi.chatgpt.ui.main.History
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -13,12 +14,14 @@ import ir.arminniromandi.chatgpt.ui.main.History.component.HistorySection
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 
 @Composable
-fun HistoryScreen(viewModel: MainViewModel ) {
+fun HistoryScreen(viewModel: MainViewModel  ) {
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
-        ) {
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+
+    ) {
 
 
         HistoryHeader()
@@ -36,5 +39,4 @@ fun HistoryScreen(viewModel: MainViewModel ) {
 @Preview
 @Composable
 private fun dfsfgsr() {
-    HistoryHeader()
 }

@@ -15,11 +15,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ir.arminniromandi.chatgpt.Activity.ExploreActivity
 import ir.arminniromandi.chatgpt.R
@@ -29,6 +27,7 @@ import ir.arminniromandi.chatgpt.ui.main.home.component.ExploreSection
 import ir.arminniromandi.chatgpt.ui.main.home.component.HomeHeader
 import ir.arminniromandi.chatgpt.ui.main.home.component.HomeHistorySection
 import ir.arminniromandi.chatgpt.ui.main.home.component.PromptSection
+import ir.arminniromandi.chatgpt.ui.theme.Typography
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 
 @Composable
@@ -64,8 +63,7 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>()) {
             Text(
                 text = context.getString(R.string.new_chat),
                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
-                fontFamily = FontFamily(Font(R.font.satoshi_medium)),
-                fontSize = 20.sp
+                style = Typography.labelMedium.copy(color = Black)
             )
         }
 

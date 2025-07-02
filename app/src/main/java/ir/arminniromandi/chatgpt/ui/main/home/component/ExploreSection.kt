@@ -3,10 +3,12 @@ package ir.arminniromandi.chatgpt.ui.main.home.component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -29,11 +31,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.Tool.util.SampleData
 import ir.arminniromandi.chatgpt.model.ExploreCardItem
 import ir.arminniromandi.chatgpt.ui.theme.Typography
@@ -123,9 +123,11 @@ private fun ExploreItemCard(item: ExploreCardItem){
                 shape = RoundedCornerShape(38.dp)
             )
             .background(gray_700)
-            .padding(12.dp),
+            .padding(12.dp)
+
+            .clickable(role = Role.Button){item.onClick}
+            ,
         horizontalAlignment = Alignment.Start,
-        verticalArrangement = Arrangement.SpaceBetween
     ) {
         Icon(
             painter = painterResource(item.icon),
@@ -136,18 +138,26 @@ private fun ExploreItemCard(item: ExploreCardItem){
         Spacer(Modifier.height(8.dp))
         Text(
             text = item.title,
-            color = white,
-            fontSize = 21.sp,
-            fontFamily = FontFamily(Font(R.font.satoshi_medium))
-        )
+            style = Typography.titleLarge
+            )
         Spacer(Modifier.height(8.dp))
         Text(
             text = item.des,
-            color = gray_300,
-            fontSize = 16.sp,
-            fontFamily = FontFamily(Font(R.font.satoshi_medium))
+            style = Typography.titleMedium.copy(color = gray_300)
         )
 
     }
 
+}
+
+@Preview
+@Composable
+private fun dsfwedhufherfiouerfu9er() {
+    Column (
+        Modifier.fillMaxSize()
+    ){
+
+        ExploreSection {  }
+
+    }
 }

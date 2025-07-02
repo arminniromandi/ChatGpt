@@ -95,10 +95,9 @@ val Typography = Typography(
     ),
     titleMedium = TextStyle(
         fontFamily = satoshi,
-        fontWeight = FontWeight.Medium, // اغلب Medium یا Bold برای Title
+        fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.15.sp,
+        lineHeight = 18.sp,
         color = Color.White
     ),
     titleSmall = TextStyle(
@@ -149,10 +148,9 @@ val Typography = Typography(
     ),
     labelMedium = TextStyle( // این استایل رو خودتون داشتید
         fontFamily = satoshi,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.Medium,
         fontSize = 18.sp, // به 12sp (پیش‌فرض Material Design 3) تغییر دادم
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp,
+
         color = Color.White
     ),
     labelSmall = TextStyle(

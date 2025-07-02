@@ -2,6 +2,7 @@ package ir.arminniromandi.chatgpt.Tool.util
 
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.model.ExploreCardItem
+import ir.arminniromandi.chatgpt.model.PromptItem
 import ir.arminniromandi.chatgpt.ui.explore.ExploreScreens
 
 object SampleData {
@@ -34,8 +35,13 @@ object SampleData {
 
     )
 
-    val samplePromptLib = arrayOf("Develope","Seo", "Marketing", "job", "Code")
-
+    val samplePromptLib = arrayOf(
+        PromptItem(title = "Develop"),
+        PromptItem(title = "Seo"),
+        PromptItem(title = "Marketing"),
+        PromptItem(title = "job"),
+        PromptItem(title = "Code")
+    )
 
 
 }

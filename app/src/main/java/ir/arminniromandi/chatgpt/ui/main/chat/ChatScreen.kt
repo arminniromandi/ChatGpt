@@ -1,9 +1,11 @@
 package ir.arminniromandi.chatgpt.ui.main.chat
 
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -19,7 +21,7 @@ import ir.arminniromandi.chatgpt.ui.main.chat.component.MessageSection
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 
 @Composable
-fun ChatScreen(viewModel: MainViewModel ) {
+fun ChatScreen(viewModel: MainViewModel) {
 
     val modelIndex = remember { mutableIntStateOf(0) }
     val chatItem = AiModel.entries
@@ -34,24 +36,29 @@ fun ChatScreen(viewModel: MainViewModel ) {
 
     if (viewModel.allMessage.isEmpty()) viewModel.showIntro.value = true
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
 
-        ChatHeader(chatItem, modelIndex, viewModel){
-            viewModel.navigate(it)
+        Column(
+            modifier = Modifier
+
+                .fillMaxSize()
+                .scrollable(rememberScrollState() , Orientation.Vertical)
+            ,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+
+            ChatHeader(chatItem, modelIndex, viewModel){
+                viewModel.navigate(it)
+            }
+
+            if (viewModel.showIntro.value) IntroSection(model.value)
+            else MessageSection(viewModel)
+
+            BottomChat(viewModel , model)
+
+
         }
 
-        if (viewModel.showIntro.value) IntroSection(model.value)
-        else MessageSection(viewModel)
 
-        BottomChat(viewModel, model)
-
-
-    }
 
 }

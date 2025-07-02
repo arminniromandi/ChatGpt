@@ -83,7 +83,7 @@ fun PromptSection(context : Context) {
         horizontalItemSpacing = 4.dp
     ) {
         items(samplePromptLib) {
-            PromptChip(it)
+            PromptChip(it.title)
         }
 
     }

@@ -26,8 +26,8 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ir.arminniromandi.chatgpt.ui.main.MainScreens
 import ir.arminniromandi.chatgpt.R
+import ir.arminniromandi.chatgpt.ui.main.MainScreens
 import ir.arminniromandi.chatgpt.ui.theme.Typography
 import ir.arminniromandi.chatgpt.ui.theme.black
 import ir.arminniromandi.chatgpt.ui.theme.gray_300
@@ -53,7 +53,7 @@ fun HomeHistorySection(onRoute: (route : String)->Unit) {
         )
 
         FloatingActionButton(
-            { onRoute(MainScreens.Main.screenName) },
+            { onRoute(MainScreens.History.screenName) },
             containerColor = Color.White,
             modifier = Modifier.size(52.dp),
             shape = CircleShape
