@@ -24,9 +24,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.R
+import ir.arminniromandi.chatgpt.customUi.AnimateMainPage
 import ir.arminniromandi.chatgpt.ui.main.MainScreens
 import ir.arminniromandi.chatgpt.ui.theme.Typography
 import ir.arminniromandi.chatgpt.ui.theme.black
@@ -35,7 +37,7 @@ import ir.arminniromandi.chatgpt.ui.theme.white
 import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 
 @Composable
-fun HomeHistorySection(onRoute: (route : String)->Unit) {
+fun HomeHistorySection(onRoute: (route: String) -> Unit, visible: Boolean, density: Density) {
 
     Row(
         modifier = Modifier
@@ -75,33 +77,38 @@ fun HomeHistorySection(onRoute: (route : String)->Unit) {
 
     val itemsSample = remember { List(10) { "Sample" } }
 
-    LazyRow(
-        modifier = Modifier.fillMaxWidth()
+    AnimateMainPage(
+        density = density,
+        visible = visible,
+        animateRun = remember {
+            androidx.compose.runtime.mutableStateOf(false)
+        }
     ) {
+        LazyRow(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            // TODO: make fix items
+            items(itemsSample) {
+                Row(
+                    modifier = Modifier
+                        .padding(vertical = 2.dp, horizontal = 4.dp)
+                        .clip(CircleShape)
+                        .background(gray_300)
+                        .padding(horizontal = 13.dp),
 
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
 
+                    Text(
+                        "sample",
+                        fontFamily = FontFamily(Font(R.font.satoshi_bold)),
+                        fontSize = 18.sp,
+                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
+                        color = black
+                    )
 
-        // TODO: make fix items
-        items(itemsSample) {
-            Row(
-                modifier = Modifier
-                    .padding(vertical = 2.dp , horizontal = 4.dp)
-                    .clip(CircleShape)
-                    .background(gray_300)
-                    .padding(horizontal = 13.dp),
-
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-
-                Text(
-                    "sample",
-                    fontFamily = FontFamily(Font(R.font.satoshi_bold)),
-                    fontSize = 18.sp,
-                    modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
-                    color = black
-                )
-
+                }
             }
         }
     }

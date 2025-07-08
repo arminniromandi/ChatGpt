@@ -6,15 +6,13 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Send
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -26,11 +24,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.Tool.util.TextDirectionUtil.getTextDirection
 import ir.arminniromandi.chatgpt.model.AiModel
 import ir.arminniromandi.chatgpt.ui.theme.Typography
@@ -39,6 +35,7 @@ import ir.arminniromandi.chatgpt.ui.theme.gray_600
 import ir.arminniromandi.chatgpt.ui.theme.textFieldColor
 import ir.arminniromandi.chatgpt.ui.theme.white
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
+import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 
 
 @Composable
@@ -64,10 +61,9 @@ fun BottomChat(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .windowInsetsPadding(WindowInsets.ime)
             .padding(bottom = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceEvenly
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
 
 
@@ -75,7 +71,7 @@ fun BottomChat(
 
         BasicTextField(
             value = text.value, modifier = Modifier
-                .fillMaxWidth(0.9f)
+                .weight(0.85f)
                 .onFocusChanged {
                     isFocused = it.isFocused
 
@@ -86,9 +82,11 @@ fun BottomChat(
                 .border(
                     1.dp, gray_600, CircleShape
                 )
-                .padding(2.dp), onValueChange = {
+                .padding(2.dp),
+            onValueChange = {
                 text.value = it
-            }, textStyle = TextStyle(
+            },
+            textStyle = TextStyle(
                 color = white, textDirection = textDirection,
 
 
@@ -113,8 +111,10 @@ fun BottomChat(
         )
 
 
-        IconButton(
-            enabled = !text.value.isEmpty(), onClick = {
+        FloatingActionButton (
+            modifier = Modifier.weight(0.15f),
+            containerColor = white,
+            onClick = {
                 if (isConnect.value) {
 
                     viewModel.saveMessageAndSendReq(
@@ -127,9 +127,9 @@ fun BottomChat(
                 } else showOverlay.value = true
             }) {
             Image(
-                painter = painterResource(R.drawable.send),
+                imageVector = Icons.AutoMirrored.Outlined.Send,
 
-                contentDescription = "send", modifier = Modifier.size(58.dp)
+                contentDescription = "send", modifier = FloatingActionButtonModifier
 
             )
         }

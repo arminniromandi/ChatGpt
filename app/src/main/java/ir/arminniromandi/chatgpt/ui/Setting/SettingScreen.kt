@@ -2,7 +2,6 @@ package ir.arminniromandi.chatgpt.ui.Setting
 
 import android.content.Context
 import android.content.Intent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -82,8 +81,7 @@ fun SettingScreen(modifier: Modifier = Modifier , context: Context) {
     )
 
     Column(
-        modifier= modifier.fillMaxSize()
-            .background(background2), // Ensure background2 is defined in your theme
+        modifier= modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(

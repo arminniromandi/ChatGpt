@@ -1,8 +1,6 @@
 package ir.arminniromandi.chatgpt.Activity
 
 import android.os.Bundle
-import android.util.Log
-import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -58,9 +56,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-
-
+//        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
 
         setContent {
@@ -72,7 +68,6 @@ class MainActivity : ComponentActivity() {
                 val currentRoute = navBackStackEntry?.destination?.route
                 val navEvent by viewModel.navEvent.collectAsState()
 
-                Log.i("test" , currentRoute.toString())
 
                 // اینجا به تغییرات navEvent گوش میدیم
                 LaunchedEffect(navEvent) {
@@ -101,19 +96,22 @@ class MainActivity : ComponentActivity() {
                             }
                         },
                     bottomBar = {
+
+
                         val visible = remember {
                             mutableStateOf(true)
                         }
-                        LaunchedEffect(currentRoute.toString() ==MainScreens.ChatPage.screenName) {
+                        LaunchedEffect(currentRoute.toString() == MainScreens.ChatPage.screenName) {
                             delay(800)
-                            visible.value = currentRoute.toString() != MainScreens.ChatPage.screenName
+                            visible.value =
+                                currentRoute.toString() != MainScreens.ChatPage.screenName
 
                         }
 
 
                         AnimatedVisibility(
                             visible.value,
-                            enter = fadeIn()+ expandVertically(animationSpec = tween(500)),
+                            enter = fadeIn() + expandVertically(animationSpec = tween(500)),
                             exit = fadeOut() + shrinkVertically(animationSpec = tween(500)),
                         ) {
 
@@ -133,8 +131,9 @@ class MainActivity : ComponentActivity() {
                         }
 
                         Spacer(modifier = Modifier.navigationBarsPadding())
+
                     }
-                ) {innerPadding->
+                ) { innerPadding ->
 
 
                     NavHost(

@@ -1,6 +1,7 @@
 package ir.arminniromandi.chatgpt.ui.main.home
 
 import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,10 +14,14 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ir.arminniromandi.chatgpt.Activity.ExploreActivity
@@ -29,10 +34,23 @@ import ir.arminniromandi.chatgpt.ui.main.home.component.HomeHistorySection
 import ir.arminniromandi.chatgpt.ui.main.home.component.PromptSection
 import ir.arminniromandi.chatgpt.ui.theme.Typography
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
+import kotlinx.coroutines.delay
 
 @Composable
 fun HomeScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>()) {
     val context = LocalContext.current
+    val density = LocalDensity.current
+    var visible = remember {
+        mutableStateOf(false)
+    }
+
+
+    //3 times
+    LaunchedEffect(Unit) {
+        delay(200)
+        visible.value = true
+    }
+
 
 
     Column(
@@ -79,13 +97,20 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>()) {
             HomeHistorySection(
                 onRoute = {
                     viewModel.navigate(it)
-                }
+                },
+                visible = visible.value,
+                density = density
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
 
-            ExploreSection(expClick = {
+
+            Log.i("test" , visible.value.toString())
+            ExploreSection(
+                visible = visible,
+                density = density,
+                expClick = {
                 context.startActivity(
                     Intent(
                         context,
@@ -97,7 +122,13 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>()) {
             Spacer(modifier = Modifier.height(8.dp))
 
 
-            PromptSection(context)
+
+
+            PromptSection(
+                context = context,
+                visible = visible.value,
+                density = density,
+            )
         }
 
 

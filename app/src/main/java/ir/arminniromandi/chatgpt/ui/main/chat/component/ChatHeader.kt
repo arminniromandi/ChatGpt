@@ -76,7 +76,7 @@ fun ChatHeader(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 8.dp),
+            .padding( vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -177,7 +177,6 @@ fun ChatHeader(
 
             },
             containerColor = white,
-            modifier = FloatingActionButtonModifier,
             shape = CircleShape,
             contentColor = white
 
@@ -186,9 +185,9 @@ fun ChatHeader(
 
             Icon(
                 painter = painterResource(R.drawable.trash),
+                modifier = FloatingActionButtonModifier,
                 tint = Color.Black,
                 contentDescription = "delete Chat",
-                modifier = Modifier.size(22.dp)
             )
 
         }

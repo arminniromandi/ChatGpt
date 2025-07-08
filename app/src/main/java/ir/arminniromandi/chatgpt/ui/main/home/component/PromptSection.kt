@@ -22,21 +22,25 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import ir.arminniromandi.chatgpt.Activity.PromptLibraryActivity
 import ir.arminniromandi.chatgpt.Tool.util.SampleData.samplePromptLib
+import ir.arminniromandi.chatgpt.customUi.AnimateMainPage
 import ir.arminniromandi.chatgpt.ui.theme.Typography
 import ir.arminniromandi.chatgpt.ui.theme.white
 import ir.arminniromandi.chatgpt.ui.theme.whiteGradient
 import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 
 @Composable
-fun PromptSection(context : Context) {
+fun PromptSection(context: Context, visible: Boolean, density: Density) {
 
 
     Row(
@@ -75,25 +79,32 @@ fun PromptSection(context : Context) {
 
     Spacer(Modifier.height(4.dp))
 
-    LazyHorizontalStaggeredGrid(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(125.dp),
-        rows = StaggeredGridCells.Fixed(2),
-        horizontalItemSpacing = 4.dp
-    ) {
-        items(samplePromptLib) {
-            PromptChip(it.title)
+    AnimateMainPage(
+        density = density,
+        visible = visible,
+        animateRun = remember {
+            mutableStateOf(true)
         }
+    ) {
+        LazyHorizontalStaggeredGrid(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(125.dp),
+            rows = StaggeredGridCells.Fixed(2),
+            horizontalItemSpacing = 4.dp
+        ) {
+            items(samplePromptLib) {
+                PromptChip(it.title)
+            }
 
+        }
     }
-
 
 
 }
 
 @Composable
-private fun PromptChip(text : String) {
+private fun PromptChip(text: String) {
 
     Row(
         modifier = Modifier
