@@ -1,13 +1,14 @@
 package ir.arminniromandi.chatgpt.viewmodel
 
-import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ir.arminniromandi.chatgpt.Api.sms.SmsApiRepository
+import ir.arminniromandi.chatgpt.Api.sms.model.Parameter
+import ir.arminniromandi.chatgpt.Api.sms.model.RequestSmsBody
 import ir.arminniromandi.composeapplication.ConectivityObserver
-import ir.arminniromandi.myapplication.Parameter
-import ir.arminniromandi.myapplication.RequestSmsBody
-import ir.arminniromandi.myapplication.SmsApiService
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -17,13 +18,8 @@ import kotlin.random.Random
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     connectivityObserver: ConectivityObserver,
-    private val smsApiService: SmsApiService
+    val smsApiRepository: SmsApiRepository
 ) : ViewModel() {
-
-    val smsReqState = mutableStateOf("")
-
-    val random = Random.nextInt(1000, 9999).toString()
-
 
     val isConnected = connectivityObserver.isConnected
         .stateIn(
@@ -32,31 +28,30 @@ class SignUpViewModel @Inject constructor(
             false
         )
 
+    private var _smsReqState = MutableLiveData<String>("")
+    val smsReqState: LiveData<String> = _smsReqState
+
+    val random = Random.nextInt(1000, 9999).toString()
+
     fun isOtpValid(entered: String): Boolean = entered == random
 
     fun sendReqForAuth(phoneNumber: String, code: String) {
-        val parametr = listOf(Parameter("code", code))
+        val parameter = listOf(Parameter("code", code))
+        _smsReqState.value ="sdsd"
 
+        if (isConnected.value){
+            viewModelScope.launch {
 
-        viewModelScope.launch {
-
-            if (isConnected.value) {
-                val response =
-                    smsApiService.sendRequest(
+                smsApiRepository.sendOtpReq(
                     RequestSmsBody(
-                        phoneNumber,
-                        "687263",
-                        parametr
+                        mobile = phoneNumber,
+                        parameters = parameter
                     )
-                ).body()
-
-
-            } else {
-                smsReqState.value = "No Internet Connection"
+                )
             }
+        }else
+            _smsReqState.postValue("No Internet Connection!")
 
-
-        }
 
 
     }

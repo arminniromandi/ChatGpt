@@ -2,7 +2,7 @@ package ir.arminniromandi.myapplication.Api.ChatAi.Model
 
 
 data class ChatRequest(
-    val model: String = "gpt-3.5-turbo",
+    val model: String ,
     val messages: List<Message>
 )
 

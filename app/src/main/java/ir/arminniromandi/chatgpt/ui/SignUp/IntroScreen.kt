@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.R
@@ -126,5 +127,13 @@ fun IntroScreen(modifier : Modifier = Modifier) {
 
     }
 
+
+}
+
+@Preview
+@Composable
+private fun sfdfds() {
+
+    IntroScreen()
 
 }

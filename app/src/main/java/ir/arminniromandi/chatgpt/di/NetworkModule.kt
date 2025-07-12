@@ -1,11 +1,13 @@
 package ir.arminniromandi.chatgpt.di
 
+import android.util.Log
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ir.arminniromandi.myapplication.Api.ChatAi.ChatApiService
 import ir.arminniromandi.myapplication.SmsApiService
+import ir.arminniromandi.myapplication.Tool.Constance.CHAT_URL
 import ir.arminniromandi.myapplication.Tool.Constance.SMS_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -39,12 +41,11 @@ object NetworkModule {
     @Provides
     @ProvideChatApi
     fun provideRetrofitChat(): Retrofit {
-
+        Log.i("testRetrofit", "provideRetrofitChat: Start")
         return Retrofit.Builder()
-            .baseUrl("https://ai.liara.ir/api/v1/6846c3d3761c7d3b5f4badaf/")
+            .baseUrl(CHAT_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-
     }
 
     @Singleton

@@ -28,7 +28,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ir.arminniromandi.chatgpt.Tool.util.TextDirectionUtil.getTextDirection
-import ir.arminniromandi.chatgpt.model.AiModel
 import ir.arminniromandi.chatgpt.ui.theme.Typography
 import ir.arminniromandi.chatgpt.ui.theme.gray_400
 import ir.arminniromandi.chatgpt.ui.theme.gray_600
@@ -41,11 +40,8 @@ import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifi
 @Composable
 fun BottomChat(
     viewModel: MainViewModel,
-    modelSelected: AiModel,
+    modelSelected: String,
 ) {
-
-
-
 
 
     val text = remember { mutableStateOf("") }
@@ -86,24 +82,21 @@ fun BottomChat(
             onValueChange = {
                 text.value = it
             },
+
             textStyle = TextStyle(
-                color = white, textDirection = textDirection,
-
-
-                ), decorationBox = { innerTextField ->
+                color = white,
+                textDirection = textDirection,
+                fontSize = Typography.titleMedium.fontSize
+                ),
+            decorationBox = { innerTextField ->
 
                 Box(modifier = Modifier.padding(16.dp)) {
                     if (text.value.isEmpty()) Text(
                         "Type Your Question...", color = gray_400
-                    ) else
-                        Text(
-                            text.value,
-                            style = Typography.titleMedium
-                        )
-
+                    )
+                    innerTextField()
                 }
 
-                innerTextField()
 
             }
 
@@ -111,20 +104,19 @@ fun BottomChat(
         )
 
 
-        FloatingActionButton (
+        FloatingActionButton(
             modifier = Modifier.weight(0.15f),
             containerColor = white,
             onClick = {
-                if (isConnect.value) {
+//                if (isConnect.value) {
 
                     viewModel.saveMessageAndSendReq(
                         text.value,
-                        modelSelected.value,
-                        modelSelected.isLiara
+                        modelSelected,
                     )
                     text.value = ""
                     viewModel.showIntro.value = false
-                } else showOverlay.value = true
+//                } else showOverlay.value = true
             }) {
             Image(
                 imageVector = Icons.AutoMirrored.Outlined.Send,

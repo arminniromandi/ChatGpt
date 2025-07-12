@@ -1,4 +1,4 @@
-package ir.arminniromandi.myapplication
+package ir.arminniromandi.chatgpt.Api.sms.model
 
 data class Parameter(
     val name: String,
@@ -7,6 +7,6 @@ data class Parameter(
 
 data class RequestSmsBody(
     val mobile: String,
-    val templateId: String,
+    val templateId: String = "687263",
     val parameters: List<Parameter>
 )

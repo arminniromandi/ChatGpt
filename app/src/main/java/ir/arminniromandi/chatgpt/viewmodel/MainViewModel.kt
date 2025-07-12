@@ -1,5 +1,6 @@
 package ir.arminniromandi.chatgpt.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
@@ -8,9 +9,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.arminniromandi.chatgpt.dataBase.ChatRepository
-import ir.arminniromandi.chatgpt.model.Role
+import ir.arminniromandi.chatgpt.model.ai.Role
 import ir.arminniromandi.composeapplication.ConectivityObserver
-import ir.arminniromandi.myapplication.Api.ChatAi.ApiRepository
+import ir.arminniromandi.myapplication.Api.ChatAi.ChatApiRepository
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatRequest
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatResponse
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.Choice
@@ -25,7 +26,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val apiRepository: ApiRepository,
+    private val chatApiRepository: ChatApiRepository,
     private val conectivityObserver: ConectivityObserver,
     private val chatRepository: ChatRepository
 ) : ViewModel() {
@@ -78,26 +79,30 @@ class MainViewModel @Inject constructor(
 
 
 
-    fun saveMessageAndSendReq(text :String , model : String , isLiara: Boolean ){
+    fun saveMessageAndSendReq(text :String , model : String  ){
         allMessage.add(Message(Role.User.value, text))
-        sendReq(ChatRequest(model , allMessage) , isLiara )
+        sendReq(ChatRequest(model , allMessage)  )
     }
 
 
 
 
-    fun sendReq(chatRequest: ChatRequest , isLiara : Boolean) {
+    fun sendReq(chatRequest: ChatRequest  ) {
+        Log.i("testRetrofit", "sendReq: on viewModel Started ")
+
         viewModelScope.launch {
-
-
-
             try {
                 _loading.postValue(true)
                 isAnimationRun.value = true
                 delay(500)
 
-                 val response = apiRepository.getChatResponse(chatRequest , isLiara)
+                 val response = chatApiRepository.getChatResponse(chatRequest)
+                Log.i("testRetrofit", response.code().toString())
+                Log.i("testRetrofit", response.errorBody().toString())
+                Log.i("testRetrofit", response.message().toString())
+                Log.i("testRetrofit", response.headers().toString())
                 if (response.isSuccessful) {
+                    Log.i("testRetrofit", "is Successful")
 
                     allMessage.add(Message(Role.Assistant.value , response.body()!!.choices[0]
                         .message.content
@@ -105,10 +110,17 @@ class MainViewModel @Inject constructor(
 
                 }else {
                     _error.postValue(response.message())
+                    Log.i("testRetrofit", "not Successful")
+                    Log.i("testRetrofit", "code = "+response.code().toString())
+                    Log.i("testRetrofit", "errorBody = "+response.errorBody()?.string())
+                    Log.i("testRetrofit", "message = "+response.message().toString())
+                    Log.i("testRetrofit", "header ="+response.headers().toString())
 
                 }
             }catch (e:Exception){
                 _error.postValue(e.message)
+                Log.i("testRetrofit", " catch :" +e.message.toString())
+
 
             }finally {
                 _loading.postValue(false)
