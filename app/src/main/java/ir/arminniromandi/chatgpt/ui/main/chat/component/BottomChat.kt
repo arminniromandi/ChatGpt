@@ -6,8 +6,10 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
@@ -25,7 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ir.arminniromandi.chatgpt.Tool.util.TextDirectionUtil.getTextDirection
 import ir.arminniromandi.chatgpt.ui.theme.Typography
@@ -40,7 +41,7 @@ import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifi
 @Composable
 fun BottomChat(
     viewModel: MainViewModel,
-    modelSelected: String,
+    modelSelected: String = "",
 ) {
 
 
@@ -52,6 +53,11 @@ fun BottomChat(
         mutableStateOf(false)
     }
     val isConnect = viewModel.isConnected.collectAsState()
+
+
+
+
+
 
 
     Row(
@@ -72,7 +78,6 @@ fun BottomChat(
                     isFocused = it.isFocused
 
                 }
-                .padding(horizontal = 12.dp)
                 .clip(CircleShape)
                 .background(textFieldColor)
                 .border(
@@ -103,12 +108,13 @@ fun BottomChat(
 
         )
 
+        Spacer(Modifier.width(8.dp))
+
 
         FloatingActionButton(
-            modifier = Modifier.weight(0.15f),
+            modifier = Modifier,
             containerColor = white,
             onClick = {
-//                if (isConnect.value) {
 
                     viewModel.saveMessageAndSendReq(
                         text.value,
@@ -116,7 +122,6 @@ fun BottomChat(
                     )
                     text.value = ""
                     viewModel.showIntro.value = false
-//                } else showOverlay.value = true
             }) {
             Image(
                 imageVector = Icons.AutoMirrored.Outlined.Send,
@@ -131,51 +136,7 @@ fun BottomChat(
 
 }
 
-@Preview(showBackground = false, showSystemUi = true)
-@Composable
-private fun BottomChatPreview() {
-    val text = remember { mutableStateOf("") }
-    val textDirection = remember {
-        getTextDirection(text.value)
-    }
-    var isFocused by remember { mutableStateOf(false) }
 
-
-    BasicTextField(
-        value = text.value, modifier = Modifier
-            .fillMaxWidth(0.8f)
-            .onFocusChanged {
-                isFocused = it.isFocused
-
-            }
-            .padding(horizontal = 12.dp)
-            .clip(CircleShape)
-            .background(textFieldColor)
-            .border(
-                1.dp, gray_600, CircleShape
-            )
-            .padding(2.dp), onValueChange = {
-            text.value = it
-        }, textStyle = TextStyle(
-            color = white, textDirection = textDirection
-
-        ), decorationBox = { innerTextField ->
-
-            Box(modifier = Modifier.padding(16.dp)) {
-                if (text.value.isEmpty()) Text(
-                    "Type Your Question...", color = gray_400
-                )
-
-            }
-
-            innerTextField()
-
-        }
-
-
-    )
-
-}
 
 
 

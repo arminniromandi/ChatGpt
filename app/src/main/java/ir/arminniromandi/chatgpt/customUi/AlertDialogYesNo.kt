@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.ui.theme.Typography
+import ir.arminniromandi.chatgpt.ui.theme.black
 
 @Preview(showBackground = false, device = "id:pixel_5", showSystemUi = false)
 @Composable
@@ -50,7 +51,7 @@ fun AlertDialogYesNo(
                     "yes",
                     modifier = Modifier.padding(2.dp),
                     fontFamily = FontFamily(Font(R.font.satoshi_medium)),
-                    style = MaterialTheme.typography.labelLarge // Apply typography
+                    style = MaterialTheme.typography.labelLarge.copy(color = black) // Apply typography
                 )
             }
         },

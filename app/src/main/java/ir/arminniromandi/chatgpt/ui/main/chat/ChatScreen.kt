@@ -1,13 +1,9 @@
 package ir.arminniromandi.chatgpt.ui.main.chat
 
-import android.util.Log
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -29,11 +25,6 @@ fun ChatScreen(viewModel: MainViewModel = viewModel()) {
     val modelIndex = rememberSaveable { mutableIntStateOf(0) }
     val chatItem = AiModel.entries
 
-    Log.i("test", "ChatScreen: ${chatItem[modelIndex.intValue].value} ")
-
-
-
-
 
 
     if (viewModel.allMessage.isEmpty()) viewModel.showIntro.value = true
@@ -42,8 +33,7 @@ fun ChatScreen(viewModel: MainViewModel = viewModel()) {
     Column(
         modifier = Modifier
             .padding(horizontal = 8.dp)
-            .fillMaxSize()
-            .scrollable(rememberScrollState(), Orientation.Vertical),
+            .fillMaxSize() ,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {

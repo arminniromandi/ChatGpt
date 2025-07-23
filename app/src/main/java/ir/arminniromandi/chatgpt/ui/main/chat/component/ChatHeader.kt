@@ -142,16 +142,21 @@ fun ChatHeader(
                     DropdownMenu(
                         expanded.value, onDismissRequest = { expanded.value = false }) {
 
+
                         chatItem.forEachIndexed { index, model ->
 
                             DropdownMenuItem(text = {
-                                Row {
+                                Row(
+                                    Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
                                     Text(
                                         model.value
                                     )
                                     Spacer(Modifier.width(4.dp))
                                     Icon(
-                                        imageVector = model.icon,
+                                        painter = painterResource(model.icon),
                                         contentDescription = model.name,
                                         modifier = Modifier.size(24.dp)
                                     )

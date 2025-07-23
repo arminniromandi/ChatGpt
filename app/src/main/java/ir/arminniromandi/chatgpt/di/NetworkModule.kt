@@ -19,7 +19,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    @Qualifier
+    @Qualifier()
     @Retention(AnnotationRetention.BINARY)
     annotation class ProvideSmsApi
     @Qualifier
