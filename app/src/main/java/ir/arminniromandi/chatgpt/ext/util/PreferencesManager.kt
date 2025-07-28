@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.Tool.util
+package ir.arminniromandi.chatgpt.ext.util
 
 import android.content.Context
 import android.content.SharedPreferences

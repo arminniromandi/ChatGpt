@@ -1,5 +1,6 @@
 package ir.arminniromandi.chatgpt.Activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
@@ -39,8 +40,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
+import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.customUi.BottomNavItem
+import ir.arminniromandi.chatgpt.model.ExploreCardItem
 import ir.arminniromandi.chatgpt.ui.Setting.SettingScreen
+import ir.arminniromandi.chatgpt.ui.explore.ExploreScreens
 import ir.arminniromandi.chatgpt.ui.main.History.HistoryScreen
 import ir.arminniromandi.chatgpt.ui.main.MainScreens
 import ir.arminniromandi.chatgpt.ui.main.chat.ChatScreen
@@ -57,7 +61,25 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
+        val items = listOf<ExploreCardItem>(
+            ExploreCardItem(
+                "Writing",
+                R.drawable.pen_writing,
+                "Writing a story or text for article or interview",
+                ExploreScreens.Writing.screenName,
+                {startActivity(Intent(this , MainActivity::class.java))}
+            ),
+            ExploreCardItem(
+                "Gym Planner",
+                R.drawable.pen_writing,
+                "Create a personalized gym workout plan tailored.",
+                ExploreScreens.GymPlanner.screenName,
+                {startActivity(Intent(this , MainActivity::class.java))}
+            )
+
+        )
 
 
         setContent {

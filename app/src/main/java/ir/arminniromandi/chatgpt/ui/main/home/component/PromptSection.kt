@@ -32,7 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import ir.arminniromandi.chatgpt.Activity.PromptLibraryActivity
-import ir.arminniromandi.chatgpt.Tool.util.SampleData.samplePromptLib
+import ir.arminniromandi.chatgpt.ext.util.SampleData.samplePromptLib
 import ir.arminniromandi.chatgpt.customUi.AnimateMainPage
 import ir.arminniromandi.chatgpt.ui.theme.Typography
 import ir.arminniromandi.chatgpt.ui.theme.white

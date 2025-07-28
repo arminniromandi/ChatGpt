@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.Tool.util
+package ir.arminniromandi.chatgpt.ext.util
 
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable

@@ -1,9 +1,11 @@
-package ir.arminniromandi.chatgpt.Tool.util
+package ir.arminniromandi.chatgpt.ext.util
 
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.model.ExploreCardItem
 import ir.arminniromandi.chatgpt.model.PromptItem
 import ir.arminniromandi.chatgpt.ui.explore.ExploreScreens
+
+
 
 object SampleData {
 
@@ -12,25 +14,14 @@ object SampleData {
             "Writing",
             R.drawable.pen_writing,
             "Writing a story or text for article or interview",
+
             ExploreScreens.Writing.screenName
         ),
         ExploreCardItem(
-            "Code Generation",
+            "Gym Planner",
             R.drawable.pen_writing,
-            "Create code quickly with any programming language",
-            ExploreScreens.Code.screenName
-        ),
-        ExploreCardItem(
-            "idk",
-            R.drawable.pen_writing,
-            "Create code quickly with any programming language",
-            ExploreScreens.Code.screenName
-        ),
-        ExploreCardItem(
-            "animate",
-            R.drawable.pen_writing,
-            "Create code quickly with any programming language",
-            ExploreScreens.Code.screenName
+            "Create a personalized gym workout plan tailored.",
+            ExploreScreens.GymPlanner.screenName
         )
 
     )

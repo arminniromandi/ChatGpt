@@ -118,6 +118,8 @@ fun SettingScreen(modifier: Modifier = Modifier , context: Context) {
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 24.dp)
         ) {
+
+            //get all section
             settingSections.forEach {  section ->
                 // Section Title
                 Text(
@@ -131,6 +133,7 @@ fun SettingScreen(modifier: Modifier = Modifier , context: Context) {
                     SettingRow(icon = item.icon, title = item.title, onClick = item.onClick)
 
                 }
+
                 HorizontalDivider(
                     modifier = Modifier.padding(vertical = 32.dp),
                     color = Color.Gray.copy(alpha = 0.5f)

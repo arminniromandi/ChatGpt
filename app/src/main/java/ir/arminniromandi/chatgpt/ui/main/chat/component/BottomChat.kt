@@ -1,5 +1,7 @@
 package ir.arminniromandi.chatgpt.ui.main.chat.component
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -14,7 +16,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Send
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -25,10 +27,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
-import ir.arminniromandi.chatgpt.Tool.util.TextDirectionUtil.getTextDirection
+import ir.arminniromandi.chatgpt.ext.util.TextDirectionUtil.getTextDirection
 import ir.arminniromandi.chatgpt.ui.theme.Typography
 import ir.arminniromandi.chatgpt.ui.theme.gray_400
 import ir.arminniromandi.chatgpt.ui.theme.gray_600
@@ -38,6 +41,7 @@ import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun BottomChat(
     viewModel: MainViewModel,
@@ -46,8 +50,8 @@ fun BottomChat(
 
 
     val text = remember { mutableStateOf("") }
-    val textDirection = remember {
-        getTextDirection(text.value)
+    val textDirection by remember(text.value) {
+        mutableStateOf(getTextDirection(text.value))
     }
     val showOverlay = remember {
         mutableStateOf(false)
@@ -71,47 +75,45 @@ fun BottomChat(
 
         var isFocused by remember { mutableStateOf(false) }
 
-        BasicTextField(
-            value = text.value, modifier = Modifier
-                .weight(0.85f)
-                .onFocusChanged {
-                    isFocused = it.isFocused
 
-                }
+
+        val textAlign = if (textDirection == TextDirection.Rtl) TextAlign.End else TextAlign.Start
+
+        BasicTextField(
+            value = text.value,
+            onValueChange = { text.value = it },
+            modifier = Modifier
+                .weight(0.85f)
                 .clip(CircleShape)
                 .background(textFieldColor)
-                .border(
-                    1.dp, gray_600, CircleShape
-                )
-                .padding(2.dp),
-            onValueChange = {
-                text.value = it
-            },
-
+                .border(1.dp, gray_600, CircleShape)
+                .padding(12.dp),
             textStyle = TextStyle(
                 color = white,
                 textDirection = textDirection,
+                textAlign = textAlign,
                 fontSize = Typography.titleMedium.fontSize
-                ),
+            ),
             decorationBox = { innerTextField ->
-
-                Box(modifier = Modifier.padding(16.dp)) {
-                    if (text.value.isEmpty()) Text(
-                        "Type Your Question...", color = gray_400
-                    )
+                Box(Modifier.fillMaxWidth()) {
+                    if (text.value.isEmpty()) {
+                        Text(
+                            "Type Your Question...",
+                            color = gray_400,
+                            textAlign = textAlign,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
                     innerTextField()
                 }
-
-
             }
-
-
         )
+
 
         Spacer(Modifier.width(8.dp))
 
 
-        FloatingActionButton(
+        SmallFloatingActionButton(
             modifier = Modifier,
             containerColor = white,
             onClick = {
@@ -135,6 +137,7 @@ fun BottomChat(
     }
 
 }
+
 
 
 

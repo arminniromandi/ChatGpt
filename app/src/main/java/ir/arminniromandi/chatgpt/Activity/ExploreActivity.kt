@@ -4,14 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -19,15 +13,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import ir.arminniromandi.chatgpt.ui.explore.ExploreScreens
-import ir.arminniromandi.chatgpt.ui.explore.exploreWriting.ExploreWriting
-import ir.arminniromandi.chatgpt.ui.explore.homeExplore.ExploreScreen
-import ir.arminniromandi.chatgpt.ui.main.MainScreens
+import ir.arminniromandi.chatgpt.navigation.ExploreNavHost
 import ir.arminniromandi.chatgpt.ui.theme.AppTheme
 import ir.arminniromandi.chatgpt.viewmodel.ExploreViewModel
 
@@ -39,6 +28,7 @@ class ExploreActivity : ComponentActivity() {
         enableEdgeToEdge()
 
 
+//        intent.getStringExtra()
 
 
 
@@ -68,37 +58,11 @@ class ExploreActivity : ComponentActivity() {
 
                     ) {
 
-                    NavHost(
-                        navController = navController,
-                        startDestination = MainScreens.Main.screenName,
-                        enterTransition = {
-                            fadeIn(
-                                animationSpec = tween(
-                                    durationMillis = 500
-                                )
-                            ) + slideInHorizontally(
-                                animationSpec = tween(
-                                    durationMillis = 500
-                                )
-                            )
-                        },
-                        exitTransition = {
-                            fadeOut(
-                                animationSpec = tween(500)
-                            ) + slideOutHorizontally(
-                                animationSpec = tween(
-                                    500
-                                )
-                            )
-                        },
-
-                        modifier = Modifier.padding(it)
-                    ) {
-                        composable(ExploreScreens.Writing.screenName) { ExploreWriting() }
-                        composable(ExploreScreens.Home.screenName) { ExploreScreen(viewModel) }
-
-                    }
-
+                    ExploreNavHost(
+                        navController= navController,
+                        innerPadding = it,
+                        viewModel = viewModel
+                        )
 
                 }
             }

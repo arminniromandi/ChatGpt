@@ -4,7 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ir.arminniromandi.chatgpt.Tool.util.PreferencesManager
+import ir.arminniromandi.chatgpt.ext.util.PreferencesManager
 import javax.inject.Inject
 
 @HiltViewModel

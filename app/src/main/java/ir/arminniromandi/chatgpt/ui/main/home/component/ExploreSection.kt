@@ -48,8 +48,8 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
-import ir.arminniromandi.chatgpt.Tool.util.SampleData
 import ir.arminniromandi.chatgpt.customUi.AnimateMainPage
+import ir.arminniromandi.chatgpt.ext.util.SampleData
 import ir.arminniromandi.chatgpt.model.ExploreCardItem
 import ir.arminniromandi.chatgpt.ui.theme.Typography
 import ir.arminniromandi.chatgpt.ui.theme.gray_300
@@ -157,7 +157,7 @@ private fun ExploreItemCard(
                 indication = null,
                 role = androidx.compose.ui.semantics.Role.Button
             ) {
-                item.onClick
+                
             }
             .pointerInput(Unit) {
                 detectTapGestures(
