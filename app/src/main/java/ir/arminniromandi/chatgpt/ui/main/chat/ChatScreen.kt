@@ -27,7 +27,7 @@ fun ChatScreen(viewModel: MainViewModel = viewModel()) {
 
 
 
-    if (viewModel.allMessage.isEmpty()) viewModel.showIntro.value = true
+    if (viewModel.currentAllMessage.isEmpty()) viewModel.showIntro.value = true
 
 
     Column(

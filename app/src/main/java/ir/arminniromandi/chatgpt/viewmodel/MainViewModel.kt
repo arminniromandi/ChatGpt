@@ -41,7 +41,6 @@ class MainViewModel @Inject constructor(
 
 
 
-    //ساخت چت مادل برای جابه جایی این متغیر ها و سبک سازی todo:
     private val currentSessionId = mutableStateOf<Int>(-1)
 
     private val _chatResponse = MutableLiveData<ChatResponse>(ChatResponse(listOf(Choice(Message("user" ,"" )))))
@@ -54,14 +53,14 @@ class MainViewModel @Inject constructor(
     val error: LiveData<String> = _error
 
 
-    val allMessage = mutableStateListOf<Message>()
+    val currentAllMessage = mutableStateListOf<Message>()
 
     val isAnimationRun = mutableStateOf(false)
 
     var showIntro = mutableStateOf(true)
 
     //fixme: todo: need to change (in change)
-    var showHistory = mutableStateOf(true)
+    var showHistory = mutableStateOf(false)
 
 
     private val _navEvent = MutableStateFlow<String?>(null)
@@ -80,8 +79,8 @@ class MainViewModel @Inject constructor(
 
 
     fun saveMessageAndSendReq(text :String , model : String  ){
-        allMessage.add(Message(Role.User.value, text))
-        sendReq(ChatRequest(model , allMessage)  )
+        currentAllMessage.add(Message(Role.User.value, text))
+        sendReq(ChatRequest(model , currentAllMessage)  )
     }
 
 
@@ -97,29 +96,21 @@ class MainViewModel @Inject constructor(
                 delay(500)
 
                  val response = chatApiRepository.getChatResponse(chatRequest)
-                Log.i("testRetrofit", response.code().toString())
-                Log.i("testRetrofit", response.errorBody().toString())
-                Log.i("testRetrofit", response.message().toString())
-                Log.i("testRetrofit", response.headers().toString())
+
                 if (response.isSuccessful) {
                     Log.i("testRetrofit", "is Successful")
 
-                    allMessage.add(Message(Role.Assistant.value , response.body()!!.choices[0]
+                    currentAllMessage.add(Message(Role.Assistant.value , response.body()!!.choices[0]
                         .message.content
                     ))
 
                 }else {
                     _error.postValue(response.message())
-                    Log.i("testRetrofit", "not Successful")
-                    Log.i("testRetrofit", "code = "+response.code().toString())
-                    Log.i("testRetrofit", "errorBody = "+response.errorBody()?.string())
-                    Log.i("testRetrofit", "message = "+response.message().toString())
-                    Log.i("testRetrofit", "header ="+response.headers().toString())
+
 
                 }
             }catch (e:Exception){
                 _error.postValue(e.message)
-                Log.i("testRetrofit", " catch :" +e.message.toString())
 
 
             }finally {
@@ -130,7 +121,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun deleteChat() {
-        allMessage.clear()
+        currentAllMessage.clear()
     }
 
 

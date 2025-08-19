@@ -46,7 +46,6 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import ir.arminniromandi.chatgpt.customUi.AnimateMainPage
 import ir.arminniromandi.chatgpt.ext.util.SampleData
@@ -59,7 +58,7 @@ import ir.arminniromandi.chatgpt.ui.theme.whiteGradient
 import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 
 @Composable
-fun ExploreSection(visible: MutableState<Boolean>, density : Density, expClick: () -> Unit) {
+fun ExploreSection(visible: MutableState<Boolean>, expClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -96,7 +95,7 @@ fun ExploreSection(visible: MutableState<Boolean>, density : Density, expClick: 
         mutableStateOf(false)
     }
 
-    AnimateMainPage(density = density, visible = visible.value, animateRun = animateRun) {
+    AnimateMainPage(visible = visible.value, animateRun = animateRun) {
 
         LazyRow(
             state = listState,

@@ -10,12 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun AnimateMainPage(
-    density: Density,
+    density: Density = LocalDensity.current,
     visible: Boolean,
     animateRun : MutableState<Boolean>,
      content: @Composable () -> Unit
@@ -24,7 +25,6 @@ fun AnimateMainPage(
     Log.i("test", "AnimateMainPage: $visible")
 
     AnimatedVisibility(
-
         visible = visible,
         enter = slideInHorizontally(
             initialOffsetX = { with(density) { 40.dp.roundToPx() } },

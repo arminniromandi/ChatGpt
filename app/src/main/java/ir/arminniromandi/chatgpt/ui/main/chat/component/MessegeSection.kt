@@ -48,9 +48,9 @@ fun MessageSection(viewModel: MainViewModel) {
             verticalArrangement = Arrangement.Top
         ) {
 
-            itemsIndexed(viewModel.allMessage) { index, massage ->
+            itemsIndexed(viewModel.currentAllMessage) { index, massage ->
                 val isLastItem by remember {
-                    derivedStateOf { index == viewModel.allMessage.lastIndex }
+                    derivedStateOf { index == viewModel.currentAllMessage.lastIndex }
                 }
 
 

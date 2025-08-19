@@ -69,7 +69,7 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>()) {
         ElevatedButton(
             onClick = { viewModel.navigate(MainScreens.ChatPage.screenName) },
             colors = ButtonDefaults.elevatedButtonColors(
-                contentColor = Color.Black, containerColor = Color.White
+                contentColor = Black, containerColor = Color.White
 
             ),
             modifier = Modifier
@@ -99,17 +99,15 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>()) {
                     viewModel.navigate(it)
                 },
                 visible = visible.value,
-                density = density
+
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
 
 
-            Log.i("test" , visible.value.toString())
             ExploreSection(
                 visible = visible,
-                density = density,
                 expClick = {
                 context.startActivity(
                     Intent(
@@ -127,7 +125,6 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>()) {
             PromptSection(
                 context = context,
                 visible = visible.value,
-                density = density,
             )
         }
 

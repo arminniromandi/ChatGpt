@@ -29,18 +29,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import ir.arminniromandi.chatgpt.Activity.PromptLibraryActivity
-import ir.arminniromandi.chatgpt.ext.util.SampleData.samplePromptLib
 import ir.arminniromandi.chatgpt.customUi.AnimateMainPage
+import ir.arminniromandi.chatgpt.ext.util.SampleData.samplePromptLib
 import ir.arminniromandi.chatgpt.ui.theme.Typography
 import ir.arminniromandi.chatgpt.ui.theme.white
 import ir.arminniromandi.chatgpt.ui.theme.whiteGradient
 import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 
 @Composable
-fun PromptSection(context: Context, visible: Boolean, density: Density) {
+fun PromptSection(context: Context, visible: Boolean) {
 
 
     Row(
@@ -80,7 +79,6 @@ fun PromptSection(context: Context, visible: Boolean, density: Density) {
     Spacer(Modifier.height(4.dp))
 
     AnimateMainPage(
-        density = density,
         visible = visible,
         animateRun = remember {
             mutableStateOf(true)
