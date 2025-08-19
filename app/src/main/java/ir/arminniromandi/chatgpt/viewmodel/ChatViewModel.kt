@@ -1,0 +1,91 @@
+package ir.arminniromandi.chatgpt.viewmodel
+
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import ir.arminniromandi.chatgpt.dataBase.ChatRepository
+import ir.arminniromandi.chatgpt.model.ai.Role
+import ir.arminniromandi.myapplication.Api.ChatAi.ChatApiRepository
+import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatRequest
+import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatResponse
+import ir.arminniromandi.myapplication.Api.ChatAi.Model.Choice
+import ir.arminniromandi.myapplication.Api.ChatAi.Model.Message
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+
+@HiltViewModel
+class ChatViewModel @Inject constructor(
+    private val chatRepository: ChatRepository,
+    private val chatApiRepository: ChatApiRepository,
+) : ViewModel() {
+
+    private val currentSessionId = mutableStateOf<Int>(-1)
+
+    private val _chatResponse =
+        MutableLiveData<ChatResponse>(ChatResponse(listOf(Choice(Message("user", "")))))
+    val chatResponse = _chatResponse
+
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> = _loading
+
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String> = _error
+
+
+    val currentAllMessage = mutableStateListOf<Message>()
+
+    val isAnimationRun = mutableStateOf(false)
+
+
+    fun saveMessageAndSendReq(text: String, model: String) {
+        currentAllMessage.add(Message(Role.User.value, text))
+        sendReq(ChatRequest(model, currentAllMessage))
+    }
+
+
+    fun deleteChat() {
+        currentAllMessage.clear()
+    }
+
+    fun sendReq(chatRequest: ChatRequest) {
+        viewModelScope.launch {
+            try {
+                _loading.postValue(true)
+                isAnimationRun.value = true
+                delay(500)
+
+                val response = chatApiRepository.getChatResponse(chatRequest)
+
+                if (response.isSuccessful) {
+
+                    currentAllMessage.add(
+                        Message(
+                            Role.Assistant.value, response.body()!!.choices[0]
+                                .message.content
+                        )
+                    )
+
+                } else {
+                    _error.postValue(response.message())
+
+
+                }
+            } catch (e: Exception) {
+                _error.postValue(e.message)
+
+
+            } finally {
+                _loading.postValue(false)
+            }
+
+        }
+    }
+
+
+}
