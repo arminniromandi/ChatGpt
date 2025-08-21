@@ -43,12 +43,17 @@ fun RowScope.BottomNavItem(
                 unselectedTextColor = gray_700
             ),
             onClick = {
-                if (currentRoute != item.name) {
-                    navController.navigate(item.name) {
-                        popUpTo(navController.graph.startDestinationId)
+                val route = item.name
+                if (currentRoute != route) {
+                    navController.navigate(route) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
                         launchSingleTop = true
+                        restoreState = true
                     }
                 }
+
             },
             icon = {
                 Icon(

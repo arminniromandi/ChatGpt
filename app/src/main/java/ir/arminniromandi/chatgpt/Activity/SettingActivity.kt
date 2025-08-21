@@ -11,7 +11,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import ir.arminniromandi.chatgpt.ui.Setting.SettingScreen
+import ir.arminniromandi.chatgpt.navigation.screens.SettingScreen
 import ir.arminniromandi.chatgpt.ui.theme.AppTheme
 import ir.arminniromandi.chatgpt.ui.theme.background2
 import ir.arminniromandi.chatgpt.viewmodel.SettingViewModel

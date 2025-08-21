@@ -27,7 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import ir.arminniromandi.chatgpt.Activity.ExploreActivity
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.ext.util.makeShadow
-import ir.arminniromandi.chatgpt.ui.main.MainScreens
+import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
 import ir.arminniromandi.chatgpt.ui.main.home.component.ExploreSection
 import ir.arminniromandi.chatgpt.ui.main.home.component.HomeHeader
 import ir.arminniromandi.chatgpt.ui.main.home.component.HomeHistorySection

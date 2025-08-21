@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.customUi.AnimateMainPage
-import ir.arminniromandi.chatgpt.ui.main.MainScreens
+import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
 import ir.arminniromandi.chatgpt.ui.theme.Typography
 import ir.arminniromandi.chatgpt.ui.theme.black
 import ir.arminniromandi.chatgpt.ui.theme.gray_300

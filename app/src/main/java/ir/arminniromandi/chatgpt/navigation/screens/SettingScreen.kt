@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.ui.Setting
+package ir.arminniromandi.chatgpt.navigation.screens
 
 import android.content.Context
 import android.content.Intent

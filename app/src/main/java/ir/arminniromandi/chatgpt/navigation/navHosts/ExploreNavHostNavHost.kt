@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.navigation
+package ir.arminniromandi.chatgpt.navigation.navHosts
 
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -12,10 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import ir.arminniromandi.chatgpt.ui.explore.ExploreScreens
+import ir.arminniromandi.chatgpt.navigation.screens.ExploreScreens
+import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
 import ir.arminniromandi.chatgpt.ui.explore.exploreWriting.ExploreWriting
 import ir.arminniromandi.chatgpt.ui.explore.homeExplore.ExploreScreen
-import ir.arminniromandi.chatgpt.ui.main.MainScreens
 import ir.arminniromandi.chatgpt.viewmodel.ExploreViewModel
 
 @Composable

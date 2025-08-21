@@ -1,7 +1,5 @@
 package ir.arminniromandi.chatgpt.ui.main.chat.component
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -19,7 +17,6 @@ import androidx.compose.material.icons.automirrored.outlined.Send
 import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,14 +34,13 @@ import ir.arminniromandi.chatgpt.ui.theme.gray_400
 import ir.arminniromandi.chatgpt.ui.theme.gray_600
 import ir.arminniromandi.chatgpt.ui.theme.textFieldColor
 import ir.arminniromandi.chatgpt.ui.theme.white
-import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
+import ir.arminniromandi.chatgpt.viewmodel.ChatViewModel
 import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun BottomChat(
-    viewModel: MainViewModel,
+    viewModel: ChatViewModel,
     modelSelected: String = "",
 ) {
 
@@ -53,15 +49,6 @@ fun BottomChat(
     val textDirection by remember(text.value) {
         mutableStateOf(getTextDirection(text.value))
     }
-    val showOverlay = remember {
-        mutableStateOf(false)
-    }
-    val isConnect = viewModel.isConnected.collectAsState()
-
-
-
-
-
 
 
     Row(

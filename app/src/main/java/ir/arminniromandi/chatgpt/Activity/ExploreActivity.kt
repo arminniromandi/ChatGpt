@@ -16,7 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import ir.arminniromandi.chatgpt.navigation.ExploreNavHost
+import ir.arminniromandi.chatgpt.navigation.navHosts.ExploreNavHost
 import ir.arminniromandi.chatgpt.ui.theme.AppTheme
 import ir.arminniromandi.chatgpt.viewmodel.ExploreViewModel
 
