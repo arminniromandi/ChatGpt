@@ -17,10 +17,11 @@ import ir.arminniromandi.chatgpt.ui.main.chat.component.BottomChat
 import ir.arminniromandi.chatgpt.ui.main.chat.component.ChatHeader
 import ir.arminniromandi.chatgpt.ui.main.chat.component.IntroSection
 import ir.arminniromandi.chatgpt.ui.main.chat.component.MessageSection
+import ir.arminniromandi.chatgpt.viewmodel.ChatViewModel
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 
 @Composable
-fun ChatScreen(viewModel: MainViewModel = viewModel()) {
+fun ChatScreen(viewModel: ChatViewModel) {
 
     val modelIndex = rememberSaveable { mutableIntStateOf(0) }
     val chatItem = AiModel.entries

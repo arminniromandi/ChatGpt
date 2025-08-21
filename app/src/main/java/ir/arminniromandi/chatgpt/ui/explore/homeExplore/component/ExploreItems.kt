@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.model.ExploreCardItem
-import ir.arminniromandi.chatgpt.ui.explore.ExploreScreens
+import ir.arminniromandi.chatgpt.navigation.screens.ExploreScreens
 import ir.arminniromandi.chatgpt.ui.theme.gray_300
 import ir.arminniromandi.chatgpt.ui.theme.gray_700
 import ir.arminniromandi.chatgpt.ui.theme.white

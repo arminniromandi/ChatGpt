@@ -40,10 +40,10 @@ import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.customUi.AlertDialogYesNo
 import ir.arminniromandi.chatgpt.model.ai.AiModel
-import ir.arminniromandi.chatgpt.ui.main.MainScreens
+import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
 import ir.arminniromandi.chatgpt.ui.theme.black
 import ir.arminniromandi.chatgpt.ui.theme.white
-import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
+import ir.arminniromandi.chatgpt.viewmodel.ChatViewModel
 import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 import kotlin.enums.EnumEntries
 
@@ -51,7 +51,7 @@ import kotlin.enums.EnumEntries
 fun ChatHeader(
     chatItem: EnumEntries<AiModel>,
     modelIndex: MutableIntState,
-    viewModel: MainViewModel,
+    viewModel: ChatViewModel,
     onRoute: (String) -> Unit
 ) {
 

@@ -3,7 +3,7 @@ package ir.arminniromandi.chatgpt.ext.util
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.model.ExploreCardItem
 import ir.arminniromandi.chatgpt.model.PromptItem
-import ir.arminniromandi.chatgpt.ui.explore.ExploreScreens
+import ir.arminniromandi.chatgpt.navigation.screens.ExploreScreens
 
 
 

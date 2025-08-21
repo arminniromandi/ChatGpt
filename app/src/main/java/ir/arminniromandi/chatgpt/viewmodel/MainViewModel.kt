@@ -30,7 +30,6 @@ class MainViewModel @Inject constructor(
 
     val isAnimationRun = mutableStateOf(false)
 
-    var showIntro = mutableStateOf(true)
 
     //fixme: todo: need to change (in change)
     var showHistory = mutableStateOf(false)

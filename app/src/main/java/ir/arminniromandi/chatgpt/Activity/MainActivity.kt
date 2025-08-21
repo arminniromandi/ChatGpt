@@ -12,8 +12,6 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,20 +33,15 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.customUi.BottomNavItem
 import ir.arminniromandi.chatgpt.model.ExploreCardItem
-import ir.arminniromandi.chatgpt.ui.Setting.SettingScreen
-import ir.arminniromandi.chatgpt.ui.explore.ExploreScreens
-import ir.arminniromandi.chatgpt.ui.main.History.HistoryScreen
-import ir.arminniromandi.chatgpt.ui.main.MainScreens
-import ir.arminniromandi.chatgpt.ui.main.chat.ChatScreen
-import ir.arminniromandi.chatgpt.ui.main.home.HomeScreen
+import ir.arminniromandi.chatgpt.navigation.navHosts.MainNavHost
+import ir.arminniromandi.chatgpt.navigation.screens.ExploreScreens
+import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
 import ir.arminniromandi.chatgpt.ui.theme.AppTheme
 import ir.arminniromandi.chatgpt.ui.theme.gradient
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
@@ -99,7 +92,6 @@ class MainActivity : ComponentActivity() {
                         viewModel.clearNavigation()
                     }
                 }
-
 
 
                 Scaffold(
@@ -159,41 +151,11 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
 
 
-                    NavHost(
-                        navController = navController,
-                        startDestination = MainScreens.Main.screenName,
-                        enterTransition = {
-                            slideInHorizontally(animationSpec = tween(500)) + fadeIn(
-                                animationSpec = tween(150)
-                            )
-                        },
-                        exitTransition = {
-                            slideOutHorizontally(
-                                animationSpec = tween(
-                                    500
-                                )
-                            ) + fadeOut(animationSpec = tween(150))
-                        },
-
-                        modifier = Modifier.padding(innerPadding)
-                    ) {
-                        composable(MainScreens.Main.screenName) {
-                            HomeScreen(viewModel)
-                        }
-                        composable(MainScreens.Setting.screenName) {
-                            SettingScreen(context = this@MainActivity)
-
-                        }
-                        composable(MainScreens.History.screenName) {
-                            HistoryScreen(viewModel)
-                        }
-                        composable(MainScreens.ChatPage.screenName) {
-                            ChatScreen(
-                                viewModel
-                            )
-                        }
-
-                    }
+                    MainNavHost(
+                        navController,
+                        innerPadding,
+                        viewModel
+                    )
 
 
                 }

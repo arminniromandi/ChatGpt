@@ -15,10 +15,10 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import ir.arminniromandi.chatgpt.customUi.ChatView
-import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
+import ir.arminniromandi.chatgpt.viewmodel.ChatViewModel
 
 @Composable
-fun MessageSection(viewModel: MainViewModel) {
+fun MessageSection(viewModel: ChatViewModel) {
 
     val error = viewModel.error.observeAsState().value
     if (error != null) {

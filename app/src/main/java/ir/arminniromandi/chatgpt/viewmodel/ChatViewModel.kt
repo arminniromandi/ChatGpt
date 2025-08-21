@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +24,11 @@ import javax.inject.Inject
 class ChatViewModel @Inject constructor(
     private val chatRepository: ChatRepository,
     private val chatApiRepository: ChatApiRepository,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    private val chatId: String = savedStateHandle["chatId"] ?: ""
+
 
     private val currentSessionId = mutableStateOf<Int>(-1)
 
@@ -36,6 +41,9 @@ class ChatViewModel @Inject constructor(
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
+
+    var showIntro = mutableStateOf(true)
+
 
 
     val currentAllMessage = mutableStateListOf<Message>()
