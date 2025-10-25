@@ -56,7 +56,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
-        val items = listOf<ExploreCardItem>(
+        val items = listOf(
             ExploreCardItem(
                 "Writing",
                 R.drawable.pen_writing,
@@ -111,8 +111,6 @@ class MainActivity : ComponentActivity() {
                             }
                         },
                     bottomBar = {
-
-
                         val visible = remember {
                             mutableStateOf(true)
                         }
@@ -122,7 +120,6 @@ class MainActivity : ComponentActivity() {
                                 currentRoute.toString() != MainScreens.ChatPage.screenName
 
                         }
-
 
                         AnimatedVisibility(
                             visible.value,

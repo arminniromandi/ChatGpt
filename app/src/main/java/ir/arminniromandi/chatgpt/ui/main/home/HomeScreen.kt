@@ -67,7 +67,8 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>()) {
         )
 
         ElevatedButton(
-            onClick = { viewModel.navigate(MainScreens.ChatPage.screenName) },
+            //fixme : fix error and bug here
+            onClick = { viewModel.navigate(MainScreens.ChatPage.createRoute("1")) },
             colors = ButtonDefaults.elevatedButtonColors(
                 contentColor = Black, containerColor = Color.White
 

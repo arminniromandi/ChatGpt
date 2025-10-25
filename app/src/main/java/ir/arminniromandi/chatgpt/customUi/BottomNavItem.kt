@@ -8,6 +8,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -21,6 +22,7 @@ import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.model.BottomNavItems
 import ir.arminniromandi.chatgpt.ui.theme.gray_700
 import ir.arminniromandi.chatgpt.ui.theme.white
+import kotlinx.coroutines.delay
 
 @Composable
 fun RowScope.BottomNavItem(
@@ -28,8 +30,6 @@ fun RowScope.BottomNavItem(
     item: BottomNavItems,
     navController: NavHostController
 ) {
-
-
 
 
         NavigationBarItem(
