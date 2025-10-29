@@ -68,8 +68,13 @@ fun MainNavHost(
 
         ) {
             val chatViewModel: ChatViewModel = hiltViewModel(it)
+            val chatId = it.arguments?.getString("chatId")
+
+
             ChatScreen(
-                chatViewModel
+                chatViewModel,
+                mainViewModel = viewModel,
+                chatId ?:"-1"
             )
         }
 

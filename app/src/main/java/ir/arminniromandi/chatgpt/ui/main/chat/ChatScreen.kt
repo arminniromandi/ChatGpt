@@ -21,8 +21,11 @@ import ir.arminniromandi.chatgpt.viewmodel.ChatViewModel
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 
 @Composable
-fun ChatScreen(viewModel: ChatViewModel) {
-    val mainViewModel: MainViewModel = viewModel()
+fun ChatScreen(
+    viewModel: ChatViewModel,
+    mainViewModel: MainViewModel,
+    id: String
+) {
 
     val modelIndex = rememberSaveable { mutableIntStateOf(0) }
     val chatItem = AiModel.entries
@@ -35,7 +38,7 @@ fun ChatScreen(viewModel: ChatViewModel) {
     Column(
         modifier = Modifier
             .padding(horizontal = 8.dp)
-            .fillMaxSize() ,
+            .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
@@ -47,17 +50,10 @@ fun ChatScreen(viewModel: ChatViewModel) {
         if (viewModel.showIntro.value) IntroSection(chatItem[modelIndex.intValue].value)
         else MessageSection(viewModel)
 
-        BottomChat(viewModel,chatItem[modelIndex.intValue].value )
+        BottomChat(viewModel, chatItem[modelIndex.intValue].value)
 
 
     }
 
-
-}
-
-@Preview
-@Composable
-private fun tgrdffdgdf() {
-    ChatScreen(viewModel())
 
 }

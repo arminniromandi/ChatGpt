@@ -1,5 +1,7 @@
 package ir.arminniromandi.chatgpt.viewmodel
 
+import android.util.Log
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
@@ -30,7 +32,8 @@ class ChatViewModel @Inject constructor(
     private val chatId: String = savedStateHandle["chatId"] ?: ""
 
 
-    private val currentSessionId = mutableStateOf<Int>(-1)
+
+    private val currentSessionId = mutableIntStateOf(-1)
 
     private val _chatResponse =
         MutableLiveData<ChatResponse>(ChatResponse(listOf(Choice(Message("user", "")))))

@@ -2,6 +2,7 @@ package ir.arminniromandi.chatgpt.ui.main.chat.component
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +23,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MenuItemColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
@@ -76,7 +78,7 @@ fun ChatHeader(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding( vertical = 8.dp),
+            .padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -85,8 +87,8 @@ fun ChatHeader(
         FloatingActionButton(
             { onRoute(MainScreens.Main.screenName) },
             shape = CircleShape,
-            containerColor =  white
-            ) {
+            containerColor = white
+        ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Default.ArrowBack,
                 tint = black,
@@ -145,27 +147,32 @@ fun ChatHeader(
 
                         chatItem.forEachIndexed { index, model ->
 
-                            DropdownMenuItem(text = {
-                                Row(
-                                    Modifier.fillMaxWidth(),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    Text(
-                                        model.value
-                                    )
-                                    Spacer(Modifier.width(4.dp))
-                                    Icon(
-                                        painter = painterResource(model.icon),
-                                        contentDescription = model.name,
-                                        modifier = Modifier.size(24.dp)
-                                    )
-                                }
-                            }, onClick = {
-                                expanded.value = false
-                                modelIndex.intValue = index
+                            DropdownMenuItem(
+                                text = {
+                                    Row(
+                                        Modifier.fillMaxWidth(),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.SpaceBetween
+                                    ) {
+                                        Text(
+                                            model.value
+                                        )
+                                        Spacer(Modifier.width(4.dp))
+                                        Image(
+                                            painter = painterResource(model.icon),
+                                            contentDescription = model.name,
 
-                            })
+                                            modifier = Modifier.size(24.dp)
+                                        )
+                                    }
+                                }, onClick = {
+                                    expanded.value = false
+                                    modelIndex.intValue = index
+
+                                },
+                                //todo: add all colors to this section
+                                colors = MenuItemColors(black ,)
+                                )
 
 
                         }
