@@ -56,7 +56,20 @@ class ChatViewModel @Inject constructor(
 
     fun saveMessageAndSendReq(text: String, model: String) {
         currentAllMessage.add(Message(Role.User.value, text))
-        sendReq(ChatRequest(model, currentAllMessage))
+        viewModelScope.launch {
+            isAnimationRun.value = true
+            delay(3000)
+            currentAllMessage.add(
+                Message(
+                    Role.Assistant.value,
+                    "hello user how can i help you for Ui Ux !!"
+                )
+            )
+        }
+
+//        sendReq(ChatRequest(model, currentAllMessage))
+
+
     }
 
 

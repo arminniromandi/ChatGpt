@@ -42,11 +42,16 @@ fun ChatView(
     isAnimationRunned: MutableState<Boolean>
 ) {
 
+
+
     val isFromUser = message.role == "user"
     var text by remember { mutableStateOf("") }
     var isTyping by remember { mutableStateOf(false) }
 
+
+
     if (!isFromUser && isLastItem && isAnimationRunned.value) {
+
         LaunchedEffect(message.content) {
             text = ""
             isTyping = true
@@ -61,6 +66,9 @@ fun ChatView(
     } else {
         text = message.content
     }
+
+
+
 
     Box(
         modifier = Modifier
@@ -101,29 +109,29 @@ fun ChatView(
 
             }
 
-                if (isTyping) {
-                    TypingDots()
-                }
         }
+    }
+    if (isAnimationRunned.value and isFromUser and isLastItem) {
+        TypingDots()
     }
 }
 
 @Composable
 fun TypingDots() {
     val dotCount = rememberInfiniteTransition(label = "dots").animateValue(
-        initialValue = 0,
-        targetValue = 3,
+        initialValue = 1,
+        targetValue = 4,
         typeConverter = Int.VectorConverter,
         animationSpec = infiniteRepeatable(
             animation = tween(1000, easing = LinearEasing),
-            repeatMode = RepeatMode.Restart
+            repeatMode = RepeatMode.Reverse
         ),
         label = "dotAnimation"
     )
 
     Text(
-        text = ".".repeat(dotCount.value),
-        fontSize = 20.sp,
+        text = "⬤".repeat(dotCount.value),
+        fontSize = 10.sp,
         color = Color.Gray,
         modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
     )

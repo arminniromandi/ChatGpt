@@ -3,6 +3,7 @@ package ir.arminniromandi.chatgpt.ui.main.chat
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
@@ -37,7 +38,9 @@ fun ChatScreen(
 
     Column(
         modifier = Modifier
+
             .padding(horizontal = 8.dp)
+            .imePadding()
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween

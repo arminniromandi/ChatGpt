@@ -2,7 +2,7 @@ import java.net.URI
 
 pluginManagement {
     repositories {
-        maven{url = uri("https://maven.myket.ir")}
+//        maven{url = uri("https://maven.myket.ir")}
         google {
             content {
                 includeGroupByRegex("com\\.android.*")
@@ -19,7 +19,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven{url = uri("https://maven.myket.ir")}
+//        maven{url = uri("https://maven.myket.ir")}
         maven {
             url = URI.create("https://jitpack.io")
         }

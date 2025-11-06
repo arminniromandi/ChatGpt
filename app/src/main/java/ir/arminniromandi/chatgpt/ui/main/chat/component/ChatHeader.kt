@@ -1,5 +1,6 @@
 package ir.arminniromandi.chatgpt.ui.main.chat.component
 
+import android.R.attr.contentDescription
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -24,6 +25,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MenuItemColors
+import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
@@ -37,6 +39,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.R
@@ -84,7 +87,7 @@ fun ChatHeader(
     ) {
 
 
-        FloatingActionButton(
+        SmallFloatingActionButton(
             { onRoute(MainScreens.Main.screenName) },
             shape = CircleShape,
             containerColor = white
@@ -142,12 +145,18 @@ fun ChatHeader(
                     )
 
                     DropdownMenu(
-                        expanded.value, onDismissRequest = { expanded.value = false }) {
+                        expanded.value,
+                        onDismissRequest = { expanded.value = false },
+                        modifier = Modifier.background(white),
+
+                        )
+                    {
 
 
                         chatItem.forEachIndexed { index, model ->
 
                             DropdownMenuItem(
+
                                 text = {
                                     Row(
                                         Modifier.fillMaxWidth(),
@@ -155,7 +164,8 @@ fun ChatHeader(
                                         horizontalArrangement = Arrangement.SpaceBetween
                                     ) {
                                         Text(
-                                            model.value
+                                            model.value,
+                                            color = black
                                         )
                                         Spacer(Modifier.width(4.dp))
                                         Image(
@@ -171,8 +181,15 @@ fun ChatHeader(
 
                                 },
                                 //todo: add all colors to this section
-                                colors = MenuItemColors(black ,)
+                                colors = MenuItemColors(
+                                    black,
+                                    leadingIconColor = black,
+                                    trailingIconColor = black,
+                                    disabledLeadingIconColor = black,
+                                    disabledTrailingIconColor = black,
+                                    disabledTextColor = black
                                 )
+                            )
 
 
                         }
@@ -183,7 +200,7 @@ fun ChatHeader(
 
 
             }
-        } else FloatingActionButton(
+        } else SmallFloatingActionButton (
             onClick = {
                 dialogState.value = true
 
@@ -202,8 +219,10 @@ fun ChatHeader(
                 contentDescription = "delete Chat",
             )
 
+
         }
     }
 
 
 }
+

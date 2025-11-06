@@ -39,7 +39,7 @@ fun MessageSection(viewModel: ChatViewModel) {
 
 
 
-    Box(modifier = Modifier.fillMaxHeight(0.80f)) {
+    Box(modifier = Modifier.fillMaxHeight(0.85f)) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()

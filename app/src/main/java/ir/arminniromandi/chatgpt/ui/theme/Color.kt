@@ -14,7 +14,7 @@ var whiteGradient = listOf(
 
 )
 
-var white = Color(0xFFFFFFFF)
+var white = Color(0xF7EDE9E9)
 var background2 = Color(0xFF282F32)
 
 

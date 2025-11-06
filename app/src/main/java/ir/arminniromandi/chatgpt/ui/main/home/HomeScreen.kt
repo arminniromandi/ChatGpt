@@ -67,7 +67,7 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>()) {
         )
 
         ElevatedButton(
-            onClick = { viewModel.navigate(MainScreens.ChatPage.createRoute("10")) },
+            onClick = { viewModel.navigate(MainScreens.ChatPage.createRoute("0")) },
             colors = ButtonDefaults.elevatedButtonColors(
                 contentColor = Black, containerColor = Color.White
 
