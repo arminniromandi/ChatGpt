@@ -57,7 +57,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 //        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
         val items = listOf(
             ExploreCardItem(
                 "Writing",
@@ -144,6 +143,7 @@ class MainActivity : ComponentActivity() {
                             }
 
                         }
+
 
                         Spacer(modifier = Modifier.navigationBarsPadding())
 

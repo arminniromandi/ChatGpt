@@ -51,6 +51,21 @@ class ChatViewModel @Inject constructor(
 
     val currentAllMessage = mutableStateListOf<Message>()
 
+    init {
+        currentAllMessage.add(Message(Role.User.value, "textFromUser"))
+        currentAllMessage.add(Message(Role.Assistant.value, "textFromAiAssistant"))
+        currentAllMessage.add(Message(Role.User.value, "textFromUser"))
+        currentAllMessage.add(Message(Role.Assistant.value, "textFromAiAssistant"))
+        currentAllMessage.add(Message(Role.User.value, "textFromUser"))
+        currentAllMessage.add(Message(Role.Assistant.value, "textFromAiAssistant"))
+        currentAllMessage.add(Message(Role.User.value, "textFromUser"))
+        currentAllMessage.add(Message(Role.Assistant.value, "textFromAiAssistant"))
+        currentAllMessage.add(Message(Role.User.value, "textFromUser"))
+        currentAllMessage.add(Message(Role.Assistant.value, "textFromAiAssistant"))
+
+
+    }
+
     val isAnimationRun = mutableStateOf(false)
 
 
