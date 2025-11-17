@@ -175,11 +175,12 @@ fun SettingRow(icon: ImageVector, title: String, onClick: () -> Unit) {
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+/*
+@Preview(showBackground = true, showSystemUi = true, backgroundColor = 0xFA000E24)
 @Composable
 fun SettingPagePreview() {
     AppTheme {
         val context = LocalContext.current
         SettingScreen(context = context)
     }
-}
+}*/

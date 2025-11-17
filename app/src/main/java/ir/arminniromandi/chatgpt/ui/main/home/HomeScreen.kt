@@ -40,7 +40,7 @@ import kotlinx.coroutines.delay
 fun HomeScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>()) {
     val context = LocalContext.current
     val density = LocalDensity.current
-    var visible = remember {
+    val visible = remember {
         mutableStateOf(false)
     }
 

@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import ir.arminniromandi.chatgpt.Activity.SettingActivity
+import androidx.lifecycle.viewmodel.compose.viewModel
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
 import ir.arminniromandi.chatgpt.ui.theme.Typography
@@ -64,7 +64,7 @@ fun HomeHeader(
         }
 
         IconButton({
-            context.startActivity(Intent(context, SettingActivity::class.java))
+            onRoute(MainScreens.Setting.screenName)
         }) {
             Icon(
                 painter = painterResource(R.drawable.profile_circle),
