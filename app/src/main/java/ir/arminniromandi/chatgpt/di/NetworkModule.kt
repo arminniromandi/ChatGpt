@@ -41,7 +41,6 @@ object NetworkModule {
     @Provides
     @ProvideChatApi
     fun provideRetrofitChat(): Retrofit {
-        Log.i("testRetrofit", "provideRetrofitChat: Start")
         return Retrofit.Builder()
             .baseUrl(CHAT_URL)
             .addConverterFactory(GsonConverterFactory.create())
