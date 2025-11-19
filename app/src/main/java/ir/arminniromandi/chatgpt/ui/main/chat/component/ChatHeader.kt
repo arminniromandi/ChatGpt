@@ -26,7 +26,6 @@ import androidx.compose.material3.MenuItemColors
 import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -52,19 +51,12 @@ import kotlin.enums.EnumEntries
 @Composable
 fun ChatHeader(
     chatItem: EnumEntries<AiModel>,
-    modelIndex: MutableIntState,
     viewModel: ChatViewModel,
     onRoute: (String) -> Unit
 ) {
 
 
-    val expanded = remember { mutableStateOf(false) }
 
-    val rotateAnimation = animateFloatAsState(
-        targetValue = if (expanded.value) -180f else 0f, animationSpec = tween(
-            durationMillis = 300
-        )
-    )
     val dialogState = remember {
         mutableStateOf(false)
     }
@@ -77,7 +69,9 @@ fun ChatHeader(
 
     Row(
         modifier = Modifier
+
             .fillMaxWidth()
+
             .padding(top = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
@@ -111,93 +105,15 @@ fun ChatHeader(
 
             Box(
                 modifier = Modifier
-                    .clickable { expanded.value = !expanded.value }
                     .wrapContentWidth()
                     .padding(4.dp)
                     .clip(RoundedCornerShape(60.dp))
                     .background(white)
                     .padding(vertical = 10.dp, horizontal = 8.dp)) {
-                Row(
-                    modifier = Modifier
-                        .wrapContentWidth()
-                        .padding(horizontal = 8.dp)
-                        .clickable { expanded.value = !expanded.value },
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        chatItem[modelIndex.intValue].value,
-                        fontFamily = FontFamily(Font(R.font.satoshi_medium)),
-                        color = Color.Black,
-                        fontSize = 18.sp
-                    )
-                    Icon(
-                        imageVector = Icons.Rounded.KeyboardArrowDown,
-                        contentDescription = "chose ai model",
-                        tint = black,
-                        modifier = Modifier
-                            .clickable { expanded.value = !expanded.value }
-                            .rotate(rotateAnimation.value)
-
-                    )
-
-                    DropdownMenu(
-                        expanded.value,
-                        onDismissRequest = { expanded.value = false },
-                        modifier = Modifier.background(white),
-
-                        )
-                    {
-
-
-                        chatItem.forEachIndexed { index, model ->
-
-                            DropdownMenuItem(
-
-                                text = {
-                                    Row(
-                                        Modifier.fillMaxWidth(),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.SpaceBetween
-                                    ) {
-                                        Text(
-                                            model.value,
-                                            color = black
-                                        )
-                                        Spacer(Modifier.width(4.dp))
-                                        Image(
-                                            painter = painterResource(model.icon),
-                                            contentDescription = model.name,
-
-                                            modifier = Modifier.size(24.dp)
-                                        )
-                                    }
-                                }, onClick = {
-                                    expanded.value = false
-                                    modelIndex.intValue = index
-
-                                },
-                                //todo: add all colors to this section
-                                colors = MenuItemColors(
-                                    black,
-                                    leadingIconColor = black,
-                                    trailingIconColor = black,
-                                    disabledLeadingIconColor = black,
-                                    disabledTrailingIconColor = black,
-                                    disabledTextColor = black
-                                )
-                            )
-
-
-                        }
-                    }
-
-
-                }
-
+                ModelSelecrtor(chatItem, viewModel)
 
             }
-        } else SmallFloatingActionButton (
+        } else SmallFloatingActionButton(
             onClick = {
                 dialogState.value = true
 
@@ -222,4 +138,100 @@ fun ChatHeader(
 
 
 }
+
+
+
+
+
+@Composable
+fun ModelSelecrtor(
+    chatItem: EnumEntries<AiModel>,
+    viewModel: ChatViewModel,
+) {
+    val expanded = remember { mutableStateOf(false) }
+
+    val rotateAnimation = animateFloatAsState(
+        targetValue = if (expanded.value) -180f else 0f,
+        animationSpec = tween(300)
+    )
+    Row(
+        modifier = Modifier
+            .wrapContentWidth()
+            .padding(horizontal = 8.dp)
+            .clickable { expanded.value = !expanded.value },
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            chatItem[viewModel.selectedModel].value,
+            fontFamily = FontFamily(Font(R.font.satoshi_medium)),
+            color = Color.Black,
+            fontSize = 18.sp
+        )
+        Icon(
+            imageVector = Icons.Rounded.KeyboardArrowDown,
+            contentDescription = "chose ai model",
+            tint = black,
+            modifier = Modifier
+                .clickable { expanded.value = !expanded.value }
+                .rotate(rotateAnimation.value)
+
+        )
+
+        DropdownMenu(
+            expanded.value,
+            onDismissRequest = { expanded.value = false },
+            modifier = Modifier.background(white),
+
+            )
+        {
+
+
+            chatItem.forEachIndexed { index, model ->
+
+                DropdownMenuItem(
+
+                    text = {
+                        Row(
+                            Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                model.value,
+                                color = black
+                            )
+                            Spacer(Modifier.width(4.dp))
+                            Image(
+                                painter = painterResource(model.icon),
+                                contentDescription = model.name,
+
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                    }, onClick = {
+                        expanded.value = false
+                        viewModel.setModel(index)
+
+                    },
+                    //todo: add all colors to this section
+                    colors = MenuItemColors(
+                        black,
+                        leadingIconColor = black,
+                        trailingIconColor = black,
+                        disabledLeadingIconColor = black,
+                        disabledTrailingIconColor = black,
+                        disabledTextColor = black
+                    )
+                )
+
+
+            }
+        }
+
+
+    }
+}
+
+
 

@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace = "ir.arminniromandi.chatgpt"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "ir.arminniromandi.chatgpt"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -57,12 +57,14 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.androidx.lifecycle.livedata.core.ktx)
+    implementation(libs.androidx.compose.foundation.layout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation ("androidx.compose.ui:ui-tooling")
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
@@ -76,9 +78,9 @@ dependencies {
 
     var lottieVersion = "6.6.6"
     implementation ("com.airbnb.android:lottie-compose:$lottieVersion")
-    implementation("com.github.jeziellago:compose-markdown:0.5.7")
-
-    var room_version = "2.7.1" 
+//    implementation("com.github.jeziellago:compose-markdown:0.5.7")
+    implementation("io.github.jeziellago:compose-markdown:0.5.8")
+    var room_version = "2.8.4"
 
     implementation ("androidx.room:room-runtime:$room_version")
     ksp ("androidx.room:room-compiler:$room_version")

@@ -1,25 +1,26 @@
 [versions]
-agp = "8.10.1"
-converterGson = "2.9.0"
+agp = "8.13.1"
+converterGson = "3.0.0"
 hiltAndroidCompiler = "2.51.1"
 hiltAndroid = "2.51.1"
 
 kotlin = "2.1.0"
 
-coreKtx = "1.13.0"
+coreKtx = "1.17.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-kotlinxCoroutinesAndroid = "1.10.1"
-lifecycleRuntimeKtx = "2.8.7"
-activityCompose = "1.10.1"
-composeBom = "2025.06.01"
-fragment = "1.8.8"
-retrofit = "2.9.0"
+kotlinxCoroutinesAndroid = "1.10.2"
+lifecycleRuntimeKtx = "2.10.0"
+activityCompose = "1.12.0"
+composeBom = "2025.11.01"
+fragment = "1.8.9"
+retrofit = "3.0.0"
 uiTextGoogleFonts = "1.7.6"
-navigationCompose = "2.8.5"
-runtimeLivedata = "1.8.3"
-lifecycleLivedataCoreKtx = "2.9.4"
+navigationCompose = "2.9.6"
+runtimeLivedata = "1.9.5"
+lifecycleLivedataCoreKtx = "2.10.0"
+foundationLayout = "1.9.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -46,6 +47,7 @@ androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 androidx-lifecycle-livedata-core-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-core-ktx", version.ref = "lifecycleLivedataCoreKtx" }
+androidx-compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "foundationLayout" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

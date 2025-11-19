@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.R
+import ir.arminniromandi.chatgpt.model.ai.AiModel
 import ir.arminniromandi.chatgpt.ui.theme.gray_400
 import ir.arminniromandi.chatgpt.ui.theme.white
 
