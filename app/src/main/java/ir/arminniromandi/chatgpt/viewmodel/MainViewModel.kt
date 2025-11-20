@@ -1,8 +1,6 @@
 package ir.arminniromandi.chatgpt.viewmodel
 
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,16 +24,11 @@ class MainViewModel @Inject constructor(
         )
 
 
-
-
-
-
     val isAnimationRun = mutableStateOf(false)
 
 
     //fixme: todo: need to change (in change)
     var showHistory = mutableStateOf(false)
-    val selectedModel by mutableStateOf(0)
 
 
     private val _navEvent = MutableStateFlow<String?>(null)
@@ -48,12 +41,6 @@ class MainViewModel @Inject constructor(
     fun clearNavigation() {
         _navEvent.value = null
     }
-
-
-
-
-
-
 
 
 }

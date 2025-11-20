@@ -43,7 +43,7 @@ fun RowScope.BottomNavItem(
                 unselectedTextColor = gray_700
             ),
             onClick = {
-                val route = item.name
+                val route = item.route
                 if (currentRoute != route) {
                     navController.navigate(route) {
                         popUpTo(navController.graph.startDestinationId) {
@@ -60,7 +60,7 @@ fun RowScope.BottomNavItem(
                     painter = painterResource(item.icon),
                     contentDescription = item.name,
                     modifier = Modifier.size(30.dp),
-                    tint = if (currentRoute == item.name) Color.White else gray_700
+                    tint = if (currentRoute == item.route) Color.White else gray_700
                 )
 
             },

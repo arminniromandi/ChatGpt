@@ -28,21 +28,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.model.ExploreCardItem
-import ir.arminniromandi.chatgpt.navigation.screens.ExploreScreens
+import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
 import ir.arminniromandi.chatgpt.ui.theme.gray_300
 import ir.arminniromandi.chatgpt.ui.theme.gray_700
 import ir.arminniromandi.chatgpt.ui.theme.white
 import ir.arminniromandi.chatgpt.ui.theme.whiteGradient
-import ir.arminniromandi.chatgpt.viewmodel.ExploreViewModel
+import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 
 
 @Composable
-fun ExploreItems(item: List<ExploreCardItem> , viewModel: ExploreViewModel ) {
+fun ExploreItems(item: List<ExploreCardItem> , viewModel: MainViewModel ) {
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         itemsIndexed(item) { index, item ->
-            ExploreCard(item = item  , ExploreScreens.Writing.screenName , viewModel)
+            ExploreCard(item = item  , MainScreens.ChatPage.screenName , viewModel)
 
         }
 
@@ -51,7 +51,7 @@ fun ExploreItems(item: List<ExploreCardItem> , viewModel: ExploreViewModel ) {
 
 
 @Composable
-private fun ExploreCard(item: ExploreCardItem ,route : String , viewModel: ExploreViewModel) {
+private fun ExploreCard(item: ExploreCardItem ,route : String , viewModel: MainViewModel) {
 
 
     Column(

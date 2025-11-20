@@ -1,7 +1,5 @@
 package ir.arminniromandi.chatgpt.ui.main.home
 
-import android.content.Intent
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,10 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import ir.arminniromandi.chatgpt.Activity.ExploreActivity
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.ext.util.makeShadow
 import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
@@ -39,7 +35,6 @@ import kotlinx.coroutines.delay
 @Composable
 fun HomeScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>()) {
     val context = LocalContext.current
-    val density = LocalDensity.current
     val visible = remember {
         mutableStateOf(false)
     }
@@ -109,12 +104,7 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>()) {
             ExploreSection(
                 visible = visible,
                 expClick = {
-                context.startActivity(
-                    Intent(
-                        context,
-                        ExploreActivity::class.java
-                    )
-                )
+                viewModel.navigate(it)
             })
 
             Spacer(modifier = Modifier.height(8.dp))

@@ -39,8 +39,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ir.arminniromandi.chatgpt.Activity.MainActivity
 import ir.arminniromandi.chatgpt.R
+import ir.arminniromandi.chatgpt.activity.MainActivity
 import ir.arminniromandi.chatgpt.customUi.MText
 import ir.arminniromandi.chatgpt.customUi.OtpView
 import ir.arminniromandi.chatgpt.ui.theme.black

@@ -1,6 +1,5 @@
 package ir.arminniromandi.chatgpt.navigation.navHosts
 
-import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -19,6 +18,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
 import ir.arminniromandi.chatgpt.navigation.screens.SettingScreen
+import ir.arminniromandi.chatgpt.ui.explore.exploreWriting.ExploreWriting
+import ir.arminniromandi.chatgpt.ui.explore.homeExplore.ExploreScreen
 import ir.arminniromandi.chatgpt.ui.main.History.HistoryScreen
 import ir.arminniromandi.chatgpt.ui.main.chat.ChatScreen
 import ir.arminniromandi.chatgpt.ui.main.home.HomeScreen
@@ -78,6 +79,12 @@ fun MainNavHost(
                 chatId ?:"-1"
             )
         }
+
+        composable(MainScreens.ExploreWriting.screenName) { ExploreWriting() }
+        composable(MainScreens.Explore.screenName) { ExploreScreen(viewModel) }
+
+
+
 
     }
 }

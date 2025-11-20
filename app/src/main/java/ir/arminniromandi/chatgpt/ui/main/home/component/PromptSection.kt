@@ -30,7 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import ir.arminniromandi.chatgpt.Activity.PromptLibraryActivity
+import ir.arminniromandi.chatgpt.activity.PromptLibraryActivity
 import ir.arminniromandi.chatgpt.customUi.AnimateMainPage
 import ir.arminniromandi.chatgpt.ext.util.SampleData.samplePromptLib
 import ir.arminniromandi.chatgpt.ui.theme.Typography

@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.model.BottomNavItems
+import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
 
 object Constance {
     const val SMS_URL = "https://api.sms.ir/v1/"
@@ -16,9 +17,9 @@ object Constance {
     val SettingIconSize = 28.dp // Placeholder
 
     val BottomNavHomeItems = arrayOf(
-        BottomNavItems("Home", R.drawable.home),
-        BottomNavItems("ChatPage", R.drawable.edit_icon),
-        BottomNavItems("History", R.drawable.home)
+        BottomNavItems("home",MainScreens.Main.screenName, R.drawable.home),
+        BottomNavItems("Chat", MainScreens.ChatPage.screenName, R.drawable.edit_icon),
+        BottomNavItems("history",MainScreens.History.screenName, R.drawable.home)
     )
 
 }

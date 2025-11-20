@@ -3,8 +3,7 @@ package ir.arminniromandi.chatgpt.ext.util
 import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.model.ExploreCardItem
 import ir.arminniromandi.chatgpt.model.PromptItem
-import ir.arminniromandi.chatgpt.navigation.screens.ExploreScreens
-
+import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
 
 
 object SampleData {
@@ -15,13 +14,13 @@ object SampleData {
             R.drawable.pen_writing,
             "Writing a story or text for article or interview",
 
-            ExploreScreens.Writing.screenName
+            MainScreens.ChatPage.screenName
         ),
         ExploreCardItem(
             "Gym Planner",
             R.drawable.pen_writing,
             "Create a personalized gym workout plan tailored.",
-            ExploreScreens.GymPlanner.screenName
+            MainScreens.History.screenName
         )
 
     )

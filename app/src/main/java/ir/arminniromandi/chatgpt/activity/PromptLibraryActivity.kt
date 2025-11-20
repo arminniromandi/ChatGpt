@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.Activity
+package ir.arminniromandi.chatgpt.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

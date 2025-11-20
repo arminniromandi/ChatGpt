@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import ir.arminniromandi.chatgpt.customUi.AnimateMainPage
 import ir.arminniromandi.chatgpt.ext.util.SampleData
 import ir.arminniromandi.chatgpt.model.ExploreCardItem
+import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
 import ir.arminniromandi.chatgpt.ui.theme.Typography
 import ir.arminniromandi.chatgpt.ui.theme.gray_300
 import ir.arminniromandi.chatgpt.ui.theme.gray_700
@@ -58,7 +59,7 @@ import ir.arminniromandi.chatgpt.ui.theme.whiteGradient
 import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 
 @Composable
-fun ExploreSection(visible: MutableState<Boolean>, expClick: () -> Unit) {
+fun ExploreSection(visible: MutableState<Boolean>, expClick: (route : String) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -73,7 +74,7 @@ fun ExploreSection(visible: MutableState<Boolean>, expClick: () -> Unit) {
         )
 
         FloatingActionButton(
-            { expClick() },
+            { expClick(MainScreens.Explore.screenName) },
             containerColor = white,
             modifier = Modifier.size(52.dp),
             shape = CircleShape

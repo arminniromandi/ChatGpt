@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.Activity
+package ir.arminniromandi.chatgpt.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -14,8 +14,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import ir.arminniromandi.chatgpt.ui.SignUp.IntroScreen
 import ir.arminniromandi.chatgpt.navigation.screens.IntroScreens
+import ir.arminniromandi.chatgpt.ui.SignUp.IntroScreen
 import ir.arminniromandi.chatgpt.ui.SignUp.LoginScreen
 import ir.arminniromandi.chatgpt.ui.theme.AppTheme
 import ir.arminniromandi.chatgpt.viewmodel.SignUpViewModel

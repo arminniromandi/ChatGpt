@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ir.arminniromandi.chatgpt.ui.explore.TopBarExplore
+import ir.arminniromandi.chatgpt.ui.explore.gymplanner.componnent.GetInfo
 
 @Composable
 fun GymPlannerScreen() {
@@ -12,6 +13,7 @@ fun GymPlannerScreen() {
         modifier = Modifier.fillMaxSize()
     ) {
         TopBarExplore()
+        GetInfo()
 
 
     }

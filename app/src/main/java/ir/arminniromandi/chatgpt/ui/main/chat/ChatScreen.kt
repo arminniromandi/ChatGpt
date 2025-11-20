@@ -50,9 +50,11 @@ fun ChatScreen(
 
 
         if (viewModel.showIntro.value) IntroSection(chatItem[viewModel.selectedModel].value)
-        else MessageSection(viewModel , Modifier
-            .weight(1f)
-            .fillMaxWidth())
+        else MessageSection(
+            viewModel, Modifier
+                .weight(1f)
+                .fillMaxWidth()
+        )
 
         BottomChat(viewModel, chatItem[viewModel.selectedModel].value)
 

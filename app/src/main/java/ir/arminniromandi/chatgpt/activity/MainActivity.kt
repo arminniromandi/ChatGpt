@@ -1,8 +1,6 @@
-package ir.arminniromandi.chatgpt.Activity
+package ir.arminniromandi.chatgpt.activity
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -33,16 +31,12 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import ir.arminniromandi.chatgpt.R
 import ir.arminniromandi.chatgpt.customUi.BottomNavItem
-import ir.arminniromandi.chatgpt.model.ExploreCardItem
 import ir.arminniromandi.chatgpt.navigation.navHosts.MainNavHost
-import ir.arminniromandi.chatgpt.navigation.screens.ExploreScreens
 import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
 import ir.arminniromandi.chatgpt.ui.theme.AppTheme
 import ir.arminniromandi.chatgpt.ui.theme.gradient
@@ -56,24 +50,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-//        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-        val items = listOf(
-            ExploreCardItem(
-                "Writing",
-                R.drawable.pen_writing,
-                "Writing a story or text for article or interview",
-                ExploreScreens.Writing.screenName,
-                {startActivity(Intent(this , MainActivity::class.java))}
-            ),
-            ExploreCardItem(
-                "Gym Planner",
-                R.drawable.pen_writing,
-                "Create a personalized gym workout plan tailored.",
-                ExploreScreens.GymPlanner.screenName,
-                {startActivity(Intent(this , MainActivity::class.java))}
-            )
 
-        )
+
 
 
 
@@ -106,7 +84,7 @@ class MainActivity : ComponentActivity() {
                         .drawWithCache {
                             val gradientB = Brush.linearGradient(
                                 colorStops = gradient,
-                                start = Offset(size.width, 0f),         // بالا راست
+                                start = Offset(size.width, 0f),
                                 end = Offset(
                                     0f, size.height
                                 )

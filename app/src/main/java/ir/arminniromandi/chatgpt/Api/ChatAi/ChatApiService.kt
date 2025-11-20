@@ -13,12 +13,8 @@ interface ChatApiService {
         "Content-Type: application/json",
         "Authorization: Bearer aa-956mUrkfRl2RMVszsND77wfzpk1fuZ4RrvtlzoJmM4NjLbNP",
 
-    )
-
-
+        )
     @POST("v1/chat/completions")
-    suspend fun getChatResponse(@Body request: ChatRequest ): Response<ChatResponse>
-
-
+    suspend fun getChatResponse(@Body request: ChatRequest): Response<ChatResponse>
 }
 
