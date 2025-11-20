@@ -1,5 +1,6 @@
 package ir.arminniromandi.myapplication.Api.ChatAi
 
+import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatRequest
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatResponse
 import retrofit2.Response
@@ -18,5 +19,6 @@ class ChatApiRepository @Inject constructor(
             throw e
         }
     }
+
 
 }

@@ -143,10 +143,6 @@ private fun ExploreItemCard(
         label = "scale_animation"
     )
 
-
-
-
-
     Card(
         modifier = Modifier
             .width(210.dp)

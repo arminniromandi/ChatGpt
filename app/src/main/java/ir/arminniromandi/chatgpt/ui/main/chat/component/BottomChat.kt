@@ -1,5 +1,6 @@
 package ir.arminniromandi.chatgpt.ui.main.chat.component
 
+import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Send
@@ -61,8 +63,9 @@ fun BottomChat(
     ) {
 
 
-        var isFocused by remember { mutableStateOf(false) }
-
+        val textFieldAnimate = animateIntAsState(
+            if(text.value.length > 25)25 else 100
+        )
 
 
         val textAlign = if (textDirection == TextDirection.Rtl) TextAlign.End else TextAlign.Start
@@ -72,9 +75,8 @@ fun BottomChat(
             onValueChange = { text.value = it },
             modifier = Modifier
                 .weight(0.85f)
-                .clip(CircleShape)
+                .clip(RoundedCornerShape(textFieldAnimate.value))
                 .background(textFieldColor)
-                .border(1.dp, gray_600, CircleShape)
                 .padding(12.dp),
             textStyle = TextStyle(
                 color = white,

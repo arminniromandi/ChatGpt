@@ -88,6 +88,12 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>()) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
+            Column(
+
+            ){
+
+
+            }
 
             HomeHistorySection(
                 onRoute = {

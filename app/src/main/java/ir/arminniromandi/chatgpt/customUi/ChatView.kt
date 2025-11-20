@@ -96,6 +96,9 @@ fun ChatView(
                 )
             } else{
 
+
+
+
                 MarkdownText(text ,
                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
 

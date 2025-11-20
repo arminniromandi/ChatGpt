@@ -43,7 +43,10 @@ fun AlertDialogYesNo(
         modifier = Modifier.padding(0.dp),
         confirmButton = {
             Button(
-                onClick = { onConfirm() },
+                onClick = {
+                    onConfirm()
+                    dialogState.value = false
+                          },
 
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White)
             ) {

@@ -19,6 +19,7 @@ import androidx.navigation.navArgument
 import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
 import ir.arminniromandi.chatgpt.navigation.screens.SettingScreen
 import ir.arminniromandi.chatgpt.ui.explore.exploreWriting.ExploreWriting
+import ir.arminniromandi.chatgpt.ui.explore.gymplanner.componnent.GetInfo
 import ir.arminniromandi.chatgpt.ui.explore.homeExplore.ExploreScreen
 import ir.arminniromandi.chatgpt.ui.main.History.HistoryScreen
 import ir.arminniromandi.chatgpt.ui.main.chat.ChatScreen
@@ -82,7 +83,7 @@ fun MainNavHost(
 
         composable(MainScreens.ExploreWriting.screenName) { ExploreWriting() }
         composable(MainScreens.Explore.screenName) { ExploreScreen(viewModel) }
-
+        composable (MainScreens.GymPlaner.screenName){ GetInfo() }
 
 
 

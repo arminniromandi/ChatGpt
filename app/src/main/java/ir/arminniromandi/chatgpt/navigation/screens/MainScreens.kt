@@ -10,4 +10,5 @@ sealed class MainScreens(val screenName: String) {
     data object History : MainScreens("History")
     data object Explore : MainScreens("Explore")
     data object ExploreWriting : MainScreens("ExploreWriting")
+    data object GymPlaner : MainScreens("GymPlaner")
 }
