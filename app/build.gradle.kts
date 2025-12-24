@@ -18,6 +18,10 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        buildConfigField("String", "API_AVAL_AI", "\"${findProperty("API_AVAL_AI")?.toString() ?: ""}\"")
+        buildConfigField("String", "API_SMS_IR", "\"${findProperty("API_SMS_IR")?.toString() ?: ""}\"")
+
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -39,6 +43,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
 }

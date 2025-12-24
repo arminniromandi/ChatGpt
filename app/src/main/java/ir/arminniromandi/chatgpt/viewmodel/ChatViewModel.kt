@@ -59,20 +59,7 @@ class ChatViewModel @Inject constructor(
 
     val currentAllMessage = mutableStateListOf<Message>()
 
-    init {
-        currentAllMessage.add(Message(Role.User.value, "textFromUser"))
-        currentAllMessage.add(Message(Role.Assistant.value, "textFromAiAssistant"))
-        currentAllMessage.add(Message(Role.User.value, "textFromUser"))
-        currentAllMessage.add(Message(Role.Assistant.value, "textFromAiAssistant"))
-        currentAllMessage.add(Message(Role.User.value, "textFromUser"))
-        currentAllMessage.add(Message(Role.Assistant.value, "textFromAiAssistant"))
-        currentAllMessage.add(Message(Role.User.value, "textFromUser"))
-        currentAllMessage.add(Message(Role.Assistant.value, "textFromAiAssistant"))
-        currentAllMessage.add(Message(Role.User.value, "textFromUser"))
-        currentAllMessage.add(Message(Role.Assistant.value, "textFromAiAssistant"))
 
-
-    }
 
     val isAnimationRun = mutableStateOf(false)
 
@@ -81,16 +68,9 @@ class ChatViewModel @Inject constructor(
         currentAllMessage.add(Message(Role.User.value, text))
         viewModelScope.launch {
             isAnimationRun.value = true
-            delay(3000)
-            currentAllMessage.add(
-                Message(
-                    Role.Assistant.value,
-                    "hello user how can i help you for Ui Ux !!"
-                )
-            )
         }
 
-//        sendReq(ChatRequest(model, currentAllMessage))
+        sendReq(ChatRequest(model, currentAllMessage))
 
 
     }
