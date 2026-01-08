@@ -40,6 +40,7 @@ import ir.arminniromandi.chatgpt.BuildConfig
 import ir.arminniromandi.chatgpt.customUi.BottomNavItem
 import ir.arminniromandi.chatgpt.navigation.navHosts.MainNavHost
 import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
+import ir.arminniromandi.chatgpt.ui.Screens.MainScreen
 import ir.arminniromandi.chatgpt.ui.theme.AppTheme
 import ir.arminniromandi.chatgpt.ui.theme.gradient
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
@@ -52,102 +53,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-
-
-        val a = BuildConfig.API_SMS_IR
-        println(a)
-
-
-
-
-
-
         setContent {
-            val viewModel: MainViewModel = hiltViewModel()
-
             AppTheme {
-                val navController = rememberNavController()
-                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentRoute = navBackStackEntry?.destination?.route
-                val navEvent by viewModel.navEvent.collectAsState()
-
-
-                // اینجا به تغییرات navEvent گوش میدیم
-                LaunchedEffect(navEvent) {
-                    navEvent?.let {
-                        navController.navigate(it)
-                        viewModel.clearNavigation()
-                    }
-                }
-
-
-                Scaffold(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .imePadding()
-                        .background(Color(0xFF282828))
-                        .drawWithCache {
-                            val gradientB = Brush.linearGradient(
-                                colorStops = gradient,
-                                start = Offset(size.width, 0f),
-                                end = Offset(
-                                    0f, size.height
-                                )
-                            )
-                            onDrawBehind {
-                                drawRect(brush = gradientB)
-                            }
-                        },
-                    bottomBar = {
-                        val visible = remember {
-                            mutableStateOf(true)
-                        }
-                        LaunchedEffect(currentRoute.toString() == MainScreens.ChatPage.screenName) {
-                            delay(800)
-                            visible.value =
-                                currentRoute.toString() != MainScreens.ChatPage.screenName
-
-                        }
-
-                        AnimatedVisibility(
-                            visible.value,
-                            enter = fadeIn() + expandVertically(animationSpec = tween(500)),
-                            exit = fadeOut() + shrinkVertically(animationSpec = tween(500)),
-                        ) {
-
-                            NavigationBar(
-                                modifier = Modifier
-                                    .navigationBarsPadding()
-                                    .padding(start = 8.dp, end = 8.dp, bottom = 4.dp)
-                                    .clip(RoundedCornerShape(60.dp)),
-                                containerColor = Color(0xFF000000),
-                                tonalElevation = 4.dp,
-                            ) {
-                                BottomNavHomeItems.forEachIndexed { _, item ->
-                                    BottomNavItem(currentRoute, item, navController)
-                                }
-                            }
-
-                        }
-
-
-                        Spacer(modifier = Modifier.navigationBarsPadding())
-
-                    }
-                ) { innerPadding ->
-
-
-                    MainNavHost(
-                        navController,
-                        innerPadding,
-                        viewModel
-                    )
-
-
-                }
-
-
+                MainScreen()
             }
         }
     }

@@ -21,7 +21,7 @@ import ir.arminniromandi.chatgpt.dataBase.AppDatabase
 )
 data class ChatMessage(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "message_id")
-    val messageId: Int,
+    val messageId: Int = 0,
 
     @ColumnInfo(name = "session_id")
     val sessionId: Int,

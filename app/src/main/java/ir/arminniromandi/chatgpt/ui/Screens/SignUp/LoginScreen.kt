@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.ui.SignUp
+package ir.arminniromandi.chatgpt.ui.Screens.SignUp
 
 import android.content.Intent
 import android.widget.Toast

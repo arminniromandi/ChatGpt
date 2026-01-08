@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.ui.SignUp
+package ir.arminniromandi.chatgpt.ui.Screens.SignUp
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

@@ -10,11 +10,8 @@ import retrofit2.http.POST
 
 
 interface ChatApiService {
-    @Headers(
-        "Content-Type: application/json",
-        "Authorization: Bearer ${BuildConfig.API_AVAL_AI}",
-
-        )
+    @Headers("Content-Type: application/json",
+        "Authorization: Bearer ${BuildConfig.API_AVAL_AI}",)
     @POST("v1/chat/completions")
     suspend fun getChatResponse(@Body request: ChatRequest): Response<ChatResponse>
 }

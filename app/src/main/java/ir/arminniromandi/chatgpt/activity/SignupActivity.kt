@@ -15,8 +15,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ir.arminniromandi.chatgpt.navigation.screens.IntroScreens
-import ir.arminniromandi.chatgpt.ui.SignUp.IntroScreen
-import ir.arminniromandi.chatgpt.ui.SignUp.LoginScreen
+import ir.arminniromandi.chatgpt.ui.Screens.SignUp.IntroScreen
+import ir.arminniromandi.chatgpt.ui.Screens.SignUp.LoginScreen
 import ir.arminniromandi.chatgpt.ui.theme.AppTheme
 import ir.arminniromandi.chatgpt.viewmodel.SignUpViewModel
 

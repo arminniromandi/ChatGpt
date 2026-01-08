@@ -10,8 +10,8 @@ import javax.inject.Singleton
 
 @Singleton
 class ChatRepository @Inject constructor(
-    val chatDao: ChatDao,
-    val sessionDao : ChatSessionDao
+    private val chatDao: ChatDao,
+    private val sessionDao : ChatSessionDao
 ) {
 
 

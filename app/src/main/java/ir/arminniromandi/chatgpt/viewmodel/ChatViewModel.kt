@@ -12,6 +12,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.arminniromandi.chatgpt.dataBase.ChatRepository
+import ir.arminniromandi.chatgpt.dataBase.model.ChatMessage
+import ir.arminniromandi.chatgpt.ext.util.isUserRole
+import ir.arminniromandi.chatgpt.ext.util.setRole
 import ir.arminniromandi.chatgpt.model.ai.Role
 import ir.arminniromandi.myapplication.Api.ChatAi.ChatApiRepository
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatRequest
@@ -25,12 +28,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChatViewModel @Inject constructor(
-    private val chatRepository: ChatRepository,
+    private val dbRepository: ChatRepository,
     private val chatApiRepository: ChatApiRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val chatId: String = savedStateHandle["chatId"] ?: ""
+    private val chatId: String = savedStateHandle["chatId"] ?: "-1"
 
     var selectedModel by mutableIntStateOf(0)
         private set
@@ -38,9 +41,6 @@ class ChatViewModel @Inject constructor(
     fun setModel(index: Int) {
         selectedModel = index
     }
-
-
-
 
     private val currentSessionId = mutableIntStateOf(-1)
 
@@ -55,11 +55,7 @@ class ChatViewModel @Inject constructor(
     val error: LiveData<String> = _error
 
     var showIntro = mutableStateOf(true)
-
-
     val currentAllMessage = mutableStateListOf<Message>()
-
-
 
     val isAnimationRun = mutableStateOf(false)
 
@@ -79,6 +75,26 @@ class ChatViewModel @Inject constructor(
     fun deleteChat() {
         currentAllMessage.clear()
     }
+
+
+    fun saveMassage(text: String, role: Role) {
+        viewModelScope.launch {
+            dbRepository.addMessage(text, role.isUserRole(), currentSessionId.intValue)
+        }
+    }
+
+    fun getMessages(sessionId: Int) {
+        viewModelScope.launch {
+            dbRepository.getMessages(sessionId).collect { messages ->
+                currentAllMessage.clear()
+                messages.forEach { it ->
+                    currentAllMessage.add(Message(it.isUser.setRole(), it.content))
+                }
+
+            }
+        }
+    }
+
 
     fun sendReq(chatRequest: ChatRequest) {
         viewModelScope.launch {
