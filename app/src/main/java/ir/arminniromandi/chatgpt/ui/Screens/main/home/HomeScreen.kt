@@ -90,7 +90,7 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>()) {
 
             Column(
 
-            ){
+            ) {
 
 
             }
@@ -101,7 +101,7 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>()) {
                 },
                 visible = visible.value,
 
-            )
+                )
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -109,9 +109,9 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>()) {
 
             ExploreSection(
                 visible = visible,
-                expClick = {
-                viewModel.navigate(it)
-            })
+                expClick = {route ->
+                    viewModel.navigate(route)
+                })
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -121,6 +121,9 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>()) {
             PromptSection(
                 context = context,
                 visible = visible.value,
+                navigate = {route ->
+                    viewModel.navigate(route)
+                }
             )
         }
 

@@ -8,6 +8,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ir.arminniromandi.composeapplication.AndroidConectivityObserver
 import ir.arminniromandi.composeapplication.ConectivityObserver
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -21,6 +22,9 @@ object AppModule {
         return AndroidConectivityObserver(context)
     }
 
+    @Provides
+    @Singleton
+    fun provideContext(@ApplicationContext context: Context): Context = context
 
 }
 

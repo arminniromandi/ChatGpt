@@ -1,5 +1,7 @@
 package ir.arminniromandi.chatgpt.viewmodel
 
+import android.app.Application
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf

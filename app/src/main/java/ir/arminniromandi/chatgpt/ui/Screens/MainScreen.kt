@@ -44,6 +44,7 @@ import kotlinx.coroutines.delay
 fun MainScreen() {
     val viewModel: MainViewModel = hiltViewModel()
 
+
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route

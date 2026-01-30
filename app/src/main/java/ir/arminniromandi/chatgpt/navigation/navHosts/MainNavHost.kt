@@ -11,13 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
-import ir.arminniromandi.chatgpt.navigation.screens.SettingScreen
+import ir.arminniromandi.chatgpt.ui.Screens.main.Setting.SettingScreen
 import ir.arminniromandi.chatgpt.ui.explore.exploreWriting.ExploreWriting
 import ir.arminniromandi.chatgpt.ui.explore.gymplanner.componnent.GetInfo
 import ir.arminniromandi.chatgpt.ui.explore.homeExplore.ExploreScreen
@@ -70,10 +71,8 @@ fun MainNavHost(
             arguments = listOf(navArgument("chatId") { type = NavType.StringType })
 
         ) {
-            val chatViewModel: ChatViewModel = hiltViewModel(it)
+            val chatViewModel: ChatViewModel = hiltViewModel()
             val chatId = it.arguments?.getString("chatId")
-
-
             ChatScreen(
                 chatViewModel,
                 mainViewModel = viewModel,

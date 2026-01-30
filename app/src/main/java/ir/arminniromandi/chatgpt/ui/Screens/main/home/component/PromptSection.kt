@@ -30,16 +30,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import ir.arminniromandi.chatgpt.activity.PromptLibraryActivity
 import ir.arminniromandi.chatgpt.customUi.AnimateMainPage
 import ir.arminniromandi.chatgpt.ext.util.SampleData.samplePromptLib
+import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
 import ir.arminniromandi.chatgpt.ui.theme.Typography
 import ir.arminniromandi.chatgpt.ui.theme.white
 import ir.arminniromandi.chatgpt.ui.theme.whiteGradient
 import ir.arminniromandi.myapplication.Tool.Constance.FloatingActionButtonModifier
 
 @Composable
-fun PromptSection(context: Context, visible: Boolean) {
+fun PromptSection(context: Context, visible: Boolean , navigate :(route : String)->Unit) {
 
 
     Row(
@@ -59,7 +59,8 @@ fun PromptSection(context: Context, visible: Boolean) {
 
         FloatingActionButton(
             {
-                context.startActivity(Intent(context, PromptLibraryActivity::class.java))
+            navigate(MainScreens.Explore.screenName)
+
             },
             elevation = FloatingActionButtonDefaults.elevation(10.dp),
             containerColor = Color.White,
