@@ -17,6 +17,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ir.arminniromandi.chatgpt.R
-import ir.arminniromandi.chatgpt.customUi.AnimateMainPage
+import ir.arminniromandi.chatgpt.ui.customUi.AnimateMainPage
 import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
 import ir.arminniromandi.chatgpt.ui.theme.Typography
 import ir.arminniromandi.chatgpt.ui.theme.black
@@ -86,7 +87,7 @@ fun HomeHistorySection(
         AnimateMainPage(
             visible = visible,
             animateRun = remember {
-                androidx.compose.runtime.mutableStateOf(false)
+                mutableStateOf(false)
             }
         ) {
             LazyRow(

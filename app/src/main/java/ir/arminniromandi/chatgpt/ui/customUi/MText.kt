@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.customUi
+package ir.arminniromandi.chatgpt.ui.customUi
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

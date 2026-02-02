@@ -31,10 +31,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import ir.arminniromandi.chatgpt.customUi.BottomNavItem
+import ir.arminniromandi.chatgpt.ui.customUi.BottomNavItem
 import ir.arminniromandi.chatgpt.navigation.navHosts.MainNavHost
 import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
-import ir.arminniromandi.chatgpt.ui.theme.AppTheme
 import ir.arminniromandi.chatgpt.ui.theme.gradient
 import ir.arminniromandi.chatgpt.viewmodel.MainViewModel
 import ir.arminniromandi.myapplication.Tool.Constance.BottomNavHomeItems

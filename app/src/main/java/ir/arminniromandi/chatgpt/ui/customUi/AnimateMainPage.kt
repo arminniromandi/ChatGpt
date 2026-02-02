@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.customUi
+package ir.arminniromandi.chatgpt.ui.customUi
 
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility

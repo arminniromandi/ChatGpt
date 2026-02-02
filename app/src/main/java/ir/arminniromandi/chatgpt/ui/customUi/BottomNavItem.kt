@@ -1,4 +1,4 @@
-package ir.arminniromandi.chatgpt.customUi
+package ir.arminniromandi.chatgpt.ui.customUi
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding

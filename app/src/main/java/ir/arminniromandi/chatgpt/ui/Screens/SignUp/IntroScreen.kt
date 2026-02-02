@@ -27,8 +27,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.arminniromandi.chatgpt.R
-import ir.arminniromandi.chatgpt.customUi.BoxIntro
-import ir.arminniromandi.chatgpt.customUi.MText
+import ir.arminniromandi.chatgpt.ui.customUi.BoxIntro
+import ir.arminniromandi.chatgpt.ui.customUi.MText
 import ir.arminniromandi.chatgpt.ui.theme.black
 import ir.arminniromandi.chatgpt.ui.theme.gradient
 import ir.arminniromandi.chatgpt.ui.theme.white

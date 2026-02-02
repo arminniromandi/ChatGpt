@@ -1,7 +1,6 @@
 package ir.arminniromandi.chatgpt.ui.main.home.component
 
 import android.content.Context
-import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -30,7 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import ir.arminniromandi.chatgpt.customUi.AnimateMainPage
+import ir.arminniromandi.chatgpt.ui.customUi.AnimateMainPage
 import ir.arminniromandi.chatgpt.ext.util.SampleData.samplePromptLib
 import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
 import ir.arminniromandi.chatgpt.ui.theme.Typography

@@ -47,7 +47,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import ir.arminniromandi.chatgpt.customUi.AnimateMainPage
+import ir.arminniromandi.chatgpt.ui.customUi.AnimateMainPage
 import ir.arminniromandi.chatgpt.ext.util.SampleData
 import ir.arminniromandi.chatgpt.model.ExploreCardItem
 import ir.arminniromandi.chatgpt.navigation.screens.MainScreens
