@@ -46,7 +46,7 @@ fun BottomChat(
     viewModel: ChatViewModel,
     modelSelected: String = "",
 ) {
-
+    //todo : handle new Bottom Chat
 
     val text = remember { mutableStateOf("") }
     val textDirection by remember(text.value) {

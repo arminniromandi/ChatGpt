@@ -2,6 +2,7 @@ package ir.arminniromandi.chatgpt.ui.Screens.main.chat.component
 
 import android.R.attr.textDirection
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +18,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Api
 import androidx.compose.material.icons.filled.ArrowUpward
+import androidx.compose.material.icons.outlined.AttachFile
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonColors
@@ -30,6 +32,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
@@ -45,18 +49,20 @@ import ir.arminniromandi.chatgpt.ui.theme.gray_400
 fun BoxChatInput(
     modifier: Modifier,
     text: String,
-    onTextChange: (String) -> Unit
+    onTextChange: (String) -> Unit = {},
+    isSmartModeEnable: Boolean = false,
+    smartModeChange: (Boolean) -> Unit = {},
+    sendButtonAction: () -> Unit={},
+    onClickFile: ()->Unit = {}
 ) {
 
 
     val isSendButtonEnable by remember(text) {
         derivedStateOf { text.isNotBlank() }
     }
-    val isSmartModeEnable by remember {
-        mutableStateOf(false)
-    }
-    val textDirection by remember(text) {
-        mutableStateOf(getTextDirection(text))
+
+    val textDirection = remember(text) {
+        getTextDirection(text)
     }
     val textAlign = if (textDirection == TextDirection.Rtl) TextAlign.End else TextAlign.Start
 
@@ -66,7 +72,7 @@ fun BoxChatInput(
             .fillMaxWidth()
             .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
             .background(Color(0xFF28324B))
-            .padding(8.dp)
+            .padding(6.dp)
 
     ) {
         BasicTextField(
@@ -96,7 +102,13 @@ fun BoxChatInput(
             }
         )
 
-        ExtItem()
+        ExtItem(
+            isSmartModeEnable,
+            smartModeChange,
+            sendButtonAction,
+            isSendButtonEnable,
+            onClickFile
+        )
 
 
     }
@@ -105,11 +117,14 @@ fun BoxChatInput(
 }
 
 @Composable
-private fun ExtItem() {
+private fun ExtItem(
+    isSmartModeEnable: Boolean,
+    change: (Boolean) -> Unit,
+    onClick: () -> Unit,
+    isSendButtonEnable: Boolean,
+    onClickFile : ()->Unit
+) {
 
-    var isSmartModeEnable by remember {
-        mutableStateOf(false)
-    }
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -117,22 +132,35 @@ private fun ExtItem() {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
 
-        Row {
+        Row (
+            verticalAlignment = Alignment.CenterVertically
+        ){
+
+            Icon(
+                imageVector = Icons.Outlined.AttachFile,
+                contentDescription = "Attach File",
+                modifier = Modifier
+                    .rotate(40f)
+                    .clickable { onClickFile() },
+                tint = Color.White.copy(alpha = 0.8f)
+                )
+
+
             BoxChip("smart", Icons.Default.Api, isSmartModeEnable) {
-                isSmartModeEnable = !isSmartModeEnable
+                change(!isSmartModeEnable)
             }
+
         }
 
         IconButton(
-            onClick = {
-
-            },
-            shape = CircleShape,
+            onClick = { onClick() },
+            enabled = isSendButtonEnable,
+            
             colors = IconButtonColors(
-                containerColor = Color.DarkGray,
+                containerColor = Color.Gray,
                 contentColor = Color.White,
-                disabledContentColor = Color.Unspecified,
-                disabledContainerColor = Color.Unspecified
+                disabledContentColor = Color.White.copy(0.7f),
+                disabledContainerColor = Color.DarkGray
             )
         ) {
 
@@ -159,6 +187,7 @@ private fun BoxChip(text: String, icon: ImageVector, enable: Boolean, onClick: (
 
         Row(
             modifier = Modifier
+                .clickable { onClick() }
                 .clip(RoundedCornerShape(8.dp))
                 .background(Color.DarkGray)
                 .padding(6.dp),
@@ -185,9 +214,11 @@ private fun BoxChip(text: String, icon: ImageVector, enable: Boolean, onClick: (
 @Composable
 private fun BoxChatPreview() {
 
+
     BoxChatInput(
         Modifier,
-        ""
+        "",
+
     ) { }
 
 
