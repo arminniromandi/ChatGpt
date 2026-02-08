@@ -163,7 +163,6 @@ private fun ExtItem(
                 disabledContainerColor = Color.DarkGray
             )
         ) {
-
             Icon(
                 imageVector = Icons.Default.ArrowUpward,
                 contentDescription = "",
@@ -217,7 +216,7 @@ private fun BoxChatPreview() {
 
     BoxChatInput(
         Modifier,
-        "",
+        "hello",
 
     ) { }
 
