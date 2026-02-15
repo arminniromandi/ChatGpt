@@ -63,8 +63,8 @@ fun MainScreen() {
         modifier = Modifier
             .fillMaxSize()
             .imePadding()
-            .background(Color(0xFF282828))
-            .drawWithCache {
+            .background(Color(0xFF282F32))
+            /*.drawWithCache {
                 val gradientB = Brush.linearGradient(
                     colorStops = gradient,
                     start = Offset(size.width, 0f),
@@ -75,7 +75,7 @@ fun MainScreen() {
                 onDrawBehind {
                     drawRect(brush = gradientB)
                 }
-            },
+            }*/,
         bottomBar = {
             val visible = remember {
                 mutableStateOf(true)

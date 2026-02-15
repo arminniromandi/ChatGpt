@@ -1,12 +1,10 @@
 package ir.arminniromandi.chatgpt.ui.main.chat
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import ir.arminniromandi.chatgpt.model.ai.AiModel
@@ -25,18 +23,10 @@ fun ChatScreen(
 ) {
 
     val chatItem = AiModel.entries
-
-    SideEffect {
-        Log.e("ChatScreen", "ChatScreen")
-    }
-
-
     if (viewModel.currentAllMessage.isEmpty()) viewModel.showIntro.value = true
-
 
     Column(
         modifier = Modifier
-
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween

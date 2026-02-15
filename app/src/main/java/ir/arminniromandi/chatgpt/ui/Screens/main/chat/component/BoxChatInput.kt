@@ -136,14 +136,22 @@ private fun ExtItem(
             verticalAlignment = Alignment.CenterVertically
         ){
 
-            Icon(
-                imageVector = Icons.Outlined.AttachFile,
-                contentDescription = "Attach File",
-                modifier = Modifier
-                    .rotate(40f)
-                    .clickable { onClickFile() },
-                tint = Color.White.copy(alpha = 0.8f)
+
+            Box(
+                modifier = Modifier.clickable { onClickFile() },
+                contentAlignment = Alignment.Center
+            ){
+
+                Icon(
+                    imageVector = Icons.Outlined.AttachFile,
+                    contentDescription = "Attach File",
+                    modifier = Modifier
+                        .rotate(40f),
+                    tint = Color.White.copy(alpha = 0.8f)
                 )
+
+            }
+
 
 
             BoxChip("smart", Icons.Default.Api, isSmartModeEnable) {
@@ -159,7 +167,7 @@ private fun ExtItem(
             colors = IconButtonColors(
                 containerColor = Color.Gray,
                 contentColor = Color.White,
-                disabledContentColor = Color.White.copy(0.7f),
+                disabledContentColor = Color.White.copy(0.6f),
                 disabledContainerColor = Color.DarkGray
             )
         ) {

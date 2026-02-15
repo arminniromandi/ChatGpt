@@ -1,7 +1,5 @@
 package ir.arminniromandi.chatgpt.viewmodel
 
-import android.app.Application
-import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
@@ -14,7 +12,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.arminniromandi.chatgpt.dataBase.ChatRepository
-import ir.arminniromandi.chatgpt.dataBase.model.ChatMessage
 import ir.arminniromandi.chatgpt.ext.util.isUserRole
 import ir.arminniromandi.chatgpt.ext.util.setRole
 import ir.arminniromandi.chatgpt.model.ai.Role
@@ -23,6 +20,7 @@ import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatRequest
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.ChatResponse
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.Choice
 import ir.arminniromandi.myapplication.Api.ChatAi.Model.Message
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -40,9 +38,6 @@ class ChatViewModel @Inject constructor(
     var selectedModel by mutableIntStateOf(0)
         private set
 
-    fun setModel(index: Int) {
-        selectedModel = index
-    }
 
     private val currentSessionId = mutableIntStateOf(-1)
 
@@ -61,31 +56,20 @@ class ChatViewModel @Inject constructor(
 
     val isAnimationRun = mutableStateOf(false)
 
-
-    fun saveMessageAndSendReq(text: String, model: String) {
-        currentAllMessage.add(Message(Role.User.value, text))
-        viewModelScope.launch {
-            isAnimationRun.value = true
-        }
-
-        sendReq(ChatRequest(model, currentAllMessage))
-
-
-    }
-
-
-    fun deleteChat() {
-        currentAllMessage.clear()
-    }
-
-
-    fun saveMassage(text: String, role: Role) {
-        viewModelScope.launch {
-            dbRepository.addMessage(text, role.isUserRole(), currentSessionId.intValue)
+    init {
+        if (chatId == "-1") {
+            showIntro.value = true
+        } else {
+            currentSessionId.intValue = chatId.toInt()
+            getMessages(chatId.toInt())
         }
     }
 
-    fun getMessages(sessionId: Int) {
+    fun setModel(index: Int) {
+        selectedModel = index
+    }
+
+    private fun getMessages(sessionId: Int) {
         viewModelScope.launch {
             dbRepository.getMessages(sessionId).collect { messages ->
                 currentAllMessage.clear()
@@ -97,9 +81,33 @@ class ChatViewModel @Inject constructor(
         }
     }
 
+    fun saveMessageAndSendReq(text: String, model: String) {
+        viewModelScope.launch(Dispatchers.Main) {
+            currentAllMessage.add(Message(Role.User.value, text))
+            isAnimationRun.value = true
+            saveMassage(text, Role.User)
+        }
+        sendReq(ChatRequest(model, currentAllMessage))
 
-    fun sendReq(chatRequest: ChatRequest) {
-        viewModelScope.launch {
+
+    }
+
+
+    fun deleteChat() {
+        currentAllMessage.clear()
+    }
+
+
+    private fun saveMassage(text: String, role: Role) {
+        viewModelScope.launch(Dispatchers.IO) {
+            dbRepository.addMessage(text, role.isUserRole(), currentSessionId.intValue)
+        }
+    }
+
+
+
+    private fun sendReq(chatRequest: ChatRequest) {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 _loading.postValue(true)
                 isAnimationRun.value = true
@@ -108,23 +116,17 @@ class ChatViewModel @Inject constructor(
                 val response = chatApiRepository.getChatResponse(chatRequest)
 
                 if (response.isSuccessful) {
-
-                    currentAllMessage.add(
-                        Message(
-                            Role.Assistant.value, response.body()!!.choices[0]
-                                .message.content
-                        )
+                    val data = Message(
+                        Role.Assistant.value, response.body()!!.choices[0]
+                            .message.content
                     )
-
+                    currentAllMessage.add(data)
+                    saveMassage(data.content, Role.Assistant)
                 } else {
                     _error.postValue(response.message())
-
-
                 }
             } catch (e: Exception) {
                 _error.postValue(e.message)
-
-
             } finally {
                 _loading.postValue(false)
             }

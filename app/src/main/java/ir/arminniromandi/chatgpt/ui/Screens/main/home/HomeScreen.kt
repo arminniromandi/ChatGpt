@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Text
@@ -62,7 +63,7 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>()) {
         )
 
         ElevatedButton(
-            onClick = { viewModel.navigate(MainScreens.ChatPage.createRoute("0")) },
+            onClick = { viewModel.navigate(MainScreens.ChatPage.newChat()) },
             colors = ButtonDefaults.elevatedButtonColors(
                 contentColor = Black, containerColor = Color.White
 
@@ -79,7 +80,6 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>()) {
                 style = Typography.labelMedium.copy(color = Black)
             )
         }
-
 
 
         Column(
