@@ -1,7 +1,3 @@
---- README.md (原始)
-
-
-+++ README.md (修改后)
 # ChatGPT Android App
 
 An Android application built with Kotlin and Jetpack Compose that provides AI chat functionality.
