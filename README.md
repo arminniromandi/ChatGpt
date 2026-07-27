@@ -126,25 +126,9 @@ API_SMS_IR=your_sms_api_key_here
 
 # Release build
 ./gradlew assembleRelease
-
-# Run tests
-./gradlew test
-
-# Install on connected device
-./gradlew installDebug
 ```
 
-## 🧪 Testing
 
-The project includes:
-- Unit tests (JUnit)
-- Instrumented tests (Espresso, Compose Test)
-
-Run tests with:
-```bash
-./gradlew test
-./gradlew connectedAndroidTest
-```
 
 ## 📦 Project Info
 
