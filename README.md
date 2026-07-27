@@ -1,4 +1,4 @@
-# ChatGPT Android App
+# Multi-Model AI Chat App for Android
 
 An Android application built with Kotlin and Jetpack Compose that provides AI chat functionality.
 
@@ -7,7 +7,7 @@ An Android application built with Kotlin and Jetpack Compose that provides AI ch
 - **AI Chat Interface** - Interactive chat interface powered by AI
 - **Material 3 Design** - Modern UI following Material Design 3 guidelines
 - **Offline Support** - Local database storage using Room
-- **Dependency Injection** - Hilt for clean architecture
+- **Dependency Injection** — Hilt for dependency management and testable component boundaries
 - **Network Layer** - Retrofit for API communication
 - **Coroutines & Flow** - Asynchronous programming with Kotlin coroutines
 - **SMS Integration** - SMS verification functionality
@@ -165,10 +165,6 @@ This project is proprietary software. All rights reserved.
 ## 👨‍💻 Author
 
 Armin Niromandi
-
-## 🤝 Contributing
-
-This is a private project. For questions or issues, please contact the maintainer directly.
 
 ---
 
